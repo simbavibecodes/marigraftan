@@ -162,7 +162,7 @@ html[data-lang="ka"] .dear{font-family:"Noto Serif Georgian",serif;font-weight:3
 .interlude .big{font-family:var(--display);font-size:clamp(34px,8vw,64px);line-height:1.05;letter-spacing:.03em}
 html[data-lang="ka"] .interlude .big{font-family:"Noto Serif Georgian",serif;font-weight:300;font-size:clamp(26px,6vw,44px)}
 .interlude.top::before{background:linear-gradient(180deg,rgba(42,19,21,.9) 0%,rgba(42,19,21,0) 35%,rgba(42,19,21,0) 60%,rgba(42,19,21,.85) 100%)}
-@media (min-width:900px){.interlude{min-height:640px}.interlude.snow img{object-position:50% 38%}}
+@media (min-width:900px){.interlude{min-height:640px}.interlude.snow img{object-position:50% 38%}.interlude.horses img{object-position:50% 40%}}
 
 /* paper band */
 .paper{background:var(--paper);color:var(--ink);position:relative}
@@ -665,6 +665,13 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 <form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
   <input name="bot-field"><input name="guest"><input name="name"><input name="attending"><input name="party"><input name="arrival"><input name="departure"><input name="ski"><input name="rental"><input name="car"><input name="dietary"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
 </form>
+
+<section class="interlude horses" aria-label="See you in the mountains">
+  <img src="media/horses.jpg" alt="Two horses beneath Gergeti Trinity Church" decoding="async">
+  <div class="wrap">
+    <p class="big"><span class="en">See you in the mountains</span><span class="ka">მთაში შევხვდებით</span></p>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
