@@ -90,8 +90,8 @@ p{margin:0}
 .hero-film{position:absolute;inset:0;z-index:-2}
 .hero-film video,.hero-film img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
-  radial-gradient(120% 60% at 50% 105%,rgba(122,36,52,.55),transparent 60%),
-  linear-gradient(180deg,rgba(42,19,21,.55) 0%,rgba(42,19,21,.05) 30%,rgba(42,19,21,.35) 55%,rgba(42,19,21,.96) 100%)}
+  radial-gradient(120% 60% at 50% 105%,rgba(122,36,52,.5),transparent 60%),
+  linear-gradient(180deg,rgba(28,14,15,.6) 0%,rgba(28,14,15,.3) 28%,rgba(28,14,15,.45) 55%,rgba(42,19,21,.96) 100%)}
 .hero-text{padding-block:120px 56px;text-align:center;display:grid;gap:18px;justify-items:center}
 .names{font-family:var(--display);font-weight:400;font-size:clamp(52px,15vw,124px);line-height:.92;margin:0;letter-spacing:.1em;display:grid;justify-items:center;animation:settle 2.6s cubic-bezier(.2,.7,.2,1) both}
 .names .amp{font-family:var(--script);font-size:.62em;letter-spacing:0;color:var(--mauve);line-height:.9;margin:.06em 0 -.04em}
@@ -112,7 +112,7 @@ html[data-lang="ka"] .hero .when{font-family:"Noto Serif Georgian",serif;font-we
   .names .amp{margin-left:.4em}
   .arch{display:block;justify-self:center;width:min(100%,430px);aspect-ratio:9/15;border-radius:999px 999px 6px 6px;overflow:hidden;position:relative;box-shadow:0 0 0 1px var(--line-dark),0 0 0 10px var(--oxblood),0 0 0 11px var(--line-dark),0 40px 90px rgba(0,0,0,.5)}
   .arch video,.arch img{width:100%;height:100%;object-fit:cover}
-  .arch::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(42,19,21,.55));pointer-events:none}
+  .arch::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,14,15,.22),rgba(28,14,15,.22) 55%,rgba(42,19,21,.55));pointer-events:none}
 }
 
 /* letter: photo + invitation */
@@ -227,24 +227,30 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .rsvp{background:var(--wine);overflow-x:clip}
 .rsvp-grid{display:grid;gap:40px;align-items:start}
 @media (min-width:940px){.rsvp-grid{grid-template-columns:400px 1fr}}
-.pass{position:relative;background:var(--cream);color:var(--ink);border-radius:14px;padding:0 0 18px;max-width:400px;width:100%;justify-self:center;box-shadow:0 30px 60px rgba(0,0,0,.35);transform:rotate(-2deg);
-  -webkit-mask:radial-gradient(circle 9px at 0 62%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 62%,transparent 98%,#000) right/51% 100% no-repeat;
-  mask:radial-gradient(circle 9px at 0 62%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 62%,transparent 98%,#000) right/51% 100% no-repeat}
-@media (min-width:940px){.pass{position:sticky;top:100px}}
-.pass-top{background:var(--burgundy);color:var(--cream);border-radius:14px 14px 0 0;padding:26px 24px 20px;display:grid;gap:4px;position:relative}
-.pass-top::before{content:"";position:absolute;top:12px;left:50%;width:34px;height:8px;margin-left:-17px;border-radius:9px;background:var(--wine)}
-.pass-top .k{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--mauve)}
-.pass-top .t{font-family:var(--display);font-size:46px;letter-spacing:.16em;line-height:1}
-.pass-body{padding:20px 24px 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;font-family:var(--mono);font-size:13px}
-.pass-body .f{display:grid;gap:2px}
+.pass-wrap{position:relative;max-width:380px;width:100%;justify-self:center;padding-top:46px}
+@media (min-width:940px){.pass-wrap{position:sticky;top:76px}}
+.pass-wrap::before{content:"";position:absolute;top:0;left:50%;width:46px;height:64px;margin-left:-23px;border:2px solid #B9AFA4;border-bottom:0;border-radius:23px 23px 0 0;transform:rotate(-2deg);transform-origin:50% 100%}
+.pass{position:relative;background:var(--cream);color:var(--ink);border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.08),0 34px 60px rgba(0,0,0,.4);transform:rotate(-2deg);transform-origin:50% 0}
+.grommet{position:absolute;top:12px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--wine);box-shadow:0 0 0 3px #CFC6BB,0 0 0 4px #9E958B,inset 0 1px 2px rgba(0,0,0,.6);z-index:3}
+.pass-top{background:var(--burgundy);color:var(--cream);border-radius:10px 10px 0 0;padding:44px 22px 16px;display:grid;gap:2px;text-align:center}
+.pass-top .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--mauve)}
+.pass-top .t{font-family:var(--display);font-size:clamp(40px,12vw,50px);letter-spacing:.2em;line-height:1.05;padding-left:.2em}
+.pass-art{margin:0;position:relative;border-bottom:1px solid var(--line-paper)}
+.pass-art img{width:100%;height:auto;mix-blend-mode:multiply;display:block}
+.pass-flowers{position:absolute;width:36%;right:-7%;top:27%;transform:rotate(10deg);pointer-events:none;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
+.pass-body{padding:14px 22px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;font-family:var(--mono);font-size:13px}
+.pass-body .f{display:grid;gap:1px;min-width:0}
 .pass-body .f.wide{grid-column:1/-1}
-.pass-body label,.pass-body .l{font-size:10px;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
-.pass-body .v{font-size:15px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
-.pass-body .holder{font-family:var(--script);font-weight:400;font-size:30px;letter-spacing:0;line-height:1.1}
-.perf{grid-column:1/-1;border-top:2px dotted var(--line-paper);margin:6px -24px 0}
-.barcode{grid-column:1/-1;height:52px;display:block;width:100%}
-.stamp{position:absolute;right:30px;top:118px;width:112px;height:112px;border-radius:50%;border:2.5px solid var(--burgundy);color:var(--burgundy);display:grid;place-items:center;text-align:center;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.14em;transform:rotate(-14deg);opacity:0;scale:1.6;transition:opacity .35s,scale .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none;box-shadow:inset 0 0 0 5px var(--cream),inset 0 0 0 6.5px var(--burgundy)}
-.stamp.on{opacity:.9;scale:1}
+.pass-body .l,.pass-stub .l{font-size:9.5px;letter-spacing:.22em;color:var(--ink-dim);text-transform:uppercase}
+.pass-body .v{font-size:14px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
+.pass-body .holder{font-family:var(--script);font-weight:400;font-size:34px;letter-spacing:0;line-height:1.05}
+.pass-stub{position:relative;border-top:2px dashed var(--line-paper);padding:14px 22px 16px;display:grid;gap:6px;text-align:center;background:#EDE2D1;border-radius:0 0 10px 10px}
+.pass-stub::before,.pass-stub::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--wine)}
+.pass-stub::before{left:-10px}.pass-stub::after{right:-10px}
+.pass-stub .rsvp-by{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--burgundy)}
+.barcode{height:44px;display:block;width:100%}
+.stamp{position:absolute;right:22px;top:46%;width:112px;height:112px;border-radius:50%;border:2.5px solid var(--burgundy);color:var(--burgundy);display:grid;place-items:center;text-align:center;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.14em;transform:rotate(-14deg);opacity:0;scale:1.6;transition:opacity .35s,scale .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none;box-shadow:inset 0 0 0 5px var(--cream),inset 0 0 0 6.5px var(--burgundy);background:rgba(241,231,216,.55);z-index:4}
+.stamp.on{opacity:.92;scale:1}
 .stamp span{display:block;font-size:10px;letter-spacing:.2em;font-weight:400;margin-top:2px}
 
 .form{background:var(--cream);color:var(--ink);border-radius:6px;padding:clamp(22px,4vw,40px);display:grid;gap:26px}
@@ -292,6 +298,7 @@ html[data-lang="ka"] .tcol h3{font-family:"Noto Serif Georgian",serif;font-size:
 .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--burgundy);white-space:nowrap;text-transform:uppercase}
 html[data-lang="ka"] .tag{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif;font-size:12px}
 .meals{display:grid;gap:12px}
+.eat-art{width:100%;max-width:340px;mix-blend-mode:multiply;margin:-6px 0 -4px}
 .meal{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-paper);padding:10px 0}
 .meal .script{font-size:28px;color:var(--burgundy);line-height:1}
 html[data-lang="ka"] .meal .script{font-family:"Noto Serif Georgian",serif;font-size:18px}
@@ -502,21 +509,30 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <h2><span class="en">Your Lift Pass</span><span class="ka">თქვენი საშვი</span></h2>
       </div>
       <div class="rsvp-grid">
+        <div class="pass-wrap">
         <div class="pass" aria-label="Lift pass">
+          <span class="grommet" aria-hidden="true"></span>
+          <img class="pass-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true">
           <div class="pass-top">
-            <span class="k">LIFT PASS · ADULT</span>
+            <span class="k">SKI PASS · SEASON 2027</span>
             <span class="t">GUDAURI</span>
-            <span class="k" style="letter-spacing:.14em">MARI &amp; GRAFTAN</span>
+            <span class="k">GEORGIA · 2,196 M</span>
           </div>
+          <figure class="pass-art"><img src="media/pass-couple.jpg" alt="Illustration of Mari and Graftan skiing in traditional Georgian dress"></figure>
           <div class="pass-body">
             <div class="f wide"><span class="l">Pass holder</span><span class="v holder" id="passName">Our guest</span></div>
-            <div class="f"><span class="l">Valid</span><span class="v">10–12 III 2027</span></div>
+            <div class="f"><span class="l">Valid</span><span class="v">10–12 MAR 2027</span></div>
             <div class="f"><span class="l">Zone</span><span class="v">Gergeti · Gudauri</span></div>
-            <div class="perf"></div>
+            <div class="f"><span class="l">Hosts</span><span class="v">Mari &amp; Graftan</span></div>
+            <div class="f"><span class="l">Days</span><span class="v">3</span></div>
+          </div>
+          <div class="pass-stub">
+            <span class="rsvp-by">RSVP BY 15 · 01 · 2027</span>
             <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
-            <div class="f wide" style="text-align:center"><span class="l" id="passNo">No. 1103-2027</span></div>
+            <span class="l" id="passNo">No. 1103-2027</span>
           </div>
           <div class="stamp" id="stamp" aria-hidden="true"><div>CONFIRMED<span>11 · III · 27</span></div></div>
+        </div>
         </div>
 
         <form class="form" id="rsvpForm" novalidate>
@@ -623,6 +639,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </div>
         <div class="tcol">
           <h3><span class="en">Where to eat</span><span class="ka">სად ვჭამოთ</span></h3>
+          <img class="eat-art" src="media/khinkali.jpg" alt="Illustration of khinkali, a clay wine jug and vintage skis" loading="lazy">
           <div class="meals">
             <div class="meal"><span class="script"><span class="en">Breakfast</span><span class="ka">საუზმე</span></span><span class="tbc">TBC</span></div>
             <div class="meal"><span class="script"><span class="en">Lunch</span><span class="ka">სადილი</span></span><span class="tbc">TBC</span></div>
