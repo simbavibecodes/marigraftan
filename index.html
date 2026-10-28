@@ -225,7 +225,7 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 
 /* rsvp */
 .rsvp{background:var(--wine);overflow-x:clip}
-.rsvp-grid{display:grid;gap:40px;align-items:start}
+.rsvp-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;align-items:start}
 @media (min-width:940px){.rsvp-grid{grid-template-columns:400px 1fr}}
 .pass-wrap{position:relative;max-width:380px;width:100%;justify-self:center;padding-top:46px}
 @media (min-width:940px){.pass-wrap{position:sticky;top:76px}}
@@ -237,7 +237,17 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .pass-top .t{font-family:var(--display);font-size:clamp(40px,12vw,50px);letter-spacing:.2em;line-height:1.05;padding-left:.2em}
 .pass-art{margin:0;position:relative;border-bottom:1px solid var(--line-paper)}
 .pass-art img{width:100%;height:auto;mix-blend-mode:multiply;display:block}
-.pass-flowers{position:absolute;width:36%;right:-7%;top:27%;transform:rotate(10deg);pointer-events:none;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18))}
+@media (max-width:600px){.pass-wrap{padding-inline:16px}.pass{transform:rotate(-1deg)}.pass-wrap::before{transform:rotate(-1deg)}}
+.weekend-flowers{position:absolute;top:-14px;right:max(8px,calc(50% - 560px));width:clamp(120px,24vw,250px);pointer-events:none;transform:rotate(6deg);opacity:.95}
+#weekend .section-head{padding-right:clamp(110px,24vw,260px)}
+#weekend{overflow-x:clip}
+.stay-flowers{display:none}
+@media (min-width:900px){
+  #weekend .section-head{padding-right:0}
+  .weekend-flowers{display:none}
+  .stay-row{display:grid;grid-template-columns:minmax(0,44em) 1fr;align-items:start;gap:24px}
+  .stay-flowers{display:block;width:190px;justify-self:end;margin:-40px 24px -88px 0;transform:rotate(6deg)}
+}
 .pass-body{padding:14px 22px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;font-family:var(--mono);font-size:13px}
 .pass-body .f{display:grid;gap:1px;min-width:0}
 .pass-body .f.wide{grid-column:1/-1}
@@ -403,6 +413,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   </section>
 
   <section class="paper section" id="weekend">
+    <img class="weekend-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true" loading="lazy">
     <div class="wrap">
       <div class="section-head">
         <p class="caps"><span class="en">10 – 13 March 2027</span><span class="ka">10 – 13 მარტი, 2027</span></p>
@@ -467,10 +478,13 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </article>
       </div>
 
-      <div class="stay">
-        <p class="script"><span class="en">Stay a little longer</span><span class="ka ka-small" style="font-family:'Noto Serif Georgian',serif;font-size:20px">დარჩით ცოტა მეტხანს</span></p>
-        <p class="en">We will be in Gudauri from the 8th through the 15th of March, and you are more than welcome to join us for more skiing. Our hosted festivities take place from the 10th through the 12th, with accommodation through the morning of the 13th.</p>
-        <p class="ka">გუდაურში 8-დან 15 მარტამდე ვიქნებით და სიამოვნებით შემოგვიერთდით სასრიალოდ. ჩვენი ზეიმი 10–12 მარტს გაიმართება, ბინადრობა კი 13 მარტის დილამდეა უზრუნველყოფილი.</p>
+      <div class="stay-row">
+        <div class="stay">
+          <p class="script"><span class="en">Stay a little longer</span><span class="ka ka-small" style="font-family:'Noto Serif Georgian',serif;font-size:20px">დარჩით ცოტა მეტხანს</span></p>
+          <p class="en">We will be in Gudauri from the 8th through the 15th of March, and you are more than welcome to join us for more skiing. Our hosted festivities take place from the 10th through the 12th, with accommodation through the morning of the 13th.</p>
+          <p class="ka">გუდაურში 8-დან 15 მარტამდე ვიქნებით და სიამოვნებით შემოგვიერთდით სასრიალოდ. ჩვენი ზეიმი 10–12 მარტს გაიმართება, ბინადრობა კი 13 მარტის დილამდეა უზრუნველყოფილი.</p>
+        </div>
+        <img class="stay-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true" loading="lazy">
       </div>
     </div>
   </section>
@@ -512,7 +526,6 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <div class="pass-wrap">
         <div class="pass" aria-label="Lift pass">
           <span class="grommet" aria-hidden="true"></span>
-          <img class="pass-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true">
           <div class="pass-top">
             <span class="k">SKI PASS · SEASON 2027</span>
             <span class="t">GUDAURI</span>
