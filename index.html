@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:url" content="https://marigraftan.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Mari & Graftan</title>
+<meta name="description" content="Mari & Graftan · Gergeti Trinity Church · 11 March 2027">
+<meta property="og:title" content="Mari & Graftan">
+<meta property="og:description" content="Gergeti Trinity Church · Gudauri, Georgia · 11 March 2027">
+<meta property="og:image" content="https://marigraftan.com/media/share.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Italiana&family=Noto+Serif+Georgian:wght@300;400;500&family=Pinyon+Script&display=swap">
+<style>
+/* Layout: candlelit oxblood bands alternating with cream "paper" bands; phone-first single column, hero becomes text + arched film window on desktop. Single deliberate dark world. */
+:root{
+  --oxblood:#2A1315;
+  --wine:#3A1A1E;
+  --burgundy:#7A2434;
+  --mauve:#C29AA4;
+  --cream:#F1E7D8;
+  --paper:#E9DECB;
+  --ink:#2B1A18;
+  --dim:#BBA89C;
+  --ink-dim:#6E5A52;
+  --line-dark:rgba(241,231,216,.18);
+  --line-paper:#CDBBA4;
+  --forest:#2F3B30;
+
+  --display:"Italiana","Noto Serif Georgian",Didot,"Bodoni 72",serif;
+  --script:"Pinyon Script","Noto Serif Georgian","Snell Roundhand",cursive;
+  --serif:"EB Garamond","Noto Serif Georgian",Garamond,Georgia,serif;
+  --mono:"Courier Prime","Noto Serif Georgian","Courier New",monospace;
+
+  --step-0:clamp(17px,1.05rem + .2vw,19px);
+  --step-1:clamp(20px,1.2rem + .5vw,24px);
+  --step-2:clamp(28px,1.5rem + 1.6vw,44px);
+  --step-3:clamp(40px,2rem + 3.5vw,76px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;background:var(--oxblood)}
+body{background:var(--oxblood);color:var(--cream);font-family:var(--serif);font-size:var(--step-0);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.13;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:41;background:var(--oxblood)}
+img,video{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:1.5px solid var(--mauve);outline-offset:3px}
+
+/* language */
+html:not([data-lang="ka"]) .ka, html[data-lang="ka"] .en{display:none!important}
+html[data-lang="ka"] .caps{text-transform:none;letter-spacing:.03em}
+html[data-lang="ka"] body{line-height:1.75}
+html[data-lang="ka"] .ka-small{font-size:.92em}
+
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.caps{text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-family:var(--serif);font-weight:500}
+.script{font-family:var(--script);font-weight:400;letter-spacing:0;text-transform:none}
+h2{font-family:var(--display);font-weight:400;font-size:var(--step-3);line-height:1;margin:0;text-wrap:balance;letter-spacing:.04em}
+html[data-lang="ka"] h2{font-size:var(--step-2);font-weight:300;letter-spacing:0}
+p{margin:0}
+.lede{max-width:34em;text-wrap:pretty}
+.tbc{display:inline-block;font-family:var(--mono);font-size:.72em;letter-spacing:.04em;padding:.05em .55em;border:1px dashed currentColor;border-radius:3px;opacity:.75;white-space:nowrap;vertical-align:.1em}
+
+/* header */
+.bar{position:fixed;top:0;left:0;right:0;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+.bar.solid{background:rgba(42,19,21,.94);border-color:var(--line-dark);backdrop-filter:blur(8px)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.mono{font-family:var(--display);font-size:22px;letter-spacing:.12em;background:none;border:0;padding:4px 0;cursor:pointer;color:var(--cream)}
+.mono .script{font-size:26px;margin:0 .15em;color:var(--mauve)}
+.bar-right{display:flex;align-items:center;gap:14px}
+.lang{display:flex;border:1px solid var(--line-dark);border-radius:99px;padding:2px}
+.lang button{background:none;border:0;padding:5px 11px;border-radius:99px;cursor:pointer;font-size:13px;letter-spacing:.08em;color:var(--dim)}
+.lang button[aria-pressed="true"]{background:var(--cream);color:var(--oxblood)}
+.lang button:last-child{font-family:"Noto Serif Georgian",serif}
+.pill{background:none;border:1px solid var(--cream);color:var(--cream);padding:7px 18px;border-radius:99px;cursor:pointer}
+.pill:hover{background:var(--cream);color:var(--oxblood)}
+.navlinks{display:none;gap:26px}
+.navlinks button{background:none;border:0;cursor:pointer;color:var(--dim);padding:6px 0}
+.navlinks button:hover{color:var(--cream)}
+@media (min-width:1020px){.navlinks{display:flex}}
+
+/* hero */
+.hero{position:relative;min-height:92svh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.hero-film{position:absolute;inset:0;z-index:-2}
+.hero-film video,.hero-film img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(120% 60% at 50% 105%,rgba(122,36,52,.55),transparent 60%),
+  linear-gradient(180deg,rgba(42,19,21,.55) 0%,rgba(42,19,21,.05) 30%,rgba(42,19,21,.35) 55%,rgba(42,19,21,.96) 100%)}
+.hero-text{padding-block:120px 56px;text-align:center;display:grid;gap:18px;justify-items:center}
+.names{font-family:var(--display);font-weight:400;font-size:clamp(52px,15vw,124px);line-height:.92;margin:0;letter-spacing:.1em;display:grid;justify-items:center;animation:settle 2.6s cubic-bezier(.2,.7,.2,1) both}
+.names .amp{font-family:var(--script);font-size:.62em;letter-spacing:0;color:var(--mauve);line-height:.9;margin:.06em 0 -.04em}
+@keyframes settle{from{letter-spacing:.24em;opacity:.55}to{letter-spacing:.1em;opacity:1}}
+.hero .when{font-family:var(--display);font-size:clamp(22px,6vw,30px);letter-spacing:.16em;white-space:nowrap}
+html[data-lang="ka"] .hero .when{font-family:"Noto Serif Georgian",serif;font-weight:300;letter-spacing:.04em;font-size:clamp(19px,5vw,24px)}
+.hero .where{color:var(--dim);line-height:1.9}
+.hero .where .caps{color:var(--cream)}
+.countdown{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--dim);margin-top:6px}
+.arch{display:none}
+@media (min-width:960px){
+  .hero{min-height:auto;align-items:center;background:var(--oxblood)}
+  .hero-film{display:none}
+  .hero::before{background:radial-gradient(60% 70% at 75% 50%,rgba(122,36,52,.35),transparent 70%)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:48px;padding-block:120px 80px}
+  .hero-text{text-align:left;justify-items:start;padding:0}
+  .names{justify-items:start}
+  .names .amp{margin-left:.4em}
+  .arch{display:block;justify-self:center;width:min(100%,430px);aspect-ratio:9/15;border-radius:999px 999px 6px 6px;overflow:hidden;position:relative;box-shadow:0 0 0 1px var(--line-dark),0 0 0 10px var(--oxblood),0 0 0 11px var(--line-dark),0 40px 90px rgba(0,0,0,.5)}
+  .arch video,.arch img{width:100%;height:100%;object-fit:cover}
+  .arch::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(42,19,21,.55));pointer-events:none}
+}
+
+/* letter: photo + invitation */
+.letter{display:grid;position:relative;isolation:isolate;background:var(--oxblood)}
+.letter-photo{margin:0;position:relative;height:min(118vw,620px);overflow:hidden}
+.letter-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.letter-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,19,21,.1) 40%,var(--oxblood) 100%)}
+.letter-body{display:grid;gap:22px;margin-top:-120px;position:relative;padding-block:0 84px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.letter-big{font-family:var(--display);font-size:clamp(38px,10vw,72px);line-height:1.02;letter-spacing:.02em;text-wrap:balance;max-width:11em}
+html[data-lang="ka"] .letter-big{font-family:"Noto Serif Georgian",serif;font-weight:300;font-size:clamp(28px,7vw,48px);line-height:1.2}
+.facts{margin:10px 0 0;display:grid;border-top:1px solid var(--line-dark)}
+.facts>div{display:grid;grid-template-columns:minmax(0,7.5em) 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line-dark);align-items:baseline}
+.facts dt{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mauve)}
+html[data-lang="ka"] .facts dt{text-transform:none;letter-spacing:0;font-size:15px}
+.facts dd{margin:0;font-size:var(--step-1);line-height:1.3}
+.facts small{display:block;color:var(--dim);font-size:15px;margin-top:2px}
+.sign{font-family:var(--script);font-size:clamp(36px,8vw,52px);color:var(--cream);line-height:1;margin-top:8px}
+.sign span{color:var(--mauve)}
+@media (min-width:900px){
+  .letter{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center}
+  .letter-photo{height:100%;min-height:760px}
+  .letter-photo::after{background:linear-gradient(90deg,transparent 60%,var(--oxblood) 100%)}
+  .letter-body{margin:0;padding:96px max(48px,env(safe-area-inset-right,0px)) 96px 64px;max-width:640px}
+}
+.dear{font-family:var(--script);font-size:clamp(40px,9vw,64px);line-height:1.1;color:var(--mauve)}
+html[data-lang="ka"] .dear{font-family:"Noto Serif Georgian",serif;font-weight:300;font-size:clamp(28px,6vw,40px);color:var(--mauve)}
+.welcome .lede{font-size:var(--step-1);line-height:1.55}
+.ornament{display:flex;align-items:center;gap:14px;color:var(--mauve);width:min(260px,70%)}
+.ornament::before,.ornament::after{content:"";flex:1;height:1px;background:currentColor;opacity:.6}
+.ornament span{width:7px;height:7px;transform:rotate(45deg);border:1px solid currentColor}
+
+/* film strip */
+.strip{padding-block:8px 80px}
+.strip-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-inline:max(20px,env(safe-area-inset-left,0px)) max(20px,env(safe-area-inset-right,0px));scrollbar-width:none}
+.strip-row::-webkit-scrollbar{display:none}
+.strip figure{margin:0;flex:0 0 auto;scroll-snap-align:center;height:min(62vh,440px);aspect-ratio:2/3;border-radius:3px;overflow:hidden;background:var(--wine)}
+.strip figure:nth-child(even){margin-top:36px}
+.strip img{width:100%;height:100%;object-fit:cover;filter:contrast(1.02)}
+.strip-hint{text-align:center;margin-top:18px;color:var(--dim);font-family:var(--mono);font-size:12px;letter-spacing:.14em}
+@media (min-width:1100px){.strip-row{justify-content:safe center}.strip figure{height:280px}.strip-hint{display:none}}
+
+/* paper band */
+.paper{background:var(--paper);color:var(--ink);position:relative}
+.paper .caps{color:var(--burgundy)}
+.paper .tbc{color:var(--burgundy)}
+.section{padding-block:88px}
+.section-head{display:grid;gap:14px;margin-bottom:44px}
+.section-head .script{font-size:clamp(30px,6vw,42px);line-height:1;color:var(--burgundy)}
+.dark .section-head .script{color:var(--mauve)}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));border:1px solid var(--line-paper);border-radius:4px;overflow:hidden;margin-bottom:40px;background:#EFE6D6}
+.cal div{padding:12px 4px 10px;text-align:center;border-left:1px solid var(--line-paper);display:grid;gap:2px;font-variant-numeric:tabular-nums}
+.cal div:first-child{border-left:0}
+.cal .d{font-family:var(--display);font-size:clamp(22px,5vw,34px);line-height:1}
+.cal .w{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+html[data-lang="ka"] .cal .w{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif}
+.cal .hosted{background:var(--burgundy);color:var(--cream)}
+.cal .hosted .w{color:var(--mauve)}
+.cal .out{background:#E2D3C0}
+.cal-key{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px;color:var(--ink-dim);margin:-26px 0 40px}
+.cal-key span{display:inline-flex;align-items:center;gap:8px}
+.cal-key i{width:12px;height:12px;border-radius:2px;display:inline-block;border:1px solid var(--line-paper)}
+
+.days{display:grid;gap:18px}
+@media (min-width:760px){.days{grid-template-columns:1fr 1fr}}
+.day{border-top:1px solid var(--ink);padding-top:18px;display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-content:start}
+.day .num{font-family:var(--display);font-size:64px;line-height:.85;grid-row:span 2}
+.day .wd{font-family:var(--script);font-size:30px;line-height:1;color:var(--burgundy)}
+html[data-lang="ka"] .day .wd{font-family:"Noto Serif Georgian",serif;font-size:20px;font-weight:500}
+.day .mo{font-size:14px;color:var(--ink-dim);letter-spacing:.14em;text-transform:uppercase}
+html[data-lang="ka"] .day .mo{text-transform:none;letter-spacing:0}
+.day ol{grid-column:1/-1;list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.day li{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:baseline}
+.day time{font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;color:var(--burgundy)}
+.day small{display:block;color:var(--ink-dim);font-size:.86em;font-style:italic}
+.stay{margin-top:44px;padding:22px 24px;border:1px solid var(--line-paper);border-radius:4px;display:grid;gap:6px;max-width:44em}
+.stay .script{font-size:28px;color:var(--burgundy);line-height:1.1}
+
+/* crowning */
+.dark{background:var(--oxblood);color:var(--cream)}
+.dark .caps{color:var(--mauve)}
+.crown-grid{display:grid;gap:44px}
+@media (min-width:900px){.crown-grid{grid-template-columns:.85fr 1.15fr;align-items:start}}
+.crown-img{position:relative;border-radius:999px 999px 4px 4px;overflow:hidden;aspect-ratio:3/4;max-width:min(300px,78vw);width:100%;justify-self:center}
+@media (min-width:900px){.crown-img{max-width:420px}}
+.crown-img img{width:100%;height:100%;object-fit:cover}
+@media (min-width:900px){.crown-img{position:sticky;top:96px}}
+.moments{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:0;counter-reset:m}
+.moments li{display:grid;grid-template-columns:40px minmax(0,9em) 1fr;gap:4px 14px;padding:12px 0;border-top:1px solid var(--line-dark);align-items:baseline}
+.moments li::before{counter-increment:m;content:counter(m,upper-roman);font-family:var(--display);font-size:20px;color:var(--mauve);line-height:1.1}
+.moments b{font-weight:400;font-size:var(--step-1);font-family:var(--display);letter-spacing:.04em}
+@media (max-width:520px){.moments li{grid-template-columns:34px 1fr}.moments p{grid-column:2}}
+html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-size:19px}
+.moments p{color:var(--dim)}
+.notes{display:grid;gap:14px;margin-top:40px}
+@media (min-width:640px){.notes{grid-template-columns:1fr 1fr}}
+.note{border:1px solid var(--line-dark);border-radius:4px;padding:20px 22px;display:grid;gap:8px;align-content:start}
+.note p{color:var(--dim);font-size:.95em}
+
+/* rsvp */
+.rsvp{background:var(--wine);overflow-x:clip}
+.rsvp-grid{display:grid;gap:40px;align-items:start}
+@media (min-width:940px){.rsvp-grid{grid-template-columns:400px 1fr}}
+.pass{position:relative;background:var(--cream);color:var(--ink);border-radius:14px;padding:0 0 18px;max-width:400px;width:100%;justify-self:center;box-shadow:0 30px 60px rgba(0,0,0,.35);transform:rotate(-2deg);
+  -webkit-mask:radial-gradient(circle 9px at 0 62%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 62%,transparent 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 9px at 0 62%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 62%,transparent 98%,#000) right/51% 100% no-repeat}
+@media (min-width:940px){.pass{position:sticky;top:100px}}
+.pass-top{background:var(--burgundy);color:var(--cream);border-radius:14px 14px 0 0;padding:26px 24px 20px;display:grid;gap:4px;position:relative}
+.pass-top::before{content:"";position:absolute;top:12px;left:50%;width:34px;height:8px;margin-left:-17px;border-radius:9px;background:var(--wine)}
+.pass-top .k{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--mauve)}
+.pass-top .t{font-family:var(--display);font-size:46px;letter-spacing:.16em;line-height:1}
+.pass-body{padding:20px 24px 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;font-family:var(--mono);font-size:13px}
+.pass-body .f{display:grid;gap:2px}
+.pass-body .f.wide{grid-column:1/-1}
+.pass-body label,.pass-body .l{font-size:10px;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
+.pass-body .v{font-size:15px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
+.pass-body .holder{font-family:var(--script);font-weight:400;font-size:30px;letter-spacing:0;line-height:1.1}
+.perf{grid-column:1/-1;border-top:2px dotted var(--line-paper);margin:6px -24px 0}
+.barcode{grid-column:1/-1;height:52px;display:block;width:100%}
+.stamp{position:absolute;right:30px;top:118px;width:112px;height:112px;border-radius:50%;border:2.5px solid var(--burgundy);color:var(--burgundy);display:grid;place-items:center;text-align:center;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.14em;transform:rotate(-14deg);opacity:0;scale:1.6;transition:opacity .35s,scale .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none;box-shadow:inset 0 0 0 5px var(--cream),inset 0 0 0 6.5px var(--burgundy)}
+.stamp.on{opacity:.9;scale:1}
+.stamp span{display:block;font-size:10px;letter-spacing:.2em;font-weight:400;margin-top:2px}
+
+.form{background:var(--cream);color:var(--ink);border-radius:6px;padding:clamp(22px,4vw,40px);display:grid;gap:26px}
+.form .deadline{font-style:italic;color:var(--ink-dim)}
+.field{display:grid;gap:8px;min-width:0}
+.field>label,.field>.lbl{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--burgundy);font-weight:500}
+html[data-lang="ka"] .field>label,html[data-lang="ka"] .field>.lbl{text-transform:none;letter-spacing:.02em;font-size:15px}
+.form input[type=text],.form input[type=number],.form select,.form textarea{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line-paper);padding:8px 2px;font-size:18px;color:var(--ink);border-radius:0;color-scheme:light}
+.form textarea{border:1px solid var(--line-paper);border-radius:4px;padding:10px 12px;min-height:96px;resize:vertical}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--burgundy)}
+.choice{display:flex;flex-wrap:wrap;gap:10px}
+.choice label{position:relative;cursor:pointer}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label>span{display:inline-block;padding:10px 18px;border:1px solid var(--line-paper);border-radius:99px;font-size:16px;transition:background .2s,color .2s,border-color .2s}
+.choice input:checked+span{background:var(--burgundy);border-color:var(--burgundy);color:var(--cream)}
+.choice input:focus-visible+span{outline:1.5px solid var(--burgundy);outline-offset:3px}
+.two{display:grid;gap:26px}
+@media (min-width:620px){.two{grid-template-columns:1fr 1fr}}
+.check{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.check input{accent-color:var(--burgundy);width:18px;height:18px;margin-top:4px;flex:none}
+.ifyes{display:grid;gap:26px}
+.submit{justify-self:start;background:var(--burgundy);color:var(--cream);border:0;padding:15px 34px;border-radius:99px;font-size:16px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+html[data-lang="ka"] .submit{text-transform:none;letter-spacing:.02em}
+.submit:hover{background:#651C2A}
+.form-msg{font-size:16px}
+.form-msg.err{color:var(--burgundy)}
+.done{display:grid;gap:10px;text-align:center;padding:24px 0}
+.done .script{font-size:44px;color:var(--burgundy);line-height:1.1}
+.done .again{justify-self:center;background:none;border:0;text-decoration:underline;color:var(--ink-dim);cursor:pointer}
+.preview-note{font-family:var(--mono);font-size:12px;color:var(--ink-dim);border-top:1px dashed var(--line-paper);padding-top:12px}
+
+/* travel */
+.travel-grid{display:grid;gap:44px}
+@media (min-width:880px){.travel-grid{grid-template-columns:1.15fr 1fr 1fr}}
+.tcol{display:grid;gap:16px;align-content:start;min-width:0}
+.tcol h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.1;letter-spacing:.03em}
+html[data-lang="ka"] .tcol h3{font-family:"Noto Serif Georgian",serif;font-size:22px;font-weight:400}
+.tcol>p{color:var(--ink-dim);font-size:.95em}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-paper)}
+.list li{padding:12px 0;border-bottom:1px solid var(--line-paper);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.list a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.list a:hover{border-color:var(--burgundy)}
+.list .via{color:var(--ink-dim);font-size:.9em}
+.fav{font-family:var(--script);font-size:22px;color:var(--burgundy);white-space:nowrap;line-height:1}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--burgundy);white-space:nowrap;text-transform:uppercase}
+html[data-lang="ka"] .tag{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif;font-size:12px}
+.meals{display:grid;gap:12px}
+.meal{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-paper);padding:10px 0}
+.meal .script{font-size:28px;color:var(--burgundy);line-height:1}
+html[data-lang="ka"] .meal .script{font-family:"Noto Serif Georgian",serif;font-size:18px}
+.route{margin-top:56px;display:grid;gap:12px;padding:24px;border:1px solid var(--line-paper);border-radius:4px;background:#EFE6D6}
+.route-line{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:14px;flex-wrap:wrap}
+.route-line i{flex:1;min-width:30px;border-top:1px dashed var(--ink-dim)}
+
+/* dress */
+.dress-grid{display:grid;gap:14px}
+@media (min-width:760px){.dress-grid{grid-template-columns:1fr 1fr}}
+.dress{border:1px solid var(--line-dark);border-radius:4px;padding:26px;display:grid;gap:10px;align-content:start}
+.dress h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0;letter-spacing:.04em}
+html[data-lang="ka"] .dress h3{font-family:"Noto Serif Georgian",serif;font-size:22px}
+.dress p{color:var(--dim)}
+
+footer{padding-block:80px calc(60px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--line-dark)}
+footer .wrap{display:grid;gap:14px;justify-items:center}
+footer .names-s{font-family:var(--display);font-size:clamp(30px,7vw,48px);letter-spacing:.12em}
+footer .names-s .script{color:var(--mauve);margin:0 .12em}
+footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="wrap">
+    <button class="mono" data-go="top" aria-label="Back to top">M<span class="script">&amp;</span>G</button>
+    <nav class="navlinks" aria-label="Sections">
+      <button data-go="weekend"><span class="en">The Weekend</span><span class="ka">პროგრამა</span></button>
+      <button data-go="crowning"><span class="en">The Crowning</span><span class="ka">ჯვრისწერა</span></button>
+      <button data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
+      <button data-go="dress"><span class="en">Dress Code</span><span class="ka">ჩაცმა</span></button>
+    </nav>
+    <div class="bar-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="ka" aria-pressed="false">ქარ</button>
+      </div>
+      <button class="pill" data-go="rsvp"><span class="en">RSVP</span><span class="ka">პასუხი</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Mari and Graftan">
+    <div class="hero-film" aria-hidden="true">
+      <video id="filmMobile" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="media/sameba-poster.jpg">
+        <source src="media/sameba.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <h1 class="names">Mari<span class="amp">&amp;</span>Graftan</h1>
+        <p class="when"><span class="en">11 March 2027</span><span class="ka">11 მარტი, 2027</span></p>
+        <p class="where"><span class="caps"><span class="en">Gergeti Trinity Church · Georgia</span><span class="ka">გერგეტის წმინდა სამება · საქართველო</span></span><br><span class="en">Caucasus Mountains</span><span class="ka">კავკასიონის მთები</span></p>
+        <p class="countdown" id="countdown"></p>
+      </div>
+      <div class="arch" aria-hidden="true">
+        <video id="filmDesk" muted loop playsinline preload="none" poster="media/sameba-poster.jpg">
+          <source src="media/sameba.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="letter" aria-label="Welcome">
+    <figure class="letter-photo"><img src="media/img_7646.jpg" alt="Mari and Graftan kissing in the snow, Graftan in a ski helmet"></figure>
+    <div class="letter-body">
+      <p class="dear" id="dear"><span class="en">Dear friends,</span><span class="ka">ძვირფასო მეგობრებო,</span></p>
+      <p class="letter-big en">Come up to the mountains with&nbsp;us.</p>
+      <p class="letter-big ka">ამოდით ჩვენთან ერთად მთაში.</p>
+      <dl class="facts">
+        <div><dt><span class="en">Church ceremony</span><span class="ka">ჯვრისწერა</span></dt><dd><span class="en">Thursday, 11 March · 12:30</span><span class="ka">ხუთშაბათი, 11 მარტი · 12:30</span><small><span class="en">Gergeti Trinity Church</span><span class="ka">გერგეტის წმინდა სამება</span></small></dd></div>
+        <div><dt><span class="en">The evening</span><span class="ka">საღამო</span></dt><dd><span class="en">From 16:30</span><span class="ka">16:30-დან</span><small>Gudauri Lodge</small></dd></div>
+        <div><dt><span class="en">The slopes</span><span class="ka">სრიალი</span></dt><dd><span class="en">10 – 12 March, and longer</span><span class="ka">10 – 12 მარტი და მეტიც</span><small><span class="en">Gudauri</span><span class="ka">გუდაური</span></small></dd></div>
+      </dl>
+      <p class="sign">Mari <span>&amp;</span> Graftan</p>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="Photographs">
+    <div class="strip-row">
+      <figure><img src="media/tezza-9645.jpg" alt="Graftan kissing Mari's forehead" loading="lazy"></figure>
+      <figure><img src="media/tezza-3486.jpg" alt="Mari twirling her dress beside Graftan holding champagne" loading="lazy"></figure>
+      <figure><img src="media/tezza-6168.jpg" alt="Mari and Graftan kissing" loading="lazy"></figure>
+      <figure><img src="media/tezza-3860.jpg" alt="Their hands and the engagement ring" loading="lazy"></figure>
+      <figure><img src="media/tezza-3256.jpg" alt="Graftan dipping Mari" loading="lazy"></figure>
+      <figure><img src="media/tezza-6794.jpg" alt="Dancing under an arch by the sea" loading="lazy"></figure>
+    </div>
+    <p class="strip-hint"><span class="en">SWIPE</span><span class="ka">გადაფურცლეთ</span> →</p>
+  </section>
+
+  <section class="paper section" id="weekend">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">10 – 13 March 2027</span><span class="ka">10 – 13 მარტი, 2027</span></p>
+        <h2><span class="en">The Weekend</span><span class="ka">პროგრამა</span></h2>
+      </div>
+
+      <div class="cal" aria-label="March 2027">
+        <div class="out"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">8</span></div>
+        <div class="out"><span class="w" data-en="Tue" data-ka="სამ"></span><span class="d">9</span></div>
+        <div class="hosted"><span class="w" data-en="Wed" data-ka="ოთხ"></span><span class="d">10</span></div>
+        <div class="hosted"><span class="w" data-en="Thu" data-ka="ხუთ"></span><span class="d">11</span></div>
+        <div class="hosted"><span class="w" data-en="Fri" data-ka="პარ"></span><span class="d">12</span></div>
+        <div class="out"><span class="w" data-en="Sat" data-ka="შაბ"></span><span class="d">13</span></div>
+        <div class="out"><span class="w" data-en="Sun" data-ka="კვი"></span><span class="d">14</span></div>
+        <div class="out"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">15</span></div>
+      </div>
+      <div class="cal-key">
+        <span><i style="background:var(--burgundy);border-color:var(--burgundy)"></i><span class="en">Hosted celebrations</span><span class="ka">ზეიმის დღეები</span></span>
+        <span><i style="background:#E2D3C0"></i><span class="en">We're in Gudauri, 8–15 March</span><span class="ka">გუდაურში ვართ 8–15 მარტს</span></span>
+      </div>
+
+      <div class="days">
+        <article class="day">
+          <span class="num">10</span>
+          <span class="wd"><span class="en">Wednesday</span><span class="ka">ოთხშაბათი</span></span>
+          <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
+          <ol>
+            <li><time>09:30</time><span><span class="en">Transfer from the Telegraph Hotel, Tbilisi, to Gudauri</span><span class="ka">ტრანსფერი თბილისიდან, სასტუმრო „ტელეგრაფიდან“ გუდაურში</span></span></li>
+            <li><time>12:00</time><span><span class="en">Arrival at Gudauri Lodge</span><span class="ka">ჩასვლა სასტუმრო „გუდაური ლოჯში“</span></span></li>
+            <li><time>16:00</time><span><span class="en">Helicopter tour over the Caucasus</span><span class="ka">ვერტმფრენით ფრენა კავკასიონზე</span><small><span class="en">Weather permitting</span><span class="ka">თუ ამინდი ხელს შეუწყობს</span></small></span></li>
+          </ol>
+        </article>
+        <article class="day">
+          <span class="num">11</span>
+          <span class="wd"><span class="en">Thursday</span><span class="ka">ხუთშაბათი</span></span>
+          <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
+          <ol>
+            <li><time>10:00</time><span><span class="en">Transfer from Gudauri Lodge to Gergeti Trinity Church</span><span class="ka">ტრანსფერი „გუდაური ლოჯიდან“ გერგეტის სამებამდე</span></span></li>
+            <li><time>12:30</time><span><span class="en">The Mystery of Crowning</span><span class="ka">ჯვრისწერა</span><small><span class="en">Church ceremony</span><span class="ka">ქორწინების საიდუმლო</span></small></span></li>
+            <li><time>14:30</time><span><span class="en">Departure from Gergeti</span><span class="ka">გამგზავრება გერგეტიდან</span></span></li>
+            <li><time>16:30</time><span><span class="en">Aperitif &amp; canapés</span><span class="ka">აპერიტივი და კანაპეები</span><small><span class="en">Gudauri Lodge, level −1</span><span class="ka">„გუდაური ლოჯი“, −1 სართული</span></small></span></li>
+            <li><time>18:30</time><span><span class="en">The evening begins</span><span class="ka">საღამო იწყება</span></span></li>
+          </ol>
+        </article>
+        <article class="day">
+          <span class="num">12</span>
+          <span class="wd"><span class="en">Friday</span><span class="ka">პარასკევი</span></span>
+          <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
+          <ol>
+            <li><time>11:00</time><span><span class="en">Après-ski brunch</span><span class="ka">აპრე-სკი ბრანჩი</span></span></li>
+            <li><time>14:30</time><span><span class="en">Skiing</span><span class="ka">თხილამურებით სრიალი</span></span></li>
+          </ol>
+        </article>
+        <article class="day">
+          <span class="num">13</span>
+          <span class="wd"><span class="en">Saturday</span><span class="ka">შაბათი</span></span>
+          <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
+          <ol>
+            <li><time>12:00</time><span><span class="en">Check-out</span><span class="ka">სასტუმროდან გაწერა</span></span></li>
+            <li><time>—</time><span><span class="en">Departures</span><span class="ka">გამგზავრება</span><small><span class="en">Cars can be arranged on request</span><span class="ka">მანქანას მოთხოვნისამებრ მოგიწყობთ</span></small></span></li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="stay">
+        <p class="script"><span class="en">Stay a little longer</span><span class="ka ka-small" style="font-family:'Noto Serif Georgian',serif;font-size:20px">დარჩით ცოტა მეტხანს</span></p>
+        <p class="en">We will be in Gudauri from the 8th through the 15th of March, and you are more than welcome to join us for more skiing. Our hosted festivities take place from the 10th through the 12th, with accommodation through the morning of the 13th.</p>
+        <p class="ka">გუდაურში 8-დან 15 მარტამდე ვიქნებით და სიამოვნებით შემოგვიერთდით სასრიალოდ. ჩვენი ზეიმი 10–12 მარტს გაიმართება, ბინადრობა კი 13 მარტის დილამდეა უზრუნველყოფილი.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark section" id="crowning">
+    <div class="wrap crown-grid">
+      <figure class="crown-img" style="margin:0"><img src="media/gergeti-light.jpg" alt="Gergeti Trinity Church silhouetted on its hill below the mountains" loading="lazy"></figure>
+      <div>
+        <div class="section-head" style="margin-bottom:22px">
+          <p class="caps"><span class="en">Gergeti Trinity Church · 12:30</span><span class="ka">გერგეტის წმინდა სამება · 12:30</span></p>
+          <h2><span class="en">The Crowning</span><span class="ka">ჯვრისწერა</span></h2>
+          <p class="script" style="font-family:'Noto Serif Georgian',serif;font-size:26px;font-weight:300"><span class="en">ჯვრისწერა</span></p>
+        </div>
+        <p class="lede en">The Georgian Orthodox sacrament of marriage. There are no spoken vows; the service is sung in Georgian, and you only need to watch for five moments.</p>
+        <p class="lede ka">გვიხარია, რომ ამ დღეს ჩვენთან ერთად იქნებით.</p>
+        <ol class="moments">
+          <li><b><span class="en">Candles</span><span class="ka">სანთლები</span></b><p><span class="en">The light of faith</span><span class="ka">რწმენის სინათლე</span></p></li>
+          <li><b><span class="en">Rings</span><span class="ka">ბეჭდები</span></b><p><span class="en">Blessed and exchanged three times</span><span class="ka">კურთხევა და სამგზის გაცვლა</span></p></li>
+          <li><b><span class="en">Crowns</span><span class="ka">გვირგვინები</span></b><p><span class="en">The heart of the service</span><span class="ka">საიდუმლოს გული</span></p></li>
+          <li><b><span class="en">The common cup</span><span class="ka">საერთო სასმისი</span></b><p><span class="en">Every joy and sorrow, shared</span><span class="ka">სიხარულიც და სიძნელეც ერთად</span></p></li>
+          <li><b><span class="en">Three circles</span><span class="ka">სამგზის შემოვლა</span></b><p><span class="en">Our first steps as husband and wife</span><span class="ka">პირველი ნაბიჯები ცოლ-ქმრად</span></p></li>
+        </ol>
+        <div class="note" style="margin-top:32px">
+          <p class="caps"><span class="en">Before you come</span><span class="ka">სანამ მოხვალთ</span></p>
+          <p class="en">Gergeti sits at 2,170 m, so expect snow: wear a warm coat and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, about <span class="tbc">length TBC</span>.</p>
+          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით თბილად, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rsvp section" id="rsvp">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">Kindly reply by 15 January 2027</span><span class="ka">გთხოვთ, გვიპასუხოთ 15 იანვრამდე</span></p>
+        <h2><span class="en">Your Lift Pass</span><span class="ka">თქვენი საშვი</span></h2>
+      </div>
+      <div class="rsvp-grid">
+        <div class="pass" aria-label="Lift pass">
+          <div class="pass-top">
+            <span class="k">LIFT PASS · ADULT</span>
+            <span class="t">GUDAURI</span>
+            <span class="k" style="letter-spacing:.14em">MARI &amp; GRAFTAN</span>
+          </div>
+          <div class="pass-body">
+            <div class="f wide"><span class="l">Pass holder</span><span class="v holder" id="passName">Our guest</span></div>
+            <div class="f"><span class="l">Valid</span><span class="v">10–12 III 2027</span></div>
+            <div class="f"><span class="l">Zone</span><span class="v">Gergeti · Gudauri</span></div>
+            <div class="perf"></div>
+            <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="f wide" style="text-align:center"><span class="l" id="passNo">No. 1103-2027</span></div>
+          </div>
+          <div class="stamp" id="stamp" aria-hidden="true"><div>CONFIRMED<span>11 · III · 27</span></div></div>
+        </div>
+
+        <form class="form" id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="f-name"><span class="en">Your name(s)</span><span class="ka">სახელი და გვარი</span></label>
+            <input type="text" id="f-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <span class="lbl" id="att-l"><span class="en">Will you join us?</span><span class="ka">შეძლებთ მობრძანებას?</span></span>
+            <div class="choice" role="radiogroup" aria-labelledby="att-l">
+              <label><input type="radio" name="attending" value="yes" id="f-yes"><span><span class="en">Joyfully accepts</span><span class="ka">სიამოვნებით მოვალ</span></span></label>
+              <label><input type="radio" name="attending" value="no" id="f-no"><span><span class="en">Regretfully declines</span><span class="ka">სამწუხაროდ, ვერ მოვალ</span></span></label>
+            </div>
+          </div>
+          <div class="ifyes" id="ifyes" hidden>
+            <div class="two">
+              <div class="field">
+                <label for="f-party"><span class="en">Guests in your party</span><span class="ka">რამდენი სტუმარი იქნებით</span></label>
+                <input type="number" id="f-party" name="party" min="1" max="6" value="1" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label for="f-arrive"><span class="en">Getting to Gudauri</span><span class="ka">გუდაურში ჩასვლა</span></label>
+                <select id="f-arrive" name="arrival">
+                  <option value="group-transfer" data-en="Group transfer, 10 March, 09:30" data-ka="საერთო ტრანსფერით, 10 მარტი, 09:30"></option>
+                  <option value="own-10" data-en="On my own, 10 March" data-ka="დამოუკიდებლად, 10 მარტს"></option>
+                  <option value="early" data-en="Earlier, 8 or 9 March" data-ka="უფრო ადრე, 8 ან 9 მარტს"></option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-leave"><span class="en">Leaving Gudauri</span><span class="ka">გუდაურიდან წასვლა</span></label>
+                <select id="f-leave" name="departure">
+                  <option value="13" data-en="13 March, after check-out" data-ka="13 მარტს, გაწერის შემდეგ"></option>
+                  <option value="14" data-en="14 March, staying to ski" data-ka="14 მარტს, ვრჩები სასრიალოდ"></option>
+                  <option value="15" data-en="15 March, staying to ski" data-ka="15 მარტს, ვრჩები სასრიალოდ"></option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-ski"><span class="en">On the slopes</span><span class="ka">თხილამურები</span></label>
+                <select id="f-ski" name="ski">
+                  <option value="none" data-en="I won't be skiing" data-ka="არ ვისრიალებ"></option>
+                  <option value="beginner" data-en="Beginner" data-ka="დამწყები"></option>
+                  <option value="intermediate" data-en="Intermediate" data-ka="საშუალო"></option>
+                  <option value="advanced" data-en="Advanced" data-ka="გამოცდილი"></option>
+                </select>
+              </div>
+            </div>
+            <label class="check" for="f-rental"><input type="checkbox" id="f-rental" name="rental"><span><span class="en">I'll need rental skis or a snowboard</span><span class="ka">დამჭირდება თხილამურების ან სნოუბორდის ქირაობა</span></span></label>
+            <label class="check" for="f-car"><input type="checkbox" id="f-car" name="car"><span><span class="en">Please arrange a car for my departure</span><span class="ka">გთხოვთ, წასვლისას მანქანა მომიწყოთ</span></span></label>
+            <div class="field">
+              <label for="f-diet"><span class="en">Dietary requirements</span><span class="ka">კვების შეზღუდვები</span></label>
+              <input type="text" id="f-diet" name="dietary">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-note"><span class="en">A note for us</span><span class="ka">მოგვწერეთ</span></label>
+            <textarea id="f-note" name="note"></textarea>
+          </div>
+          <p class="form-msg err" id="formErr" role="alert" hidden></p>
+          <button class="submit" type="submit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
+          <p class="preview-note" id="previewNote" hidden>Preview: replies start saving once the site is live on marigraftan.com.</p>
+        </form>
+        <div class="form" id="rsvpDone" hidden>
+          <div class="done">
+            <p class="script" id="doneTitle"></p>
+            <p id="doneText"></p>
+            <button class="again" type="button" id="again"><span class="en">Change my reply</span><span class="ka">პასუხის შეცვლა</span></button>
+          </div>
+          <p class="preview-note" id="previewNote2" hidden>Preview: this reply was not saved. Replies start saving once the site is live on marigraftan.com.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper section" id="travel">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">Getting here</span><span class="ka">როგორ ჩამოხვიდეთ</span></p>
+        <h2><span class="en">Travel</span><span class="ka">მგზავრობა</span></h2>
+      </div>
+      <div class="travel-grid">
+        <div class="tcol">
+          <h3><span class="en">Flying to Tbilisi</span><span class="ka">ფრენა თბილისში</span></h3>
+          <p class="en">There are no nonstop flights from the US to Tbilisi, so you'll connect at least once. Several of these routes don't fly daily, so choose the one that fits your dates.</p>
+          <p class="ka">საზღვარგარეთიდან მომავალ სტუმრებს: აშშ-დან პირდაპირი რეისი არ არის, საჭიროა მინიმუმ ერთი გადაჯდომა. ზოგი რეისი ყოველდღე არ დაფრინავს.</p>
+          <ul class="list">
+            <li><span>British Airways <span class="via">· London Heathrow</span></span><span class="fav"><span class="en">Mari's favourite</span><span class="ka tag">მარის რჩეული</span></span></li>
+            <li><span>Air France <span class="via">· Paris CDG</span></span><span class="fav"><span class="en">Mari's favourite</span><span class="ka tag">მარის რჩეული</span></span></li>
+            <li><span>KLM <span class="via">· Amsterdam</span></span><span class="tag"><span class="en">Last leg Georgian Airways</span><span class="ka">ბოლო მონაკვეთი: Georgian Airways</span></span></li>
+            <li><span>Lufthansa <span class="via">· Munich</span></span></li>
+            <li><span>Austrian Airlines <span class="via">· Vienna</span></span></li>
+            <li><span>Emirates <span class="via">· Dubai</span></span></li>
+            <li><span>Turkish Airlines <span class="via">· Istanbul</span></span></li>
+          </ul>
+        </div>
+        <div class="tcol">
+          <h3><span class="en">Where to stay in Tbilisi</span><span class="ka">სად დარჩეთ თბილისში</span></h3>
+          <ul class="list">
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Telegraph+Hotel+Tbilisi" target="_blank" rel="noopener">Telegraph Hotel</a><span class="tag"><span class="en">Transfer departs here</span><span class="ka">ტრანსფერი აქედან</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Stamba+Hotel+Tbilisi" target="_blank" rel="noopener">Stamba Hotel</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Paragraph+Freedom+Square+Tbilisi" target="_blank" rel="noopener">Paragraph Freedom Square</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Rooms+Hotel+Tbilisi" target="_blank" rel="noopener">Rooms Hotel Tbilisi</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Artizan+Hotel+Tbilisi" target="_blank" rel="noopener">Artizan Hotel</a></li>
+          </ul>
+        </div>
+        <div class="tcol">
+          <h3><span class="en">Where to eat</span><span class="ka">სად ვჭამოთ</span></h3>
+          <div class="meals">
+            <div class="meal"><span class="script"><span class="en">Breakfast</span><span class="ka">საუზმე</span></span><span class="tbc">TBC</span></div>
+            <div class="meal"><span class="script"><span class="en">Lunch</span><span class="ka">სადილი</span></span><span class="tbc">TBC</span></div>
+            <div class="meal"><span class="script"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span><span class="tbc">TBC</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="route">
+        <p class="caps"><span class="en">Tbilisi to Gudauri</span><span class="ka">თბილისიდან გუდაურამდე</span></p>
+        <div class="route-line"><span>TELEGRAPH HOTEL · 09:30</span><i></i><span>GUDAURI LODGE · 12:00</span></div>
+        <p class="en" style="color:var(--ink-dim)">A group transfer leaves Tbilisi on Wednesday, 10 March, and arrives in Gudauri around midday. Let us know in your reply if you'll join it.</p>
+        <p class="ka" style="color:var(--ink-dim)">საერთო ტრანსფერი თბილისიდან ოთხშაბათს, 10 მარტს გავა. გთხოვთ, პასუხში მიუთითოთ, შემოგვიერთდებით თუ არა.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark section" id="dress">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">What to wear</span><span class="ka">რა ჩავიცვათ</span></p>
+        <h2><span class="en">Dress Code</span><span class="ka">ჩაცმის სტილი</span></h2>
+      </div>
+      <div class="dress-grid">
+        <div class="dress">
+          <p class="caps"><span class="en">Thursday · Day</span><span class="ka">ხუთშაბათი · დღე</span></p>
+          <h3><span class="en">The Crowning</span><span class="ka">ჯვრისწერა</span></h3>
+          <p class="en">Warm and modest. Covered shoulders and a head scarf for women, long trousers for men, a proper coat and boots for the snow.</p>
+          <p class="ka">თბილად და თავშეკავებულად. ქალბატონებს თავსაფარი, ყველას თბილი პალტო და თოვლისთვის შესაფერისი ფეხსაცმელი.</p>
+        </div>
+        <div class="dress">
+          <p class="caps"><span class="en">Thursday · Evening</span><span class="ka">ხუთშაბათი · საღამო</span></p>
+          <h3><span class="en">The Celebration</span><span class="ka">ზეიმი</span></h3>
+          <p><span class="tbc">Dress code TBC</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+  <input name="bot-field"><input name="guest"><input name="name"><input name="attending"><input name="party"><input name="arrival"><input name="departure"><input name="ski"><input name="rental"><input name="car"><input name="dietary"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
+</form>
+
+<footer>
+  <div class="wrap">
+    <p class="names-s">MARI<span class="script">&amp;</span>GRAFTAN</p>
+    <p class="caps" style="color:var(--mauve)"><span class="en">11 March 2027</span><span class="ka">11 მარტი, 2027</span></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- Configuration ---------- */
+  // Replies are saved by Netlify Forms on the live site (marigraftan.com). Anywhere else the form runs in preview mode.
+  var LIVE = /(^|\.)marigraftan\.com$|\.netlify\.app$/.test(location.hostname);
+  // Personal invitations: code -> guest. Each printed QR code opens marigraftan.com/?g=<code>.
+  var GUESTS = {
+    "mari": {name:"Mari", dear:{en:"Dear Mari,", ka:"ძვირფასო მარი,"}, lang:"en"}
+  };
+
+  var root = document.documentElement;
+
+  /* ---------- Guest ---------- */
+  function guestCode(){
+    var q = "";
+    try { q = new URLSearchParams(location.search).get("g") || ""; } catch(e){}
+    if(!q){ var m = (location.hash||"").match(/^#for-([a-z0-9-]+)$/i); if(m) q = m[1]; }
+    return q.toLowerCase();
+  }
+  var code = guestCode();
+  var guest = GUESTS[code] || null;
+
+  /* ---------- Language ---------- */
+  function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function read(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function setLang(l){
+    root.setAttribute("data-lang", l);
+    root.setAttribute("lang", l);
+    document.querySelectorAll("[data-lang-btn]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang-btn")===l)); });
+    document.querySelectorAll("[data-en]").forEach(function(el){ el.textContent = el.getAttribute("data-"+l); });
+    renderDear(); renderCountdown(); renderDone();
+  }
+  document.querySelectorAll("[data-lang-btn]").forEach(function(b){
+    b.addEventListener("click", function(){ var l=b.getAttribute("data-lang-btn"); store("mg-lang",l); setLang(l); });
+  });
+
+  /* ---------- Greeting ---------- */
+  function renderDear(){
+    if(!guest) return;
+    var l = root.getAttribute("data-lang");
+    document.getElementById("dear").textContent = guest.dear[l] || guest.dear.en;
+  }
+  if(guest){
+    document.getElementById("passName").textContent = guest.name;
+    document.getElementById("f-name").value = guest.name;
+  }
+
+  /* ---------- Countdown ---------- */
+  function renderCountdown(){
+    var target = Date.UTC(2027,2,11,8,30); // 12:30 Tbilisi (UTC+4)
+    var days = Math.ceil((target - Date.now())/86400000);
+    var el = document.getElementById("countdown");
+    var l = root.getAttribute("data-lang");
+    if(days > 1) el.textContent = l==="ka" ? days+" დღე დარჩა" : days+" days to go";
+    else if(days === 1) el.textContent = l==="ka" ? "ხვალ" : "Tomorrow";
+    else el.textContent = "";
+  }
+
+  /* ---------- Barcode ---------- */
+  (function(){
+    var seed = 0, s = (guest ? guest.name : "Mari & Graftan") + "1103";
+    for(var i=0;i<s.length;i++) seed = (seed*31 + s.charCodeAt(i)) >>> 0;
+    function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+    var x = 4, out = "";
+    while(x < 296){ var w = rnd()<.35 ? 3 : (rnd()<.5 ? 1.2 : 2); out += '<rect x="'+x.toFixed(1)+'" y="0" width="'+w+'" height="52" fill="#2B1A18"/>'; x += w + (rnd()<.5 ? 1.6 : 3.2); }
+    document.getElementById("barcode").innerHTML = out;
+    document.getElementById("passNo").textContent = "No. " + (1000 + seed % 9000) + "-0311";
+  })();
+
+  /* ---------- Header + nav ---------- */
+  var bar = document.getElementById("bar");
+  function onScroll(){ bar.classList.toggle("solid", window.scrollY > 40); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+  document.querySelectorAll("[data-go]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = b.getAttribute("data-go");
+      if(id === "top"){ window.scrollTo({top:0, behavior:"smooth"}); return; }
+      var t = document.getElementById(id); if(!t) return;
+      window.scrollTo({top: t.getBoundingClientRect().top + window.scrollY - 60, behavior:"smooth"});
+    });
+  });
+
+  /* ---------- Film ---------- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var desk = window.matchMedia("(min-width: 960px)");
+  function playFilm(){
+    var on = document.getElementById(desk.matches ? "filmDesk" : "filmMobile");
+    var off = document.getElementById(desk.matches ? "filmMobile" : "filmDesk");
+    try{ off.pause(); }catch(e){}
+    if(reduce) return;
+    on.preload = "auto"; on.muted = true; on.defaultMuted = true;
+    var p = on.play(); if(p && p.catch) p.catch(function(){
+      // Some phones (e.g. Low Power Mode) block autoplay; start on the first touch instead.
+      var go = function(){ on.play().catch(function(){}); window.removeEventListener("touchstart", go); window.removeEventListener("click", go); };
+      window.addEventListener("touchstart", go, {passive:true}); window.addEventListener("click", go);
+    });
+  }
+  if(desk.addEventListener) desk.addEventListener("change", playFilm);
+  playFilm();
+
+  /* ---------- RSVP ---------- */
+  var form = document.getElementById("rsvpForm");
+  var done = document.getElementById("rsvpDone");
+  var ifyes = document.getElementById("ifyes");
+  var stamp = document.getElementById("stamp");
+  var lastReply = null;
+  form.querySelectorAll('input[name="attending"]').forEach(function(r){
+    r.addEventListener("change", function(){ ifyes.hidden = form.elements.attending.value !== "yes"; });
+  });
+  document.getElementById("f-name").addEventListener("input", function(e){
+    document.getElementById("passName").textContent = e.target.value.trim() || (guest ? guest.name : "Our guest");
+  });
+  function renderDone(){
+    if(!lastReply) return;
+    var l = root.getAttribute("data-lang"), yes = lastReply.attending === "yes";
+    document.getElementById("doneTitle").textContent = yes ? (l==="ka" ? "მთაში შევხვდებით" : "See you in the mountains") : (l==="ka" ? "მოგვენატრებით" : "We'll miss you");
+    document.getElementById("doneText").textContent = yes
+      ? (l==="ka" ? "მადლობა, "+lastReply.name+". თქვენი პასუხი მიღებულია." : "Thank you, "+lastReply.name+". Your reply is in.")
+      : (l==="ka" ? "მადლობა, რომ შეგვატყობინეთ, "+lastReply.name+"." : "Thank you for letting us know, "+lastReply.name+".");
+    stamp.querySelector("div").firstChild.nodeValue = yes ? "CONFIRMED" : "WITH LOVE";
+  }
+  function showDone(reply, saved){
+    lastReply = reply; renderDone();
+    form.hidden = true; done.hidden = false;
+    document.getElementById("previewNote2").hidden = saved;
+    stamp.classList.toggle("on", true);
+  }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var l = root.getAttribute("data-lang"), err = document.getElementById("formErr");
+    var name = document.getElementById("f-name").value.trim(), att = form.elements.attending.value;
+    if(!name || !att){
+      err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ სახელი და აირჩიოთ, შეძლებთ თუ არა მობრძანებას." : "Please add your name and choose whether you can join us.";
+      err.hidden = false; return;
+    }
+    err.hidden = true;
+    var reply = {
+      guest: code || "", name: name, attending: att,
+      party: att==="yes" ? Number(form.elements.party.value||1) : 0,
+      arrival: att==="yes" ? form.elements.arrival.value : "", departure: att==="yes" ? form.elements.departure.value : "",
+      ski: att==="yes" ? form.elements.ski.value : "", rental: att==="yes" && form.elements.rental.checked, car: att==="yes" && form.elements.car.checked,
+      dietary: att==="yes" ? form.elements.dietary.value.trim() : "", note: form.elements.note.value.trim(), lang: l, sentAt: new Date().toISOString()
+    };
+    if(!LIVE){ showDone(reply, false); return; }
+    var btn = form.querySelector(".submit"); btn.disabled = true;
+    var body = new URLSearchParams({"form-name":"rsvp"}); Object.keys(reply).forEach(function(k){ body.append(k, String(reply[k])); });
+    fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); showDone(reply, true); store("mg-reply", JSON.stringify(reply)); })
+      .catch(function(){ err.textContent = l==="ka" ? "პასუხი ვერ გაიგზავნა. შეამოწმეთ ინტერნეტი და სცადეთ თავიდან." : "Your reply didn't send. Check your connection and try again."; err.hidden = false; })
+      .then(function(){ btn.disabled = false; });
+  });
+  document.getElementById("again").addEventListener("click", function(){ done.hidden = true; form.hidden = false; stamp.classList.remove("on"); });
+  document.getElementById("previewNote").hidden = LIVE;
+
+  /* ---------- Start ---------- */
+  var startLang = read("mg-lang") || (guest && guest.lang) || ((navigator.language||"").toLowerCase().indexOf("ka")===0 ? "ka" : "en");
+  setLang(startLang);
+})();
+</script>
+
+</body>
+</html>
