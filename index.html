@@ -225,10 +225,9 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 
 /* rsvp */
 .rsvp{background:var(--wine);overflow-x:clip}
-.rsvp-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;align-items:start}
-@media (min-width:940px){.rsvp-grid{grid-template-columns:400px 1fr}}
-.pass-wrap{position:relative;max-width:380px;width:100%;justify-self:center;padding-top:46px}
-@media (min-width:940px){.pass-wrap{position:sticky;top:76px}}
+.rsvp .wrap{display:grid;justify-items:center}
+.rsvp-head{text-align:center;justify-items:center}
+.pass-wrap{position:relative;max-width:380px;width:100%;padding-top:46px}
 .pass-wrap::before{content:"";position:absolute;top:0;left:50%;width:46px;height:64px;margin-left:-23px;border:2px solid #B9AFA4;border-bottom:0;border-radius:23px 23px 0 0;transform:rotate(-2deg);transform-origin:50% 100%}
 .pass{position:relative;background:var(--cream);color:var(--ink);border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.08),0 34px 60px rgba(0,0,0,.4);transform:rotate(-2deg);transform-origin:50% 0}
 .grommet{position:absolute;top:12px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--wine);box-shadow:0 0 0 3px #CFC6BB,0 0 0 4px #9E958B,inset 0 1px 2px rgba(0,0,0,.6);z-index:3}
@@ -254,10 +253,37 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .pass-body .l,.pass-stub .l{font-size:9.5px;letter-spacing:.22em;color:var(--ink-dim);text-transform:uppercase}
 .pass-body .v{font-size:14px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
 .pass-body .holder{font-family:var(--script);font-weight:400;font-size:34px;letter-spacing:0;line-height:1.05}
-.pass-stub{position:relative;border-top:2px dashed var(--line-paper);padding:14px 22px 16px;display:grid;gap:6px;text-align:center;background:#EDE2D1;border-radius:0 0 10px 10px}
+.pass-stub{position:relative;width:100%;border:0;border-top:2px dashed var(--line-paper);padding:18px 22px 16px;display:grid;gap:6px;text-align:center;background:#EDE2D1;border-radius:0 0 10px 10px;cursor:pointer;color:inherit;font:inherit;transform-origin:20% 0;transition:transform .55s cubic-bezier(.5,0,.75,0),opacity .45s ease-in .1s;animation:tug 4s ease-in-out 1.5s infinite}
+.pass-stub:hover{background:#E8DBC7}
+.pass-stub.torn{transform:translate(18px,70px) rotate(9deg);opacity:0;animation:none;pointer-events:none}
+.pass-stub.gone{display:none}
+@keyframes tug{0%,82%,100%{transform:none}86%{transform:rotate(2.2deg)}90%{transform:rotate(-.6deg)}94%{transform:rotate(1deg)}}
+.tear-line{position:absolute;top:-10px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--burgundy);pointer-events:none}
+.tear-line>span:not(.scissors){background:#EDE2D1;padding:0 6px}
+html[data-lang="ka"] .tear-line{letter-spacing:.02em;font-family:"Noto Serif Georgian",serif;font-size:11px}
+.scissors{position:absolute;left:14px;top:-1px;font-size:15px;transform:rotate(180deg) scaleY(-1)}
+.pass-hint{margin-top:22px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--mauve);text-transform:uppercase;text-align:center}
+html[data-lang="ka"] .pass-hint{text-transform:none;letter-spacing:.02em;font-family:"Noto Serif Georgian",serif;font-size:14px}
+.pass-again{margin-top:22px;background:none;border:1px solid var(--line-dark);color:var(--cream);padding:10px 22px;border-radius:99px;cursor:pointer}
+.pass-again:hover{border-color:var(--cream)}
+
+/* rsvp sheet */
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(20,9,10,.72);backdrop-filter:blur(3px);display:grid;place-items:start center;overflow-y:auto;padding:max(16px,env(safe-area-inset-top,0px)) 0 max(16px,env(safe-area-inset-bottom,0px));animation:fade .3s ease}
+.sheet-panel{position:relative;width:min(560px,100% - 24px);margin-block:auto;background:var(--cream);color:var(--ink);border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:rise .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes fade{from{opacity:0}}
+@keyframes rise{from{transform:translateY(30px);opacity:0}}
+.sheet-close{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:transparent;color:var(--ink);font-size:28px;line-height:1;cursor:pointer;z-index:2}
+.sheet-close:hover{background:#E6DACA}
+.sheet-stub{background:#EDE2D1;border-bottom:2px dashed var(--line-paper);border-radius:12px 12px 0 0;padding:26px 24px 18px;text-align:center;display:grid;gap:4px;font-family:var(--mono)}
+.sheet-stub .l{font-size:10px;letter-spacing:.22em;color:var(--ink-dim)}
+.sheet-name{font-family:var(--script);font-size:42px;line-height:1.1;color:var(--ink)}
+.sheet-stub .rsvp-by{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--burgundy);text-transform:uppercase}
+html[data-lang="ka"] .sheet-stub .rsvp-by{font-family:"Noto Serif Georgian",serif;text-transform:none;letter-spacing:.02em;font-size:13px}
+.sheet .form{border-radius:0 0 12px 12px}
 .pass-stub::before,.pass-stub::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--wine)}
 .pass-stub::before{left:-10px}.pass-stub::after{right:-10px}
 .pass-stub .rsvp-by{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--burgundy)}
+.pass-stub .l{display:block}
 .barcode{height:44px;display:block;width:100%}
 .stamp{position:absolute;right:22px;top:46%;width:112px;height:112px;border-radius:50%;border:2.5px solid var(--burgundy);color:var(--burgundy);display:grid;place-items:center;text-align:center;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.14em;transform:rotate(-14deg);opacity:0;scale:1.6;transition:opacity .35s,scale .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none;box-shadow:inset 0 0 0 5px var(--cream),inset 0 0 0 6.5px var(--burgundy);background:rgba(241,231,216,.55);z-index:4}
 .stamp.on{opacity:.92;scale:1}
@@ -509,8 +535,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </ol>
         <div class="note" style="margin-top:32px">
           <p class="caps"><span class="en">Before you come</span><span class="ka">სანამ მოხვალთ</span></p>
-          <p class="en">Gergeti sits at 2,170 m, so expect snow: wear a warm coat and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, about <span class="tbc">length TBC</span>.</p>
-          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით თბილად, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი.</p>
+          <p class="en">Gergeti sits at 2,170 m, so expect snow: wear a warm coat and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, which lasts about 30 minutes.</p>
+          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით თბილად, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი. მსახურება დაახლოებით 30 წუთი გაგრძელდება.</p>
         </div>
       </div>
     </div>
@@ -518,12 +544,11 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 
   <section class="rsvp section" id="rsvp">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head rsvp-head">
         <p class="caps"><span class="en">Kindly reply by 15 January 2027</span><span class="ka">გთხოვთ, გვიპასუხოთ 15 იანვრამდე</span></p>
         <h2><span class="en">Your Lift Pass</span><span class="ka">თქვენი საშვი</span></h2>
       </div>
-      <div class="rsvp-grid">
-        <div class="pass-wrap">
+      <div class="pass-wrap">
         <div class="pass" aria-label="Lift pass">
           <span class="grommet" aria-hidden="true"></span>
           <div class="pass-top">
@@ -535,87 +560,21 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <div class="pass-body">
             <div class="f wide"><span class="l">Pass holder</span><span class="v holder" id="passName">Our guest</span></div>
             <div class="f"><span class="l">Valid</span><span class="v">10–12 MAR 2027</span></div>
-            <div class="f"><span class="l">Zone</span><span class="v">Gergeti · Gudauri</span></div>
+            <div class="f"><span class="l">Zone</span><span class="v">Kazbegi · Gudauri</span></div>
             <div class="f"><span class="l">Hosts</span><span class="v">Mari &amp; Graftan</span></div>
             <div class="f"><span class="l">Days</span><span class="v">3</span></div>
           </div>
-          <div class="pass-stub">
-            <span class="rsvp-by">RSVP BY 15 · 01 · 2027</span>
+          <button class="pass-stub" id="tear" type="button" aria-haspopup="dialog">
+            <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოაგლიჯეთ პასუხისთვის</span></span>
+            <span class="rsvp-by">RSVP BY 15 JAN 2027</span>
             <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
             <span class="l" id="passNo">No. 1103-2027</span>
-          </div>
+          </button>
           <div class="stamp" id="stamp" aria-hidden="true"><div>CONFIRMED<span>11 · III · 27</span></div></div>
         </div>
-        </div>
-
-        <form class="form" id="rsvpForm" novalidate>
-          <div class="field">
-            <label for="f-name"><span class="en">Your name(s)</span><span class="ka">სახელი და გვარი</span></label>
-            <input type="text" id="f-name" name="name" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <span class="lbl" id="att-l"><span class="en">Will you join us?</span><span class="ka">შეძლებთ მობრძანებას?</span></span>
-            <div class="choice" role="radiogroup" aria-labelledby="att-l">
-              <label><input type="radio" name="attending" value="yes" id="f-yes"><span><span class="en">Joyfully accepts</span><span class="ka">სიამოვნებით მოვალ</span></span></label>
-              <label><input type="radio" name="attending" value="no" id="f-no"><span><span class="en">Regretfully declines</span><span class="ka">სამწუხაროდ, ვერ მოვალ</span></span></label>
-            </div>
-          </div>
-          <div class="ifyes" id="ifyes" hidden>
-            <div class="two">
-              <div class="field">
-                <label for="f-party"><span class="en">Guests in your party</span><span class="ka">რამდენი სტუმარი იქნებით</span></label>
-                <input type="number" id="f-party" name="party" min="1" max="6" value="1" inputmode="numeric">
-              </div>
-              <div class="field">
-                <label for="f-arrive"><span class="en">Getting to Gudauri</span><span class="ka">გუდაურში ჩასვლა</span></label>
-                <select id="f-arrive" name="arrival">
-                  <option value="group-transfer" data-en="Group transfer, 10 March, 09:30" data-ka="საერთო ტრანსფერით, 10 მარტი, 09:30"></option>
-                  <option value="own-10" data-en="On my own, 10 March" data-ka="დამოუკიდებლად, 10 მარტს"></option>
-                  <option value="early" data-en="Earlier, 8 or 9 March" data-ka="უფრო ადრე, 8 ან 9 მარტს"></option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="f-leave"><span class="en">Leaving Gudauri</span><span class="ka">გუდაურიდან წასვლა</span></label>
-                <select id="f-leave" name="departure">
-                  <option value="13" data-en="13 March, after check-out" data-ka="13 მარტს, გაწერის შემდეგ"></option>
-                  <option value="14" data-en="14 March, staying to ski" data-ka="14 მარტს, ვრჩები სასრიალოდ"></option>
-                  <option value="15" data-en="15 March, staying to ski" data-ka="15 მარტს, ვრჩები სასრიალოდ"></option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="f-ski"><span class="en">On the slopes</span><span class="ka">თხილამურები</span></label>
-                <select id="f-ski" name="ski">
-                  <option value="none" data-en="I won't be skiing" data-ka="არ ვისრიალებ"></option>
-                  <option value="beginner" data-en="Beginner" data-ka="დამწყები"></option>
-                  <option value="intermediate" data-en="Intermediate" data-ka="საშუალო"></option>
-                  <option value="advanced" data-en="Advanced" data-ka="გამოცდილი"></option>
-                </select>
-              </div>
-            </div>
-            <label class="check" for="f-rental"><input type="checkbox" id="f-rental" name="rental"><span><span class="en">I'll need rental skis or a snowboard</span><span class="ka">დამჭირდება თხილამურების ან სნოუბორდის ქირაობა</span></span></label>
-            <label class="check" for="f-car"><input type="checkbox" id="f-car" name="car"><span><span class="en">Please arrange a car for my departure</span><span class="ka">გთხოვთ, წასვლისას მანქანა მომიწყოთ</span></span></label>
-            <div class="field">
-              <label for="f-diet"><span class="en">Dietary requirements</span><span class="ka">კვების შეზღუდვები</span></label>
-              <input type="text" id="f-diet" name="dietary">
-            </div>
-          </div>
-          <div class="field">
-            <label for="f-note"><span class="en">A note for us</span><span class="ka">მოგვწერეთ</span></label>
-            <textarea id="f-note" name="note"></textarea>
-          </div>
-          <p class="form-msg err" id="formErr" role="alert" hidden></p>
-          <button class="submit" type="submit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
-          <p class="preview-note" id="previewNote" hidden>Preview: replies start saving once the site is live on marigraftan.com.</p>
-        </form>
-        <div class="form" id="rsvpDone" hidden>
-          <div class="done">
-            <p class="script" id="doneTitle"></p>
-            <p id="doneText"></p>
-            <button class="again" type="button" id="again"><span class="en">Change my reply</span><span class="ka">პასუხის შეცვლა</span></button>
-          </div>
-          <p class="preview-note" id="previewNote2" hidden>Preview: this reply was not saved. Replies start saving once the site is live on marigraftan.com.</p>
-        </div>
       </div>
+      <p class="pass-hint" id="passHint"><span class="en">Tear off the stub to reply</span><span class="ka">პასუხისთვის მოაგლიჯეთ კუპონი</span></p>
+      <button class="pass-again" id="passAgain" type="button" hidden><span class="en">Change my reply</span><span class="ka">პასუხის შეცვლა</span></button>
     </div>
   </section>
 
@@ -692,8 +651,82 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   </section>
 </main>
 
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="sheet-panel">
+    <button class="sheet-close" id="sheetClose" type="button" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <div class="sheet-stub">
+      <span class="l" id="sheetNo">RSVP</span>
+      <p class="sheet-name" id="sheetTitle">Our guest</p>
+      <span class="rsvp-by"><span class="en">Kindly reply by 15 Jan 2027</span><span class="ka">გთხოვთ, გვიპასუხოთ 15 იანვრამდე</span></span>
+    </div>
+    <form class="form" id="rsvpForm" novalidate>
+      <div class="field">
+        <label for="f-name"><span class="en">Your name</span><span class="ka">სახელი და გვარი</span></label>
+        <input type="text" id="f-name" name="name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <span class="lbl" id="att-l"><span class="en">Will you join us?</span><span class="ka">შეძლებთ მობრძანებას?</span></span>
+        <div class="choice" role="radiogroup" aria-labelledby="att-l">
+          <label><input type="radio" name="attending" value="yes" id="f-yes"><span><span class="en">Joyfully accepts</span><span class="ka">სიამოვნებით მოვალ</span></span></label>
+          <label><input type="radio" name="attending" value="no" id="f-no"><span><span class="en">Regretfully declines</span><span class="ka">სამწუხაროდ, ვერ მოვალ</span></span></label>
+        </div>
+      </div>
+      <div class="ifyes" id="ifyes" hidden>
+        <div class="two">
+          <div class="field">
+            <label for="f-arrive"><span class="en">Arriving</span><span class="ka">როდის ჩამოხვალთ</span></label>
+            <select id="f-arrive" name="arrival">
+              <option value="8 March" data-en="Monday, 8 March" data-ka="ორშაბათი, 8 მარტი"></option>
+              <option value="9 March" data-en="Tuesday, 9 March" data-ka="სამშაბათი, 9 მარტი"></option>
+              <option value="10 March" selected data-en="Wednesday, 10 March" data-ka="ოთხშაბათი, 10 მარტი"></option>
+              <option value="11 March" data-en="Thursday, 11 March" data-ka="ხუთშაბათი, 11 მარტი"></option>
+              <option value="other" data-en="Another day (tell us below)" data-ka="სხვა დღე (მიუთითეთ ქვემოთ)"></option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-leave"><span class="en">Leaving</span><span class="ka">როდის წახვალთ</span></label>
+            <select id="f-leave" name="departure">
+              <option value="12 March" data-en="Friday, 12 March" data-ka="პარასკევი, 12 მარტი"></option>
+              <option value="13 March" selected data-en="Saturday, 13 March" data-ka="შაბათი, 13 მარტი"></option>
+              <option value="14 March" data-en="Sunday, 14 March" data-ka="კვირა, 14 მარტი"></option>
+              <option value="15 March" data-en="Monday, 15 March" data-ka="ორშაბათი, 15 მარტი"></option>
+              <option value="other" data-en="Another day (tell us below)" data-ka="სხვა დღე (მიუთითეთ ქვემოთ)"></option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="plus-l"><span class="en">Bringing a plus one?</span><span class="ka">მოგყავთ თანმხლები?</span></span>
+          <div class="choice" role="radiogroup" aria-labelledby="plus-l">
+            <label><input type="radio" name="plusOne" value="yes" id="f-plus-yes"><span><span class="en">Yes</span><span class="ka">დიახ</span></span></label>
+            <label><input type="radio" name="plusOne" value="no" id="f-plus-no" checked><span><span class="en">No</span><span class="ka">არა</span></span></label>
+          </div>
+        </div>
+        <div class="field" id="plusName" hidden>
+          <label for="f-plus-name"><span class="en">Their name</span><span class="ka">თანმხლების სახელი და გვარი</span></label>
+          <input type="text" id="f-plus-name" name="plusOneName">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-note"><span class="en">Anything we can help with?</span><span class="ka">რამეში ხომ არ გჭირდებათ დახმარება?</span></label>
+        <textarea id="f-note" name="note" data-en-placeholder="Transfers, accommodation, ski rental, dietary needs, or a note for us" data-ka-placeholder="ტრანსფერი, განთავსება, სათხილამურო აღჭურვილობა, კვება ან უბრალოდ გვწერეთ"></textarea>
+      </div>
+      <p class="form-msg err" id="formErr" role="alert" hidden></p>
+      <button class="submit" type="submit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
+      <p class="preview-note" id="previewNote" hidden>Preview: replies start saving once the site is live on marigraftan.com.</p>
+    </form>
+    <div class="form" id="rsvpDone" hidden>
+      <div class="done">
+        <p class="script" id="doneTitle"></p>
+        <p id="doneText"></p>
+        <button class="submit" type="button" id="doneBack" style="justify-self:center"><span class="en">Back to the site</span><span class="ka">საიტზე დაბრუნება</span></button>
+      </div>
+      <p class="preview-note" id="previewNote2" hidden>Preview: this reply was not saved. Replies start saving once the site is live on marigraftan.com.</p>
+    </div>
+  </div>
+</div>
+
 <form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
-  <input name="bot-field"><input name="guest"><input name="name"><input name="attending"><input name="party"><input name="arrival"><input name="departure"><input name="ski"><input name="rental"><input name="car"><input name="dietary"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
+  <input name="bot-field"><input name="guest"><input name="name"><input name="attending"><input name="arrival"><input name="departure"><input name="plusOne"><input name="plusOneName"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
 </form>
 
 <section class="interlude horses" aria-label="See you in the mountains">
@@ -815,27 +848,67 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var done = document.getElementById("rsvpDone");
   var ifyes = document.getElementById("ifyes");
   var stamp = document.getElementById("stamp");
-  var lastReply = null;
+  var sheet = document.getElementById("sheet");
+  var stub = document.getElementById("tear");
+  var hint = document.getElementById("passHint");
+  var again = document.getElementById("passAgain");
+  var lastReply = null, opener = null;
+
+  function holderName(){ return document.getElementById("f-name").value.trim() || (guest ? guest.name : (root.getAttribute("data-lang")==="ka" ? "ჩვენი სტუმარი" : "Our guest")); }
+  function syncName(){ var n = holderName(); document.getElementById("passName").textContent = n; document.getElementById("sheetTitle").textContent = n; }
+  document.getElementById("f-name").addEventListener("input", syncName);
+
   form.querySelectorAll('input[name="attending"]').forEach(function(r){
     r.addEventListener("change", function(){ ifyes.hidden = form.elements.attending.value !== "yes"; });
   });
-  document.getElementById("f-name").addEventListener("input", function(e){
-    document.getElementById("passName").textContent = e.target.value.trim() || (guest ? guest.name : "Our guest");
+  form.querySelectorAll('input[name="plusOne"]').forEach(function(r){
+    r.addEventListener("change", function(){ document.getElementById("plusName").hidden = form.elements.plusOne.value !== "yes"; });
   });
+
+  function openSheet(){
+    opener = document.activeElement;
+    sheet.hidden = false; root.style.overflow = "hidden";
+    document.getElementById("sheetNo").textContent = "RSVP · " + document.getElementById("passNo").textContent;
+    setTimeout(function(){ (document.getElementById("f-name").value ? document.getElementById("f-yes") : document.getElementById("f-name")).focus({preventScroll:true}); }, 50);
+  }
+  function closeSheet(){
+    sheet.hidden = true; root.style.overflow = "";
+    if(!lastReply){ stub.classList.remove("torn","gone"); hint.hidden = false; }
+    if(opener && opener.focus && !opener.closest(".gone")) opener.focus({preventScroll:true});
+  }
+  stub.addEventListener("click", function(){
+    hint.hidden = true;
+    if(reduce){ stub.classList.add("gone"); openSheet(); return; }
+    stub.classList.add("torn");
+    setTimeout(function(){ stub.classList.add("gone"); openSheet(); }, 520);
+  });
+  again.addEventListener("click", function(){ form.hidden = false; done.hidden = true; openSheet(); });
+  document.getElementById("sheetClose").addEventListener("click", closeSheet);
+  document.getElementById("doneBack").addEventListener("click", closeSheet);
+  sheet.addEventListener("click", function(e){ if(e.target === sheet) closeSheet(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !sheet.hidden) closeSheet(); });
+
   function renderDone(){
+    var l = root.getAttribute("data-lang");
+    document.querySelectorAll("[data-en-placeholder]").forEach(function(el){ el.placeholder = el.getAttribute("data-"+l+"-placeholder"); });
+    syncName();
     if(!lastReply) return;
-    var l = root.getAttribute("data-lang"), yes = lastReply.attending === "yes";
+    var yes = lastReply.attending === "yes";
     document.getElementById("doneTitle").textContent = yes ? (l==="ka" ? "მთაში შევხვდებით" : "See you in the mountains") : (l==="ka" ? "მოგვენატრებით" : "We'll miss you");
     document.getElementById("doneText").textContent = yes
       ? (l==="ka" ? "მადლობა, "+lastReply.name+". თქვენი პასუხი მიღებულია." : "Thank you, "+lastReply.name+". Your reply is in.")
       : (l==="ka" ? "მადლობა, რომ შეგვატყობინეთ, "+lastReply.name+"." : "Thank you for letting us know, "+lastReply.name+".");
     stamp.querySelector("div").firstChild.nodeValue = yes ? "CONFIRMED" : "WITH LOVE";
   }
-  function showDone(reply, saved){
+  function markReplied(reply){
     lastReply = reply; renderDone();
+    stub.classList.add("gone"); hint.hidden = true; again.hidden = false;
+    stamp.classList.add("on");
+  }
+  function showDone(reply, saved){
+    markReplied(reply);
     form.hidden = true; done.hidden = false;
     document.getElementById("previewNote2").hidden = saved;
-    stamp.classList.toggle("on", true);
   }
   form.addEventListener("submit", function(e){
     e.preventDefault();
@@ -845,13 +918,18 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ სახელი და აირჩიოთ, შეძლებთ თუ არა მობრძანებას." : "Please add your name and choose whether you can join us.";
       err.hidden = false; return;
     }
+    var plus = att==="yes" && form.elements.plusOne.value==="yes";
+    var plusName = plus ? document.getElementById("f-plus-name").value.trim() : "";
+    if(plus && !plusName){
+      err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ თანმხლების სახელი." : "Please add your plus one's name.";
+      err.hidden = false; return;
+    }
     err.hidden = true;
     var reply = {
       guest: code || "", name: name, attending: att,
-      party: att==="yes" ? Number(form.elements.party.value||1) : 0,
       arrival: att==="yes" ? form.elements.arrival.value : "", departure: att==="yes" ? form.elements.departure.value : "",
-      ski: att==="yes" ? form.elements.ski.value : "", rental: att==="yes" && form.elements.rental.checked, car: att==="yes" && form.elements.car.checked,
-      dietary: att==="yes" ? form.elements.dietary.value.trim() : "", note: form.elements.note.value.trim(), lang: l, sentAt: new Date().toISOString()
+      plusOne: att==="yes" ? (plus ? "yes" : "no") : "", plusOneName: plusName,
+      note: form.elements.note.value.trim(), lang: l, sentAt: new Date().toISOString()
     };
     if(!LIVE){ showDone(reply, false); return; }
     var btn = form.querySelector(".submit"); btn.disabled = true;
@@ -861,8 +939,10 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       .catch(function(){ err.textContent = l==="ka" ? "პასუხი ვერ გაიგზავნა. შეამოწმეთ ინტერნეტი და სცადეთ თავიდან." : "Your reply didn't send. Check your connection and try again."; err.hidden = false; })
       .then(function(){ btn.disabled = false; });
   });
-  document.getElementById("again").addEventListener("click", function(){ done.hidden = true; form.hidden = false; stamp.classList.remove("on"); });
   document.getElementById("previewNote").hidden = LIVE;
+  // A guest who already replied on this phone sees their stamped pass.
+  (function(){ var r = null; try{ r = JSON.parse(read("mg-reply") || "null"); }catch(e){}
+    if(r && r.name){ markReplied(r); var f=document.getElementById("f-name"); if(!f.value) f.value = r.name; } })();
 
   /* ---------- Start ---------- */
   var startLang = read("mg-lang") || (guest && guest.lang) || ((navigator.language||"").toLowerCase().indexOf("ka")===0 ? "ka" : "en");
