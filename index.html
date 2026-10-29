@@ -80,6 +80,16 @@ p{margin:0}
 .lang button:last-child{font-family:"Noto Serif Georgian",serif}
 .pill{background:none;border:1px solid var(--cream);color:var(--cream);padding:7px 18px;border-radius:99px;cursor:pointer}
 .pill:hover{background:var(--cream);color:var(--oxblood)}
+/* RSVP button: ticket tab (current). Alternative: change class "ticket-tab" to "wax-seal" on the header button. */
+.ticket-tab{position:relative;background:var(--cream);color:var(--burgundy);border:0;padding:9px 16px 9px 24px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.22em;line-height:1;cursor:pointer;border-radius:3px;transform:rotate(-3deg);transition:transform .25s ease;
+  -webkit-mask:radial-gradient(circle 5px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 5px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 5px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 5px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat}
+.ticket-tab::before{content:"";position:absolute;left:13px;top:6px;bottom:6px;border-left:1.5px dashed rgba(122,36,52,.5)}
+.ticket-tab:hover,.ticket-tab:focus-visible{transform:rotate(0) translateY(-1px)}
+html[data-lang="ka"] .ticket-tab{font-family:"Noto Serif Georgian",serif;letter-spacing:.02em;font-size:13px}
+.wax-seal{width:48px;height:48px;padding:0;border:0;color:#F3DCCB;font-family:var(--display);font-size:11px;letter-spacing:.14em;cursor:pointer;border-radius:48% 52% 50% 50%/52% 47% 53% 48%;background:radial-gradient(circle at 35% 30%,#9B3346,#6E1F2D 55%,#4C1420);box-shadow:inset 0 0 0 4px rgba(0,0,0,.14),inset 0 0 0 6px rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.4);transform:rotate(-8deg);transition:transform .25s}
+.wax-seal:hover{transform:rotate(0) scale(1.05)}
+html[data-lang="ka"] .wax-seal{font-family:"Noto Serif Georgian",serif;font-size:10px;letter-spacing:0}
 .navlinks{display:none;gap:26px}
 .navlinks button{background:none;border:0;cursor:pointer;color:var(--dim);padding:6px 0}
 .navlinks button:hover{color:var(--cream)}
@@ -375,7 +385,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
         <button type="button" data-lang-btn="ka" aria-pressed="false">ქარ</button>
       </div>
-      <button class="pill" data-go="rsvp"><span class="en">RSVP</span><span class="ka">პასუხი</span></button>
+      <button class="rsvp-btn ticket-tab" data-go="rsvp"><span class="en">RSVP</span><span class="ka">პასუხი</span></button>
     </div>
   </div>
 </header>
