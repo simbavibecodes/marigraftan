@@ -246,16 +246,12 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .pass-art{margin:0;position:relative;border-bottom:1px solid var(--line-paper)}
 .pass-art img{width:100%;height:auto;mix-blend-mode:multiply;display:block}
 @media (max-width:600px){.pass-wrap{padding-inline:16px}.pass{transform:rotate(-1deg)}.pass-wrap::before{transform:rotate(-1deg)}}
-.weekend-flowers{position:absolute;top:-14px;right:max(8px,calc(50% - 560px));width:clamp(120px,24vw,250px);pointer-events:none;transform:rotate(6deg);opacity:.95}
-#weekend .section-head{padding-right:clamp(110px,24vw,260px)}
-#weekend{overflow-x:clip}
-.stay-flowers{display:none}
-@media (min-width:900px){
-  #weekend .section-head{padding-right:0}
-  .weekend-flowers{display:none}
-  .stay-row{display:grid;grid-template-columns:minmax(0,44em) 1fr;align-items:start;gap:24px}
-  .stay-flowers{display:block;width:190px;justify-self:end;margin:-40px 24px -88px 0;transform:rotate(6deg)}
-}
+#weekend{padding-top:0;overflow-x:clip}
+.prog-head{position:relative;isolation:isolate;min-height:min(92vw,480px);display:grid;align-items:end;margin-bottom:44px;color:var(--cream);overflow:hidden}
+.prog-head img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 34%;z-index:-2}
+.prog-head::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(12,9,9,.25) 0%,rgba(12,9,9,.15) 40%,rgba(12,9,9,.72) 100%)}
+.prog-head .wrap{width:100%;display:grid;gap:12px;padding-block:0 34px}
+.prog-head .caps{color:var(--cream);opacity:.85}
 .pass-body{padding:14px 22px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;font-family:var(--mono);font-size:13px}
 .pass-body .f{display:grid;gap:1px;min-width:0}
 .pass-body .f.wide{grid-column:1/-1}
@@ -375,7 +371,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   <div class="wrap">
     <button class="mono" data-go="top" aria-label="Back to top">M<span class="script">&amp;</span>G</button>
     <nav class="navlinks" aria-label="Sections">
-      <button data-go="weekend"><span class="en">The Weekend</span><span class="ka">პროგრამა</span></button>
+      <button data-go="weekend"><span class="en">The Programme</span><span class="ka">პროგრამა</span></button>
       <button data-go="crowning"><span class="en">The Crowning</span><span class="ka">ჯვრისწერა</span></button>
       <button data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
       <button data-go="dress"><span class="en">Dress Code</span><span class="ka">ჩაცმა</span></button>
@@ -439,21 +435,16 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <p class="strip-hint"><span class="en">SWIPE</span><span class="ka">გადაფურცლეთ</span> →</p>
   </section>
 
-  <section class="interlude snow top" aria-label="Gergeti Trinity Church">
-    <img src="media/gergeti-snow.jpg" alt="Gergeti Trinity Church on its snowy ridge beneath Mount Kazbek" loading="lazy">
-    <div class="wrap">
-      <p class="caps"><span class="en">Gergeti Trinity Church · 2,170 m</span><span class="ka">გერგეტის წმინდა სამება · 2170 მ</span></p>
-      <p class="big"><span class="en">Where we will be crowned</span><span class="ka">აქ დავიწერთ ჯვარს</span></p>
-    </div>
-  </section>
-
   <section class="paper section" id="weekend">
-    <img class="weekend-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true" loading="lazy">
-    <div class="wrap">
-      <div class="section-head">
+    <header class="prog-head">
+      <img src="media/gergeti-snow.jpg" alt="Gergeti Trinity Church on its snowy ridge beneath Mount Kazbek" loading="lazy">
+      <div class="wrap">
+        <p class="caps"><span class="en">Mount Kazbek · 5,054 m</span><span class="ka">მყინვარწვერი · 5054 მ</span></p>
+        <h2><span class="en">The Programme</span><span class="ka">პროგრამა</span></h2>
         <p class="caps"><span class="en">10 – 13 March 2027</span><span class="ka">10 – 13 მარტი, 2027</span></p>
-        <h2><span class="en">The Weekend</span><span class="ka">პროგრამა</span></h2>
       </div>
+    </header>
+    <div class="wrap">
 
       <div class="cal" aria-label="March 2027">
         <div class="out"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">8</span></div>
@@ -519,7 +510,6 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <p class="en">We will be in Gudauri from the 8th through the 15th of March, and you are more than welcome to join us for more skiing. Our hosted festivities take place from the 10th through the 12th, with accommodation through the morning of the 13th.</p>
           <p class="ka">გუდაურში 8-დან 15 მარტამდე ვიქნებით და სიამოვნებით შემოგვიერთდით სასრიალოდ. ჩვენი ზეიმი 10–12 მარტს გაიმართება, ბინადრობა კი 13 მარტის დილამდეა უზრუნველყოფილი.</p>
         </div>
-        <img class="stay-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true" loading="lazy">
       </div>
     </div>
   </section>
