@@ -29,6 +29,7 @@
   --line-dark:rgba(241,231,216,.18);
   --line-paper:#CDBBA4;
   --forest:#2F3B30;
+  --ski-day:#DCC3C2;
 
   --display:"Italiana","Noto Serif Georgian",Didot,"Bodoni 72",serif;
   --script:"Pinyon Script","Noto Serif Georgian","Snell Roundhand",cursive;
@@ -191,7 +192,12 @@ html[data-lang="ka"] .interlude .big{font-family:"Noto Serif Georgian",serif;fon
 html[data-lang="ka"] .cal .w{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif}
 .cal .hosted{background:var(--burgundy);color:var(--cream)}
 .cal .hosted .w{color:var(--mauve)}
-.cal .out{background:#E2D3C0}
+.cal .ski{background:var(--ski-day)}
+.cal .ski .w{color:var(--burgundy)}
+.cal-ribbon{grid-column:1/-1;background:var(--burgundy);color:var(--cream);text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:9px 10px;border-top:1px solid rgba(241,231,216,.35);display:flex;align-items:center;justify-content:center;gap:12px}
+.cal-ribbon::before,.cal-ribbon::after{content:"";flex:1;max-width:90px;height:1px;background:rgba(241,231,216,.45)}
+html[data-lang="ka"] .cal-ribbon{text-transform:none;letter-spacing:.02em;font-family:"Noto Serif Georgian",serif;font-size:13px}
+@media (max-width:420px){.cal-ribbon{font-size:9.5px;letter-spacing:.12em}.cal-ribbon::before,.cal-ribbon::after{max-width:24px}}
 .cal-key{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px;color:var(--ink-dim);margin:-26px 0 40px}
 .cal-key span{display:inline-flex;align-items:center;gap:8px}
 .cal-key i{width:12px;height:12px;border-radius:2px;display:inline-block;border:1px solid var(--line-paper)}
@@ -447,18 +453,19 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <div class="wrap">
 
       <div class="cal" aria-label="March 2027">
-        <div class="out"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">8</span></div>
-        <div class="out"><span class="w" data-en="Tue" data-ka="სამ"></span><span class="d">9</span></div>
+        <div class="ski"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">8</span></div>
+        <div class="ski"><span class="w" data-en="Tue" data-ka="სამ"></span><span class="d">9</span></div>
         <div class="hosted"><span class="w" data-en="Wed" data-ka="ოთხ"></span><span class="d">10</span></div>
         <div class="hosted"><span class="w" data-en="Thu" data-ka="ხუთ"></span><span class="d">11</span></div>
         <div class="hosted"><span class="w" data-en="Fri" data-ka="პარ"></span><span class="d">12</span></div>
-        <div class="out"><span class="w" data-en="Sat" data-ka="შაბ"></span><span class="d">13</span></div>
-        <div class="out"><span class="w" data-en="Sun" data-ka="კვი"></span><span class="d">14</span></div>
-        <div class="out"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">15</span></div>
+        <div class="ski"><span class="w" data-en="Sat" data-ka="შაბ"></span><span class="d">13</span></div>
+        <div class="ski"><span class="w" data-en="Sun" data-ka="კვი"></span><span class="d">14</span></div>
+        <div class="ski"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">15</span></div>
+        <p class="cal-ribbon"><span class="en">Mari &amp; Graftan in Gudauri · ski with us</span><span class="ka">მარი და გრაფტანი გუდაურში · ისრიალეთ ჩვენთან ერთად</span></p>
       </div>
       <div class="cal-key">
         <span><i style="background:var(--burgundy);border-color:var(--burgundy)"></i><span class="en">Hosted celebrations</span><span class="ka">ზეიმის დღეები</span></span>
-        <span><i style="background:#E2D3C0"></i><span class="en">We're in Gudauri, 8–15 March</span><span class="ka">გუდაურში ვართ 8–15 მარტს</span></span>
+        <span><i style="background:var(--ski-day)"></i><span class="en">Ski days with us</span><span class="ka">სათხილამურო დღეები ჩვენთან ერთად</span></span>
       </div>
 
       <div class="days">
