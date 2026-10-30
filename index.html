@@ -99,7 +99,7 @@ html[data-lang="ka"] .wax-seal{font-family:"Noto Serif Georgian",serif;font-size
 @media (min-width:1020px){.navlinks{display:flex}.bar .wrap{display:grid;grid-template-columns:1fr auto 1fr}.bar .mono{justify-self:start}.bar-right{justify-self:end}}
 
 /* hero */
-.hero{position:relative;min-height:92svh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.hero{position:relative;min-height:100vh;min-height:100lvh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
 .hero-film{position:absolute;inset:0;z-index:-2}
 .hero-film video,.hero-film img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 .hero-film video.wide{display:none}
@@ -111,9 +111,9 @@ html[data-lang="ka"] .wax-seal{font-family:"Noto Serif Georgian",serif;font-size
 @keyframes settle{from{letter-spacing:.24em;opacity:.55}to{letter-spacing:.1em;opacity:1}}
 .hero .when{font-family:var(--display);font-size:clamp(22px,6vw,30px);letter-spacing:.16em;white-space:nowrap}
 html[data-lang="ka"] .hero .when{font-family:"Noto Serif Georgian",serif;font-weight:300;letter-spacing:.04em;font-size:clamp(19px,5vw,24px)}
-.hero .where{color:var(--dim);line-height:1.9}
+.hero .where{color:rgba(241,231,216,.92);line-height:1.9}
 .hero .where .caps{color:var(--cream)}
-.countdown{font-family:var(--serif);font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-top:6px}
+.countdown{font-family:var(--serif);font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,216,.88);margin-top:6px}
 html[data-lang="ka"] .countdown{text-transform:none;letter-spacing:.04em}
 .arch{display:none}
 @media (min-width:960px){
@@ -218,11 +218,14 @@ html[data-lang="ka"] .story-title{font-family:"Noto Serif Georgian",serif;font-w
 .frame figcaption{position:absolute;left:10px;right:10px;bottom:1px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#E3B868;opacity:.85}
 .strip-sign{text-align:center;margin-top:34px}
 @media (min-width:1100px){.frame img{height:280px}}
-/* wide screens: the strip drifts slowly; hover to pause */
-.film-row.drift{overflow:hidden;padding-inline:0}
-.film-row.drift .film-track{display:flex;width:max-content;animation:drift 70s linear infinite}
-.film-row.drift:hover .film-track{animation-play-state:paused}
-@keyframes drift{to{transform:translateX(-50%)}}
+/* the strip rolls on its own like film; touch or hover pauses it, swiping still works */
+.film-row.rolling{scroll-snap-type:none}
+.swipe-hint{display:flex;justify-content:center;align-items:center;gap:10px;margin:14px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim,#BBA89C);opacity:.8}
+.swipe-hint i{font-style:normal;font-size:13px;letter-spacing:0;display:inline-block;animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@media (hover:hover) and (pointer:fine){.swipe-hint{display:none}}
+@media (prefers-reduced-motion:reduce){.swipe-hint i{animation:none}}
+.strip-sign{margin-top:26px}
 
 /* full-bleed photo interludes */
 .interlude{position:relative;min-height:min(125vw,760px);display:grid;align-items:end;overflow:hidden;isolation:isolate;background:var(--oxblood)}
@@ -268,6 +271,7 @@ html[data-lang="ka"] .cal-ribbon{text-transform:none;letter-spacing:.02em;font-f
 @media (max-width:420px){.cal-ribbon{font-size:12.5px;letter-spacing:.1em}}
 .cal-key{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px;color:var(--ink-dim);margin:-26px 0 40px}
 .cal-key span{display:inline-flex;align-items:center;gap:8px}
+.cal-key .cal-note{flex-basis:100%;font-size:13px;font-style:italic;margin-top:-2px}
 .cal-key i{width:12px;height:12px;border-radius:2px;display:inline-block;border:1px solid var(--line-paper)}
 
 .days{display:grid;gap:18px}
@@ -284,11 +288,12 @@ html[data-lang="ka"] .day .mo{text-transform:none;letter-spacing:0}
 .day small{display:block;color:var(--ink-dim);font-size:.86em;font-style:italic}
 .route.stay-box{margin-top:44px;max-width:560px}
 .route.has-stamp{position:relative;padding-right:150px}
-.code-stamp{position:absolute;top:18px;right:18px;width:118px;padding:11px 8px 9px;display:grid;gap:2px;justify-items:center;cursor:pointer;color:var(--cream);background:var(--burgundy);border:0;border-radius:5px;transform:rotate(4deg);font-family:var(--mono);box-shadow:inset 0 0 0 4px var(--burgundy),inset 0 0 0 5px rgba(241,231,216,.45),0 8px 18px rgba(42,19,21,.25);-webkit-mask:radial-gradient(circle 6px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 6px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;transition:transform .25s}
+.code-stamp{position:absolute;top:20px;right:20px;width:118px;padding:12px 8px 10px;display:grid;gap:3px;justify-items:center;cursor:pointer;color:var(--burgundy);background:rgba(239,230,214,.6);border:1.5px dashed var(--burgundy);border-radius:4px;transform:rotate(4deg);font-family:var(--mono);transition:transform .3s}
+.code-stamp::before{content:"\2702";position:absolute;top:-10px;left:12px;font-size:14px;line-height:1;color:var(--burgundy);background:#EFE6D6;padding:0 3px;transform:rotate(-4deg)}
 .code-stamp .k,.code-stamp .t,.code-stamp .copied{font-size:9px;letter-spacing:.2em;opacity:.8}
 .code-stamp b{font-size:16px;letter-spacing:.16em}
 .code-stamp:hover{transform:rotate(0) scale(1.04)}
-.code-stamp .k,.code-stamp .t,.code-stamp .copied{color:rgba(241,231,216,.8)}
+.code-stamp .k,.code-stamp .t,.code-stamp .copied{color:var(--burgundy)}
 @media (max-width:520px){.route.has-stamp{padding-right:24px;padding-top:24px}.code-stamp{position:relative;top:auto;right:auto;justify-self:end;margin:-6px -6px 4px 0;order:-1}}
 
 .rate-line .rate-code{display:inline-flex;vertical-align:middle;margin-left:6px;padding:3px 8px 3px 10px;gap:8px}
@@ -350,6 +355,9 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .travel-head::before{background:linear-gradient(180deg,rgba(12,9,9,.15) 0%,rgba(12,9,9,.05) 40%,rgba(12,9,9,.7) 100%)}
 .stay-art{margin:0;border-radius:999px 999px 4px 4px;overflow:hidden;aspect-ratio:3/4;max-width:300px}
 .stay-art img{width:100%;height:100%;object-fit:cover;object-position:50% 0%}
+.stay-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px}
+.stay-pair .stay-art{max-width:none}
+.stay-pair .stay-art:last-child img{object-position:50% 50%}
 .prog-head{position:relative;isolation:isolate;min-height:min(92vw,480px);display:grid;align-items:end;margin-bottom:44px;color:var(--cream);overflow:hidden}
 .prog-head img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 34%;z-index:-2}
 .prog-head::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(12,9,9,.25) 0%,rgba(12,9,9,.15) 40%,rgba(12,9,9,.72) 100%)}
@@ -432,7 +440,7 @@ html[data-lang="ka"] .submit{text-transform:none;letter-spacing:.02em}
 
 /* travel */
 .travel-grid{display:grid;gap:44px}
-@media (min-width:880px){.travel-grid{grid-template-columns:1.15fr 1fr 1fr}}
+@media (min-width:880px){.travel-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:64px}}
 .tcol{display:grid;gap:16px;align-content:start;min-width:0}
 .tcol h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.1;letter-spacing:.03em}
 html[data-lang="ka"] .tcol h3{font-family:"Noto Serif Georgian",serif;font-size:22px;font-weight:400}
@@ -450,6 +458,65 @@ html[data-lang="ka"] .fav-note{text-transform:none;letter-spacing:0;font-family:
 .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--burgundy);white-space:nowrap;text-transform:uppercase}
 html[data-lang="ka"] .tag{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif;font-size:12px}
 .meals{display:grid;gap:12px}
+.eat-intro{color:var(--ink-dim);margin:0}
+/* transfer ribbon across both travel panes */
+.route-ribbon{margin:0;grid-column:1/-1;padding:24px 28px;
+  -webkit-mask:radial-gradient(circle 11px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat}
+.rr-a,.rr-c{display:grid;gap:8px}.rr-c p,.rr-a p{margin:0}
+@media (min-width:880px){.route-ribbon{grid-template-columns:auto minmax(240px,1fr) minmax(0,1.25fr);gap:40px;align-items:center;padding:28px 44px}}
+/* food & wine (dark) */
+.food-grid{display:grid;gap:40px}
+.food-intro{display:grid;gap:16px}
+@media (min-width:880px){
+  .food-grid{gap:56px}
+  .food-intro{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:56px;align-items:center}
+  .food-grid .dish-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .food-lists .eat-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:column;column-gap:64px;border-top:0}
+  .food-lists .eat-list.rows5{grid-template-rows:repeat(5,auto)}
+  .food-lists .eat-list.rows1{grid-template-rows:auto}
+  .food-lists .eat-list li{border-top:1px solid var(--line-dark);border-bottom:0}
+  .food-lists .eat-list.rows5 li:nth-child(5n),.food-lists .eat-list.rows1 li{border-bottom:1px solid var(--line-dark)}
+  .food-lists .eat-fav:not(:first-child){margin-top:20px}
+}
+.food-lists{display:grid;gap:16px;align-content:start}
+.dark .eat-intro{color:var(--dim)}
+.dark .eat-note{background:rgba(241,231,216,.06);border-left-color:var(--mauve);color:var(--cream)}
+.dark .eat-fav{color:var(--mauve)}
+.dark .list{border-top-color:var(--line-dark)}
+.dark .list li{border-bottom-color:var(--line-dark)}
+.dark .list a{color:var(--cream)}
+.dark .list a:hover{border-color:var(--mauve)}
+.dark .tag{color:var(--mauve)}
+.dark .dish figcaption{color:var(--dim)}
+.dark .dish figcaption b{color:var(--cream)}
+.dark .dish-nut{color:var(--mauve)}
+
+/* must-try dishes */
+.dishes{display:grid;gap:20px;min-width:0}
+.dishes h3,.food-lists h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0 0 4px;line-height:1.1;letter-spacing:.03em}
+html[data-lang="ka"] .food-lists h3,html[data-lang="ka"] .dishes h3{font-family:"Noto Serif Georgian",serif;font-size:22px;font-weight:400}
+/* phones: a swipeable strip of small cards */
+.dish-row{display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1 * max(20px,env(safe-area-inset-left,0px)));padding-inline:max(20px,env(safe-area-inset-left,0px));scroll-padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.dish-row::-webkit-scrollbar{display:none}
+.dish{margin:0;display:grid;gap:10px;align-content:start;scroll-snap-align:start}
+.dish img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;border-radius:999px 999px 3px 3px}
+.dish figcaption{display:grid;gap:4px;color:var(--ink-dim);font-size:.82em;line-height:1.4}
+.dish figcaption b{font-family:var(--display);font-weight:400;font-size:18px;line-height:1.15;color:var(--ink);letter-spacing:.02em}
+.dishes-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.dishes .swipe-hint{margin:0}
+html[data-lang="ka"] .dish figcaption b{font-family:"Noto Serif Georgian",serif;font-size:16px}
+.dish-nut{justify-self:start;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--burgundy);border:1px solid currentColor;border-radius:3px;padding:2px 6px;margin-top:2px}
+html[data-lang="ka"] .dish-nut{text-transform:none;letter-spacing:0;font-family:"Noto Serif Georgian",serif;font-size:11px}
+@media (min-width:880px){
+  .dish-row{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:36px;row-gap:24px;overflow:visible;margin-inline:0;padding-inline:0}
+  .dish{grid-template-columns:104px minmax(0,1fr);gap:16px;align-items:start}.dish figcaption{padding-top:6px}.dish img{width:104px}
+  .dish figcaption{font-size:.9em;line-height:1.45}.dish figcaption b{font-size:21px}
+  .dishes .swipe-hint{display:none}
+}
+
+.eat-note{margin:0;padding:10px 14px;border-left:2px solid var(--burgundy);background:rgba(122,36,52,.06);color:var(--ink);font-size:.95em}
+.eat-fav{margin:6px 0 -6px;color:var(--burgundy)}
 .eat-art{width:100%;max-width:340px;mix-blend-mode:multiply;margin:-6px 0 -4px}
 .meal{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-paper);padding:10px 0}
 .meal .script{font-size:28px;color:var(--burgundy);line-height:1}
@@ -467,6 +534,105 @@ html[data-lang="ka"] .route-when{font-family:"Noto Serif Georgian",serif;letter-
 .dress h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0;letter-spacing:.04em}
 html[data-lang="ka"] .dress h3{font-family:"Noto Serif Georgian",serif;font-size:22px}
 .dress p{color:var(--dim)}
+.paper .dress{border:1px solid rgba(42,19,21,.3);background:rgba(42,19,21,.1);color:var(--oxblood)}
+.paper .dress h3{color:var(--oxblood)}
+/* black tie palette + lookbook */
+.palette{margin-top:28px;padding:28px;border:1px solid rgba(42,19,21,.3);background:rgba(42,19,21,.06);border-radius:4px;display:grid;gap:22px}
+.palette-head{display:grid;gap:8px}
+.palette .caps{color:rgba(42,19,21,.75)}
+.palette-note{margin:0;color:#4A2A2C}
+.swatches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 10px}
+.swatches.in-card{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+.dress-grid.one{grid-template-columns:minmax(0,1fr)!important;max-width:780px}
+.dress-row{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;justify-items:center}
+/* looks: one polaroid at a time */
+.lookbook-pol{display:grid;justify-items:center;gap:12px;width:100%}
+.lookbook-pol .caps{color:var(--burgundy);margin:0}
+.pol-wrap{display:flex;align-items:center;gap:10px}
+.polaroid{position:relative;width:min(58vw,300px);background:#FBF8F2;padding:14px 14px 0;box-shadow:0 14px 28px rgba(42,19,21,.18),0 2px 4px rgba(42,19,21,.08);touch-action:pan-y}
+.pol-slide{margin:0;display:none}
+.pol-slide.on{display:block;animation:polIn .55s ease}
+@keyframes polIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pol-slide img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#F6F1E8}
+.pol-slide figcaption{font-family:var(--script);font-size:26px;line-height:1;color:var(--oxblood);text-align:center;padding:16px 4px 20px}
+html[data-lang="ka"] .pol-slide figcaption{font-family:"Noto Serif Georgian",serif;font-size:15px;padding:18px 4px 20px}
+.pol-arrow{width:40px;height:40px;border-radius:50%;border:1px solid rgba(42,19,21,.35);background:rgba(251,248,242,.6);color:var(--oxblood);font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 3px;transition:background .2s,color .2s}
+.pol-arrow:hover{background:var(--oxblood);color:var(--cream)}
+.pol-count{margin:4px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
+.pol-label{color:var(--burgundy)}
+html[data-lang="ka"] .pol-label{font-family:"Noto Serif Georgian",serif;letter-spacing:0;text-transform:none;font-size:12px}
+@media (min-width:900px){
+  .dress-row.has-pol{grid-template-columns:minmax(0,780px) auto;align-items:center;gap:18px}
+  .has-pol .lookbook-pol{justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){.pol-slide.on{animation:none}}
+
+.dress-title{display:flex;align-items:flex-end;gap:18px}
+@media (max-width:520px){.dress-flowers{height:210px;top:18px;right:-14px}.dress-title{gap:10px}}
+.dress-emblem{height:clamp(62px,12vw,118px);width:auto;margin-bottom:4px;filter:drop-shadow(0 6px 8px rgba(42,19,21,.12))}
+.looks{width:100%;display:grid;gap:14px;margin-top:8px}
+.looks-head{display:flex;justify-content:space-between;align-items:baseline}
+.looks .caps{color:var(--burgundy);margin:0}
+.looks .swipe-hint{margin:0}
+.looks-row{display:grid;grid-auto-flow:column;grid-auto-columns:72%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1 * max(20px,env(safe-area-inset-left,0px)));padding-inline:max(20px,env(safe-area-inset-left,0px));scroll-padding-inline:max(20px,env(safe-area-inset-left,0px));padding-bottom:10px}
+.looks-row::-webkit-scrollbar{display:none}
+.look-card{margin:0;display:grid;gap:10px;scroll-snap-align:start}
+.look-mat{background:#F6F1E8;padding:10px;box-shadow:0 8px 18px rgba(42,19,21,.12);aspect-ratio:4/5;display:grid;place-items:center;overflow:hidden}
+.look-mat img{width:100%;height:100%;object-fit:contain}
+.look-card figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--oxblood);text-align:center}
+html[data-lang="ka"] .look-card figcaption{font-family:"Noto Serif Georgian",serif;letter-spacing:0;text-transform:none;font-size:12px}
+@media (min-width:900px){.looks-row{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0;gap:24px}.looks .swipe-hint{display:none}.looks{margin-top:20px}}
+
+.dress-row .dress-grid.one{width:100%}
+.dress-couple{margin:0;width:min(62vw,250px)}
+.dress-couple img{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 14px rgba(42,19,21,.15))}
+@media (min-width:900px){.dress-row{justify-items:start;gap:40px}.dress-couple{width:auto;height:min(460px,100%);max-height:470px;justify-self:center}.dress-couple img{height:100%;width:auto;max-height:470px}}
+
+/* celebration card: translucent deep wine */
+.paper .dress-grid.one .dress{background:rgba(42,19,21,.94);border-color:rgba(42,19,21,.5);color:var(--cream);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);box-shadow:0 18px 36px rgba(42,19,21,.22)}
+.paper .dress-grid.one .dress h3{color:var(--cream)}
+.gown-lead{display:block;font-family:var(--script);font-size:1.9em;line-height:1.15;color:var(--cream);margin-bottom:4px}
+.gown-lead.ka-lead{font-family:"Noto Serif Georgian",serif;font-size:1.15em;font-weight:500}
+.paper .dress-grid.one .dress p{color:rgba(241,231,216,.82)}
+.paper .dress-grid.one .dress .caps{color:var(--mauve)}
+.paper .dress-grid.one .dress-tag{color:var(--cream)!important}
+.dress-grid.one .sw.chip{box-shadow:0 4px 10px rgba(0,0,0,.35)}
+
+@media (min-width:760px){.dress-grid.one .swatches.in-card{grid-template-columns:repeat(8,minmax(0,1fr))}.dress-grid.one .dress{padding:34px 38px}}
+
+.sw.chip{background:#FBF7F0;padding:5px 5px 8px;box-shadow:0 3px 8px rgba(42,19,21,.14);justify-items:stretch;align-content:start;grid-template-rows:auto 1fr auto;text-align:left;gap:3px}
+.sw.chip i{width:auto;height:auto;aspect-ratio:1/1.05;border-radius:0;box-shadow:none;flex-shrink:0}
+.sw.chip b{align-self:end}
+.sw.chip b{font-family:var(--mono);font-weight:700;font-size:8.5px;letter-spacing:.08em;margin-top:4px;line-height:1.2;color:var(--oxblood)}
+.sw.chip small{font-family:var(--mono);font-size:8px;color:var(--ink-dim);letter-spacing:.02em}
+.sw{display:grid;justify-items:center;gap:8px;text-align:center}
+.sw i{width:46px;height:46px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 2px 6px rgba(42,19,21,.18)}
+.sw b{font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood)}
+html[data-lang="ka"] .sw b{font-family:"Noto Serif Georgian",serif;letter-spacing:0;text-transform:none;font-size:12px}
+.lookbook{display:grid;grid-auto-flow:column;grid-auto-columns:38%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-28px;padding-inline:28px;scroll-padding-inline:28px}
+.lookbook::-webkit-scrollbar{display:none}
+.look{margin:0;display:grid;gap:8px;scroll-snap-align:start}
+.look-art{position:relative;aspect-ratio:3/4;border-radius:999px 999px 3px 3px;background:#F6EFE4;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(42,19,21,.12)}
+.look-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:12% 8% 5%;box-sizing:border-box}
+.look-art.photo{background:#fff}.look-art.photo img{padding:4%}
+
+.lookbook.groups{grid-auto-columns:82%}
+.groups .look-art{aspect-ratio:3/2;border-radius:4px;background:#fff}
+.groups .look-art img{object-fit:cover;padding:0}
+.groups .look figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--oxblood)}
+html[data-lang="ka"] .groups .look figcaption{font-family:"Noto Serif Georgian",serif;letter-spacing:0;text-transform:none;font-size:12px}
+@media (min-width:760px){.lookbook.groups{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px 18px}}
+.look figcaption{font-size:.85em;color:#4A2A2C;text-align:center;line-height:1.3}
+@media (min-width:760px){.swatches:not(.in-card){grid-template-columns:repeat(7,minmax(0,1fr))}.lookbook{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0}.palette{padding:36px 40px}}
+
+.paper .dress p{color:#4A2A2C}
+.paper .dress .caps{color:rgba(42,19,21,.7)}
+.dress-tag{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--oxblood)!important;margin:2px 0 0}
+html[data-lang="ka"] .dress-tag{font-family:"Noto Serif Georgian",serif;letter-spacing:.02em;text-transform:none;font-size:14px}
+#dress{overflow:hidden}
+#dress .wrap{position:relative;z-index:1}
+.dress-flowers{position:absolute;z-index:0;top:46px;right:max(8px,calc(50% - 690px));height:clamp(250px,40vw,430px);width:auto;pointer-events:none;transform:rotate(-6deg);opacity:.95}
+@media (min-width:760px){.dress-flowers{top:26px}}
 
 footer{padding-block:22px calc(20px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--line-dark)}
 footer .wrap{display:grid;gap:4px;justify-items:center}
@@ -486,8 +652,9 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <nav class="navlinks" aria-label="Sections">
       <button data-go="weekend"><span class="en">The Program</span><span class="ka">პროგრამა</span></button>
       <button data-go="crowning"><span class="en">Ceremony</span><span class="ka">ჯვრისწერა</span></button>
-      <button data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
       <button data-go="dress"><span class="en">Dress Code</span><span class="ka">ჩაცმა</span></button>
+      <button data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
+      <button data-go="food"><span class="en">Food &amp; Wine</span><span class="ka">სამზარეულო</span></button>
     </nav>
     <div class="bar-right">
       <div class="lang" role="group" aria-label="Language">
@@ -567,6 +734,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <figure class="frame"><img src="media/tezza-9645.jpg" alt="Graftan kissing Mari's forehead" loading="lazy"><figcaption>10<span>10A</span></figcaption></figure>
       </div>
     </div>
+    <p class="swipe-hint" aria-hidden="true"><span class="en">Swipe</span><span class="ka">გადაფურცლეთ</span><i>&rarr;</i></p>
     <p class="sign strip-sign">Mari <span>&amp;</span> Graftan</p>
   </section>
 
@@ -574,7 +742,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <header class="prog-head">
       <img src="media/gergeti-snow.jpg" alt="Gergeti Trinity Church on its snowy ridge beneath Mount Kazbek" loading="lazy">
       <div class="wrap">
-        <p class="caps"><span class="en">Mount Kazbek · 5,054 m</span><span class="ka">მყინვარწვერი · 5054 მ</span></p>
+        <p class="caps"><span class="en">Mount Kazbek · 16,581 ft</span><span class="ka">მყინვარწვერი · 5054 მ</span></p>
         <h2><span class="en">The Program</span><span class="ka">პროგრამა</span></h2>
         <p class="caps"><span class="en">March 10–13, 2027</span><span class="ka">10 – 13 მარტი, 2027</span></p>
       </div>
@@ -594,7 +762,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <p class="cal-ribbon"><span class="en">Mari &amp; Graftan in Gudauri · <span style="white-space:nowrap">March 8 – 15</span></span><span class="ka">მარი და გრაფტანი გუდაურში · <span style="white-space:nowrap">8 – 15 მარტი</span></span></p>
       <div class="cal-key">
         <span><i style="background:var(--hosted);border-color:var(--hosted)"></i><span class="en">Hosted celebrations</span><span class="ka">ზეიმის დღეები</span></span>
-        <span><img class="ski-ico key" src="media/skis-icon.webp" alt=""><span class="en">Ski days · feel free to join</span><span class="ka">სათხილამურო დღეები · შემოგვიერთდით სურვილისამებრ</span></span>
+        <span><img class="ski-ico key" src="media/skis-icon.webp" alt=""><span class="en">Ski days · feel free to join*</span><span class="ka">სათხილამურო დღეები · შემოგვიერთდით სურვილისამებრ*</span></span>
+        <span class="cal-note"><span class="en">* Heliskiing is available at the resort</span><span class="ka">* კურორტზე ხელმისაწვდომია ჰელისკიინგი</span></span>
       </div>
 
       <div class="days">
@@ -603,8 +772,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <span class="wd"><span class="en">Wednesday</span><span class="ka">ოთხშაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">9:30 AM</span><span class="ka">09:30</span></time><span><span class="en">Transfer from the Telegraph Hotel, Tbilisi, to Gudauri</span><span class="ka">ტრანსფერი თბილისიდან, სასტუმრო „ტელეგრაფიდან“ გუდაურში</span></span></li>
-            <li><time><span class="en">12:00 PM</span><span class="ka">12:00</span></time><span><span class="en">Arrival at Gudauri Lodge</span><span class="ka">ჩასვლა სასტუმრო „გუდაური ლოჯში“</span></span></li>
+            <li><time><span class="en">9:30 AM</span><span class="ka">09:30</span></time><span><span class="en">Transfer from the <a class="lodge-link" href="https://telegraphhotel.com/" target="_blank" rel="noopener">Telegraph Hotel</a>, Tbilisi, to Gudauri</span><span class="ka">ტრანსფერი თბილისიდან, სასტუმრო <a class="lodge-link" href="https://telegraphhotel.com/" target="_blank" rel="noopener">„ტელეგრაფიდან“</a> გუდაურში</span></span></li>
+            <li><time><span class="en">12:00 PM</span><span class="ka">12:00</span></time><span><span class="en">Arrival at <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a></span><span class="ka">ჩასვლა სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯში“</a></span></span></li>
             <li><time><span class="en">4:00 PM</span><span class="ka">16:00</span></time><span><span class="en">Helicopter tour over the Caucasus</span><span class="ka">ვერტმფრენით ფრენა კავკასიონზე</span><small><span class="en">Weather permitting</span><span class="ka">თუ ამინდი ხელს შეუწყობს</span></small></span></li>
           </ol>
         </article>
@@ -613,11 +782,11 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <span class="wd"><span class="en">Thursday</span><span class="ka">ხუთშაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">10:00 AM</span><span class="ka">10:00</span></time><span><span class="en">Transfer from Gudauri Lodge to Gergeti Trinity Church</span><span class="ka">ტრანსფერი „გუდაური ლოჯიდან“ გერგეტის სამებამდე</span></span></li>
+            <li><time><span class="en">10:00 AM</span><span class="ka">10:00</span></time><span><span class="en">Transfer from <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> to Gergeti Trinity Church</span><span class="ka">ტრანსფერი <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯიდან“</a> გერგეტის სამებამდე</span></span></li>
             <li><time><span class="en">12:30 PM</span><span class="ka">12:30</span></time><span><span class="en">Church ceremony</span><span class="ka">ჯვრისწერა</span><small><span class="en">Gergeti Trinity Church</span><span class="ka">ქორწინების საიდუმლო</span></small></span></li>
             <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Departure from Gergeti</span><span class="ka">გამგზავრება გერგეტიდან</span></span></li>
-            <li><time><span class="en">4:30 PM</span><span class="ka">16:30</span></time><span><span class="en">Aperitif &amp; canapés</span><span class="ka">აპერიტივი და კანაპეები</span><small><span class="en">Gudauri Lodge, level −1</span><span class="ka">„გუდაური ლოჯი“, −1 სართული</span></small></span></li>
-            <li><time><span class="en">6:30 PM</span><span class="ka">18:30</span></time><span><span class="en">The evening begins</span><span class="ka">საღამო იწყება</span></span></li>
+            <li><time><span class="en">4:30 PM</span><span class="ka">16:30</span></time><span><span class="en">Cocktail hour</span><span class="ka">კოქტეილი</span><small><span class="en">Champagne &amp; canapés · <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
+            <li><time><span class="en">6:30 PM</span><span class="ka">18:30</span></time><span><span class="en">The evening begins</span><span class="ka">საღამო იწყება</span><small><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
           </ol>
         </article>
         <article class="day">
@@ -625,8 +794,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <span class="wd"><span class="en">Friday</span><span class="ka">პარასკევი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">11:00 AM</span><span class="ka">11:00</span></time><span><span class="en">Après-ski brunch</span><span class="ka">აპრე-სკი ბრანჩი</span></span></li>
-            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Skiing</span><span class="ka">თხილამურებით სრიალი</span></span></li>
+            <li><time><span class="en">11:00 AM</span><span class="ka">11:00</span></time><span><span class="en">Après-ski brunch</span><span class="ka">აპრე-სკი ბრანჩი</span><small><span class="en">Khinkali-making masterclass</span><span class="ka">ხინკლის მომზადების მასტერკლასი</span></small></span></li>
+            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Let&rsquo;s hit the slopes</span><span class="ka">გავიდეთ ტრასაზე</span></span></li>
           </ol>
         </article>
         <article class="day">
@@ -634,8 +803,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <span class="wd"><span class="en">Saturday</span><span class="ka">შაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">12:00 PM</span><span class="ka">12:00</span></time><span><span class="en">Check-out</span><span class="ka">სასტუმროდან გაწერა</span></span></li>
-            <li><time>—</time><span><span class="en">Departures</span><span class="ka">გამგზავრება</span><small><span class="en">Cars can be arranged on request</span><span class="ka">მანქანას მოთხოვნისამებრ მოგიწყობთ</span></small></span></li>
+            <li><time><span class="en">12:00 PM</span><span class="ka">12:00</span></time><span><span class="en">Check-out</span><span class="ka">სასტუმროდან გაწერა</span><small><span class="en">Cars can be arranged on request</span><span class="ka">მანქანას მოთხოვნისამებრ მოგიწყობთ</span></small></span></li>
           </ol>
         </article>
       </div>
@@ -657,7 +825,6 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <div>
         <div class="section-head" style="margin-bottom:22px">
           <h2><span class="en">The Church Ceremony</span><span class="ka">ჯვრისწერა</span></h2>
-          <p class="script" style="font-family:'Noto Serif Georgian',serif;font-size:26px;font-weight:300"><span class="en">ჯვრისწერა</span></p>
         </div>
         <p class="lede en">The Georgian Orthodox sacrament of marriage. There are no spoken vows; the service is sung in Georgian, and you only need to watch for five moments.</p>
         <p class="lede ka">გვიხარია, რომ ამ დღეს ჩვენთან ერთად იქნებით.</p>
@@ -670,8 +837,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </ol>
         <div class="note" style="margin-top:32px">
           <p class="caps"><span class="en">Before you come</span><span class="ka">სანამ მოხვალთ</span></p>
-          <p class="en">Gergeti sits at 2,170 m, so expect snow: wear a warm coat and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, which lasts about 30 minutes.</p>
-          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით თბილად, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი. მსახურება დაახლოებით 30 წუთი გაგრძელდება.</p>
+          <p class="en">Gergeti sits at 7,119 ft, so expect snow: wear a classic coat or fur and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, which lasts about 30 minutes.</p>
+          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით კლასიკური პალტო ან ბეწვი, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი. მსახურება დაახლოებით 30 წუთი გაგრძელდება.</p>
         </div>
       </div>
     </div>
@@ -689,7 +856,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <div class="pass-top">
             <span class="k">SKI PASS · SEASON 2027</span>
             <span class="t">GUDAURI</span>
-            <span class="k">GEORGIA · 2,196 M</span>
+            <span class="k"><span class="en">GEORGIA · 7,205 FT</span><span class="ka">GEORGIA · 2,196 M</span></span>
           </div>
           <figure class="pass-art"><img src="media/pass-couple-blue.jpg" alt="Illustration of Mari and Graftan skiing in traditional Georgian dress"></figure>
           <div class="pass-body">
@@ -713,6 +880,36 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     </div>
   </section>
 
+  <section class="paper section" id="dress">
+    <img class="dress-flowers" src="media/pass-flowers.webp" alt="" aria-hidden="true" loading="lazy">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">What to wear</span><span class="ka">რა ჩავიცვათ</span></p>
+        <div class="dress-title"><h2><span class="en">Dress Code</span><span class="ka">ჩაცმის სტილი</span></h2></div>
+      </div>
+      <div class="dress-row has-pol">
+      <div class="dress-grid one">
+        <div class="dress">
+          <p class="caps"><span class="en">March 11 · Evening</span><span class="ka">11 მარტი · საღამო</span></p>
+          <h3><span class="en">The Celebration</span><span class="ka">ზეიმი</span></h3>
+          <p class="dress-tag"><span class="en">Black tie</span><span class="ka">Black tie</span></p>
+          <p class="en"><span class="gown-lead">Gowns &amp; tuxedos</span>in deep jewel and earth tones.<br>Classic black tuxedos are always welcome.<br>Please avoid bright colors.</p>
+          <p class="ka"><span class="gown-lead ka-lead">საღამოს კაბები და სმოკინგები</span>მუქ, ძვირფასი ქვებისა და მიწის ფერებში.<br>კლასიკური შავი სმოკინგიც სასურველია.<br>გთხოვთ, მოერიდოთ მკვეთრ ფერებს.</p>
+          <div class="swatches in-card"><span class="sw chip"><i style="background:#2E1A0E"></i><b><span class="en">Espresso</span><span class="ka">ესპრესო</span></b><small>#2E1A0E</small></span><span class="sw chip"><i style="background:#461312"></i><b><span class="en">Burgundy</span><span class="ka">ბორდო</span></b><small>#461312</small></span><span class="sw chip"><i style="background:#6C0B25"></i><b><span class="en">Ruby</span><span class="ka">ლალისფერი</span></b><small>#6C0B25</small></span><span class="sw chip"><i style="background:#4A2338"></i><b><span class="en">Plum</span><span class="ka">ქლიავისფერი</span></b><small>#4A2338</small></span><span class="sw chip"><i style="background:#A97F8F"></i><b><span class="en">Mauve</span><span class="ka">ღია იისფერი</span></b><small>#A97F8F</small></span><span class="sw chip"><i style="background:#B08A86"></i><b><span class="en">Dusty rose</span><span class="ka">ფერფლისფერი ვარდი</span></b><small>#B08A86</small></span><span class="sw chip"><i style="background:#64652A"></i><b><span class="en">Olive</span><span class="ka">ზეთისხილისფერი</span></b><small>#64652A</small></span><span class="sw chip"><i style="background:#B5AD80"></i><b><span class="en">Sage</span><span class="ka">სალბისფერი</span></b><small>#B5AD80</small></span></div>
+        </div>
+      </div>
+        <div class="lookbook-pol" id="lookbook" aria-roledescription="carousel" aria-label="Looks we love">
+          <div class="pol-wrap">
+            <button class="pol-arrow prev" type="button" aria-label="Previous look">&lsaquo;</button>
+            <div class="polaroid"><figure class="pol-slide on" data-i="0"><img src="media/look-wine.jpg" alt="A draped wine-red velvet gown beside a black tuxedo" loading="lazy"><figcaption><span class="en">Wine &amp; black</span><span class="ka">ღვინისფერი და შავი</span></figcaption></figure><figure class="pol-slide" data-i="1"><img src="media/look-g-blush.jpg" alt="A pale rose draped jersey gown with pearl earrings and crystal sandals" loading="lazy"><figcaption><span class="en">Dusty rose drape</span><span class="ka">ფერფლისფერი ვარდი</span></figcaption></figure><figure class="pol-slide" data-i="2"><img src="media/look-aubergine.jpg" alt="A pleated aubergine gown beside a plum suit" loading="lazy"><figcaption><span class="en">Aubergine &amp; plum</span><span class="ka">ბადრიჯნისფერი და ქლიავისფერი</span></figcaption></figure><figure class="pol-slide" data-i="3"><img src="media/look-g-plum2.jpg" alt="A plum satin halter slip gown with a gold clutch, pearl bracelet and jeweled sandals" loading="lazy"><figcaption><span class="en">Plum satin</span><span class="ka">ქლიავისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="4"><img src="media/look-olive.jpg" alt="An olive cape gown beside an olive double-breasted suit" loading="lazy"><figcaption><span class="en">Olive</span><span class="ka">ზეთისხილისფერი</span></figcaption></figure><figure class="pol-slide" data-i="5"><img src="media/look-g-espresso.jpg" alt="An espresso satin cowl-neck gown with an olive clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Espresso &amp; olive</span><span class="ka">ესპრესო და ზეთისხილისფერი</span></figcaption></figure><figure class="pol-slide" data-i="6"><img src="media/look-g-fringe.jpg" alt="A strapless gown with tiered fringe fading from blush to chocolate" loading="lazy"><figcaption><span class="en">Ombré fringe</span><span class="ka">ომბრე ფოჩებით</span></figcaption></figure><figure class="pol-slide" data-i="7"><img src="media/look-espresso.jpg" alt="An espresso cape gown beside a dark brown double-breasted suit" loading="lazy"><figcaption><span class="en">Espresso</span><span class="ka">ესპრესო</span></figcaption></figure><figure class="pol-slide" data-i="8"><img src="media/look-g-copper.jpg" alt="A copper pleated chiffon halter gown with amber earrings and a pearl clutch" loading="lazy"><figcaption><span class="en">Copper chiffon</span><span class="ka">სპილენძისფერი შიფონი</span></figcaption></figure><figure class="pol-slide" data-i="9"><img src="media/look-g-wine.jpg" alt="A burgundy column gown with gold serpent jewelry and a burgundy clutch" loading="lazy"><figcaption><span class="en">Burgundy column</span><span class="ka">ბორდოსფერი</span></figcaption></figure><figure class="pol-slide" data-i="10"><img src="media/look-g-gold.jpg" alt="A gold beaded high-neck top with a burgundy satin draped maxi skirt" loading="lazy"><figcaption><span class="en">Gold &amp; burgundy</span><span class="ka">ოქროსფერი და ბორდო</span></figcaption></figure><figure class="pol-slide" data-i="11"><img src="media/look-black.jpg" alt="A one-shoulder black gown beside a black three-piece tuxedo with a bow tie" loading="lazy"><figcaption><span class="en">Classic black</span><span class="ka">კლასიკური შავი</span></figcaption></figure><figure class="pol-slide" data-i="12"><img src="media/look-g-chocolate.jpg" alt="A chocolate ruched halter gown with cream flower earrings, sandals and clutch" loading="lazy"><figcaption><span class="en">Chocolate halter</span><span class="ka">შოკოლადისფერი</span></figcaption></figure><figure class="pol-slide" data-i="13"><img src="media/look-g-rose.jpg" alt="A rose satin one-shoulder gown with a gold clutch and gold sandals" loading="lazy"><figcaption><span class="en">Rose satin</span><span class="ka">ვარდისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="14"><img src="media/look-g-olive.jpg" alt="An olive satin halter gown with a scarf neckline, an olive ostrich clutch and olive patent mules" loading="lazy"><figcaption><span class="en">Olive satin</span><span class="ka">ზეთისხილისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="15"><img src="media/look-g-sage.jpg" alt="A sage off-the-shoulder draped gown with emerald earrings and a silver woven clutch" loading="lazy"><figcaption><span class="en">Sage drape</span><span class="ka">სალბისფერი</span></figcaption></figure><figure class="pol-slide" data-i="16"><img src="media/look-g-aubergine.jpg" alt="An aubergine column gown with a knotted shoulder, a woven burgundy clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Aubergine column</span><span class="ka">ბადრიჯნისფერი</span></figcaption></figure><figure class="pol-slide" data-i="17"><img src="media/look-g-taupe.jpg" alt="A taupe satin draped top and bias-cut maxi skirt with silver accessories" loading="lazy"><figcaption><span class="en">Taupe satin</span><span class="ka">ნაცრისფერ-ვარდისფერი ატლასი</span></figcaption></figure></div>
+            <button class="pol-arrow next" type="button" aria-label="Next look">&rsaquo;</button>
+          </div>
+          <p class="pol-count" aria-live="polite"><span class="pol-label"><span class="en">Looks we love</span><span class="ka">ჩვენი საყვარელი სტილი</span></span> · <span id="polNo">1</span> / <span id="polOf">18</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="paper section" id="travel">
     <header class="prog-head travel-head">
       <img src="media/tbilisi.jpg" alt="Old Tbilisi at dusk: Narikala fortress above the old town, with the Peace Bridge over the Mtkvari" loading="lazy">
@@ -724,7 +921,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <div class="wrap">
       <div class="travel-grid">
         <div class="tcol">
-          <h3><span class="en">Flying to Tbilisi</span><span class="ka">ფრენა თბილისში</span></h3>
+          <h3><span class="en">How to fly to Tbilisi</span><span class="ka">როგორ ჩამოფრინდეთ თბილისში</span></h3>
           <p class="en">There are no nonstop flights from the US to Tbilisi, so you'll connect at least once. Several of these routes don't fly daily, so choose the one that fits your dates.</p>
           <p class="ka">საზღვარგარეთიდან მომავალ სტუმრებს: აშშ-დან პირდაპირი რეისი არ არის, საჭიროა მინიმუმ ერთი გადაჯდომა. ზოგი რეისი ყოველდღე არ დაფრინავს.</p>
           <ul class="list">
@@ -739,16 +936,16 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <div class="route">
             <p class="caps"><span class="en">Tbilisi to Gudauri</span><span class="ka">თბილისიდან გუდაურამდე</span></p>
             <p class="route-when"><span class="en">WED, MAR 10 · 9:30 AM</span><span class="ka">ოთხშაბათი, 10 მარტი · 09:30</span></p>
-            <div class="route-line"><span>TELEGRAPH HOTEL</span><i></i><span>GUDAURI LODGE</span></div>
-            <p class="en" style="color:var(--ink-dim)">A group transfer leaves the Telegraph Hotel in Tbilisi and arrives at Gudauri Lodge around 12:00 PM.</p>
-            <p class="ka" style="color:var(--ink-dim)">საერთო ტრანსფერი სასტუმრო „ტელეგრაფიდან“ გავა და „გუდაური ლოჯში“ დაახლოებით 12:00-ზე ჩავა.</p>
+            <div class="route-line"><span><a class="lodge-link" href="https://telegraphhotel.com/" target="_blank" rel="noopener">TELEGRAPH HOTEL</a></span><i></i><span><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">GUDAURI LODGE</a></span></div>
+            <p class="en" style="color:var(--ink-dim)">A group transfer leaves the <a class="lodge-link" href="https://telegraphhotel.com/" target="_blank" rel="noopener">Telegraph Hotel</a> in Tbilisi and arrives at <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> around 12:00 PM.</p>
+            <p class="ka" style="color:var(--ink-dim)">საერთო ტრანსფერი სასტუმრო <a class="lodge-link" href="https://telegraphhotel.com/" target="_blank" rel="noopener">„ტელეგრაფიდან“</a> გავა და <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯში“</a> დაახლოებით 12:00-ზე ჩავა.</p>
             <p class="en" style="color:var(--ink-dim)">Private transfers can be arranged upon request.</p>
             <p class="ka" style="color:var(--ink-dim)">მოთხოვნის შემთხვევაში ინდივიდუალურ ტრანსფერსაც მოგიწყობთ.</p>
           </div>
         </div>
         <div class="tcol">
           <h3><span class="en">Where to stay in Tbilisi</span><span class="ka">სად დარჩეთ თბილისში</span></h3>
-          <figure class="stay-art"><img src="media/tbilisi-street.jpg" alt="An old Tbilisi street in autumn with Kartlis Deda on the hill above" loading="lazy"></figure>
+          <div class="stay-pair"><figure class="stay-art"><img src="media/tbilisi-street.jpg" alt="An old Tbilisi street in autumn with Kartlis Deda on the hill above" loading="lazy"></figure><figure class="stay-art"><img src="media/tbilisi-stay.jpg" alt="A Tbilisi hotel lobby with book-lined walls, concrete columns and a leather sofa" loading="lazy"></figure></div>
           <ul class="list">
             <li><a href="https://telegraphhotel.com/" target="_blank" rel="noopener">Telegraph Hotel</a><span class="tag"><span class="en">Transfer departs here</span><span class="ka">ტრანსფერი აქედან</span></span></li>
             <li><a href="https://stambahotel.com/" target="_blank" rel="noopener">Stamba Hotel</a></li>
@@ -757,45 +954,56 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <li><a href="https://www.artizanhotels.com/en" target="_blank" rel="noopener">Artizan Hotel</a></li>
           </ul>
         </div>
-        <div class="tcol">
-          <h3><span class="en">Where to eat</span><span class="ka">სად ვჭამოთ</span></h3>
-          <img class="eat-art" src="media/khinkali.jpg" alt="Illustration of khinkali, a clay wine jug and vintage skis" loading="lazy">
-          <div class="meals">
-            <div class="meal"><span class="script"><span class="en">Breakfast</span><span class="ka">საუზმე</span></span><span class="tbc">TBC</span></div>
-            <div class="meal"><span class="script"><span class="en">Lunch</span><span class="ka">სადილი</span></span><span class="tbc">TBC</span></div>
-            <div class="meal"><span class="script"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span><span class="tbc">TBC</span></div>
-          </div>
+      </div>
+    </div>
+  </section>
+  <section class="dark section" id="food">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="caps"><span class="en">Eat &amp; drink</span><span class="ka">ჭამა და სმა</span></p>
+        <h2><span class="en">Food &amp; Wine</span><span class="ka">სამზარეულო და ღვინო</span></h2>
+      </div>
+      <div class="food-grid">
+        <div class="food-intro">
+          <p class="eat-intro"><span class="en">While in Georgia, we highly recommend eating only Georgian food: expect fresh, organic ingredients everywhere. Try pairing meals with Georgian wine.</span><span class="ka">საქართველოში ყოფნისას გირჩევთ, მხოლოდ ქართული სამზარეულო გასინჯოთ — ყველგან ახალ, ნატურალურ პროდუქტებს შეხვდებით. კერძებს ქართული ღვინო შეუხამეთ.</span></p>
+          <p class="eat-note"><span class="en">Georgian cooking is rich in nuts. If you have a nut allergy, please let the restaurant know.</span><span class="ka">ქართული სამზარეულო თხილეულით მდიდარია. თუ ალერგია გაქვთ, გთხოვთ, რესტორანს აცნობოთ.</span></p>
         </div>
+        <div class="food-lists">
+          <h3><span class="en">Where to eat in Tbilisi</span><span class="ka">სად ვჭამოთ თბილისში</span></h3>
+          <p class="eat-fav caps"><span class="en">Mari’s favorites</span><span class="ka">მარის საყვარელი ადგილები</span></p>
+          <ul class="list eat-list rows5">
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Puri+Guliani+Tbilisi" target="_blank" rel="noopener">Puri Guliani</a><span class="tag"><span class="en">Bakery · Breakfast</span><span class="ka">საცხობი · საუზმე</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Cafe+Stamba+Tbilisi" target="_blank" rel="noopener">Cafe Stamba</a><span class="tag"><span class="en">Breakfast · Lunch</span><span class="ka">საუზმე · სადილი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Keto+da+Kote+Tbilisi" target="_blank" rel="noopener">Keto da Kote</a><span class="tag"><span class="en">Lunch · Dinner</span><span class="ka">სადილი · ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Cafe+Gabriadze+Tbilisi" target="_blank" rel="noopener">Cafe Gabriadze</a><span class="tag"><span class="en">Lunch · Dinner</span><span class="ka">სადილი · ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Ninia%27s+Garden+Tbilisi" target="_blank" rel="noopener">Ninia&rsquo;s Garden</a><span class="tag"><span class="en">Lunch · Dinner</span><span class="ka">სადილი · ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Barbarestan+Tbilisi" target="_blank" rel="noopener">Barbarestan</a><span class="tag"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Zala+Tbilisi" target="_blank" rel="noopener">Zala</a><span class="tag"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=OtsY+Tbilisi" target="_blank" rel="noopener">OtsY</a><span class="tag"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Odi+Tbilisi" target="_blank" rel="noopener">Odí</a><span class="tag"><span class="en">Dinner</span><span class="ka">ვახშამი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Georgian+House+Tbilisi" target="_blank" rel="noopener">Georgian House</a><span class="tag"><span class="en">Khinkali · Dinner</span><span class="ka">ხინკალი · ვახშამი</span></span></li>
+          </ul>
+          <p class="eat-fav caps"><span class="en">Wine bars</span><span class="ka">ღვინის ბარები</span></p>
+          <ul class="list eat-list rows1">
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=8000+Vintages+Tbilisi" target="_blank" rel="noopener">8000 Vintages</a><span class="tag"><span class="en">Wine bar</span><span class="ka">ღვინის ბარი</span></span></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Wine+Factory+N1+Tbilisi" target="_blank" rel="noopener">Wine Factory</a><span class="tag"><span class="en">Wine bar</span><span class="ka">ღვინის ბარი</span></span></li>
+          </ul>
+        </div>
+        <div class="dishes">
+        <div class="dishes-head"><h3><span class="en">Must-try dishes</span><span class="ka">აუცილებლად გასასინჯი</span></h3><p class="swipe-hint" aria-hidden="true"><span class="en">Swipe</span><span class="ka">გადაფურცლეთ</span><i>&rarr;</i></p></div>
+        <div class="dish-row">
+          <figure class="dish"><img src="media/dish-khinkali.jpg" alt="Khinkali dumplings in a clay dish" loading="lazy"><figcaption><b><span class="en">Khinkali</span><span class="ka">ხინკალი</span></b><span class="en">Juicy dumplings. Hold them by the knot, sip the broth first, and leave the knot on the plate.</span><span class="ka">წვნიანი ხინკალი — ჯერ წვენი მოსვით, კუდი კი თეფშზე დატოვეთ.</span></figcaption></figure>
+          <figure class="dish"><img src="media/dish-khachapuri.jpg" alt="Two Acharuli khachapuri with egg yolk and butter" loading="lazy"><figcaption><b><span class="en">Acharuli Khachapuri</span><span class="ka">აჭარული ხაჭაპური</span></b><span class="en">A boat of bread filled with cheese, egg and butter. Stir it together and tear from the edges.</span><span class="ka">ყველით, კვერცხითა და კარაქით სავსე ნავი — აურიეთ და კიდეებიდან დაიწყეთ.</span></figcaption></figure>
+          <figure class="dish"><img src="media/dish-mtsvadi.jpg" alt="Mtsvadi skewers grilling over coals" loading="lazy"><figcaption><b><span class="en">Veal Mtsvadi</span><span class="ka">ხბოს მწვადი</span></b><span class="en">Veal skewers grilled over glowing coals.</span><span class="ka">ხბოს ხორცი, ნაკვერჩხალზე შემწვარი.</span></figcaption></figure>
+          <figure class="dish"><img src="media/dish-elarji.jpg" alt="Elarji stretching from a fork, with gebzhalia beside it" loading="lazy"><figcaption><b><span class="en">Elarji with Gebzhalia</span><span class="ka">ელარჯი გებჟალიით</span></b><span class="en">Stretchy cornmeal with sulguni cheese, and fresh cheese rolled with mint.</span><span class="ka">ღომი სულგუნით და პიტნიანი ახალი ყველის რულეტები.</span></figcaption></figure>
+          <figure class="dish"><img src="media/dish-pkhali.jpg" alt="Spinach and beet pkhali with eggplant rolls and walnuts" loading="lazy"><figcaption><b><span class="en">Pkhali & Eggplant with Walnuts</span><span class="ka">ფხალი და ბადრიჯანი ნიგვზით</span></b><span class="en">Spinach and beet pkhali and eggplant rolls, all made with walnut paste.</span><span class="ka">ისპანახისა და ჭარხლის ფხალი და ბადრიჯანი ნიგვზით.</span></figcaption></figure>
+          <figure class="dish"><img src="media/dish-chashushuli.jpg" alt="Chashushuli stew in a clay bowl with fresh herbs" loading="lazy"><figcaption><b><span class="en">Chashushuli</span><span class="ka">ჩაშუშული</span></b><span class="en">A rich, spicy beef stew with tomatoes, peppers and fresh herbs.</span><span class="ka">ხორცი პომიდვრით, წიწაკითა და მწვანილით მოშუშული.</span></figcaption></figure>
+        </div>
+      </div>
       </div>
     </div>
   </section>
 
-  <section class="dark section" id="dress">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="caps"><span class="en">What to wear</span><span class="ka">რა ჩავიცვათ</span></p>
-        <h2><span class="en">Dress Code</span><span class="ka">ჩაცმის სტილი</span></h2>
-      </div>
-      <div class="dress-grid">
-        <div class="dress">
-          <p class="caps"><span class="en">Thursday · Day</span><span class="ka">ხუთშაბათი · დღე</span></p>
-          <h3><span class="en">The Church Ceremony</span><span class="ka">ჯვრისწერა</span></h3>
-          <p class="en">Warm and modest. Covered shoulders and a head scarf for women, long trousers for men, a proper coat and boots for the snow.</p>
-          <p class="ka">თბილად და თავშეკავებულად. ქალბატონებს თავსაფარი, ყველას თბილი პალტო და თოვლისთვის შესაფერისი ფეხსაცმელი.</p>
-        </div>
-        <div class="dress">
-          <p class="caps"><span class="en">Thursday · Evening</span><span class="ka">ხუთშაბათი · საღამო</span></p>
-          <h3><span class="en">The Celebration</span><span class="ka">ზეიმი</span></h3>
-          <p><span class="tbc">Dress code TBC</span></p>
-        </div>
-        <div class="dress">
-          <p class="caps"><span class="en">Friday · 11:00 AM</span><span class="ka">პარასკევი · 11:00</span></p>
-          <h3><span class="en">Après-Ski Brunch</span><span class="ka">აპრე-სკი ბრანჩი</span></h3>
-          <p><span class="tbc">Dress code TBC</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
@@ -989,25 +1197,61 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   if(desk.addEventListener) desk.addEventListener("change", playFilm);
   playFilm();
 
-  /* ---------- Film strip drift (wide screens) ---------- */
+  /* ---------- Film strip: rolls on its own; touch, drag or hover pauses it ---------- */
   (function(){
-    var row = document.querySelector(".film-row");
-    if(!row || reduce || !window.matchMedia("(min-width: 1100px)").matches) return;
-    var track = document.createElement("div"); track.className = "film-track";
+    var row = document.querySelector(".film-row"); if(!row || reduce) return;
     var frames = Array.prototype.slice.call(row.children);
-    frames.forEach(function(f){ track.appendChild(f); });
-    frames.forEach(function(f){ var c = f.cloneNode(true); c.setAttribute("aria-hidden","true"); c.querySelector("img").alt = ""; track.appendChild(c); });
-    row.appendChild(track); row.classList.add("drift"); row.closest(".filmstrip").classList.add("drifting");
+    frames.forEach(function(f){ var c = f.cloneNode(true); c.setAttribute("aria-hidden","true"); c.querySelector("img").alt = ""; row.appendChild(c); });
+    row.classList.add("rolling");
+    var first = frames[0], clone = row.children[frames.length];
+    var speed = window.matchMedia("(min-width: 1100px)").matches ? 32 : 26; // px per second
+    var pos = 0, last = 0, held = false, hover = false, seen = false, resumeT;
+    function period(){ return clone.offsetLeft - first.offsetLeft; }
+    function wrap(){ var P = period(); if(P > 0){ if(pos >= P) pos -= P; if(pos < 0) pos += P; } }
+    function tick(t){
+      if(last && !held && !hover && seen){ pos += speed * Math.min(t - last, 64) / 1000; wrap(); row.scrollLeft = pos; }
+      last = t; requestAnimationFrame(tick);
+    }
+    function hold(){ held = true; clearTimeout(resumeT); }
+    function release(){ clearTimeout(resumeT); resumeT = setTimeout(function(){ pos = row.scrollLeft; wrap(); row.scrollLeft = pos; held = false; }, 2500); }
+    row.addEventListener("touchstart", hold, {passive:true});
+    row.addEventListener("touchend", release, {passive:true});
+    row.addEventListener("pointerdown", hold);
+    row.addEventListener("pointerup", release);
+    row.addEventListener("wheel", function(){ hold(); release(); }, {passive:true});
+    row.addEventListener("mouseenter", function(){ hover = true; });
+    row.addEventListener("mouseleave", function(){ hover = false; pos = row.scrollLeft; });
+    row.addEventListener("scroll", function(){ if(held){ var P = period(); if(P > 0 && row.scrollLeft >= P){ row.scrollLeft -= P; } } }, {passive:true});
+    if("IntersectionObserver" in window){ new IntersectionObserver(function(es){ seen = es[0].isIntersecting; }, {rootMargin:"100px"}).observe(row); } else { seen = true; }
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- Looks we love: one polaroid at a time ---------- */
+  (function(){
+    var box = document.getElementById("lookbook"); if(!box) return;
+    var slides = box.querySelectorAll(".pol-slide"), no = document.getElementById("polNo"), i = 0;
+    function show(n){ i = (n + slides.length) % slides.length; slides.forEach(function(s,k){ s.classList.toggle("on", k===i); }); no.textContent = i+1; }
+    box.querySelector(".prev").addEventListener("click", function(){ show(i-1); });
+    box.querySelector(".next").addEventListener("click", function(){ show(i+1); });
+    var pol = box.querySelector(".polaroid"), x0 = null;
+    pol.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+    pol.addEventListener("touchend", function(e){ if(x0===null) return; var dx = e.changedTouches[0].clientX - x0; if(Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); x0 = null; }, {passive:true});
   })();
 
   /* ---------- Horses film: starts looping as soon as the page loads ---------- */
   (function(){
     var v = document.getElementById("horsesFilm"); if(!v || reduce) return;
-    v.muted = true; v.defaultMuted = true;
-    var p = v.play(); if(p && p.catch) p.catch(function(){
-      var go = function(){ v.play().catch(function(){}); window.removeEventListener("touchstart", go); window.removeEventListener("scroll", go); };
-      window.addEventListener("touchstart", go, {passive:true}); window.addEventListener("scroll", go, {passive:true});
-    });
+    v.muted = true; v.defaultMuted = true; v.loop = true;
+    function kick(){ if(!v.paused && !v.ended) return; if(v.ended) v.currentTime = 0; var q = v.play(); if(q && q.catch) q.catch(function(){}); }
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
+    // Keep it rolling: phones sometimes stop looping videos to save power, so restart it whenever it stops.
+    v.addEventListener("ended", function(){ v.currentTime = 0; kick(); });
+    v.addEventListener("pause", function(){ setTimeout(kick, 300); });
+    v.addEventListener("stalled", function(){ setTimeout(kick, 500); });
+    document.addEventListener("visibilitychange", function(){ if(!document.hidden) kick(); });
+    ["touchstart","scroll","click"].forEach(function(t){ window.addEventListener(t, kick, {passive:true}); });
+    if("IntersectionObserver" in window) new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) kick(); }); }).observe(v);
+    setInterval(kick, 2000);
   })();
 
   /* ---------- Lodge booking code ---------- */
