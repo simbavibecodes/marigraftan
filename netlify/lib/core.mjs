@@ -1,26 +1,80 @@
-// Shared logic for the guest functions: the private guest list, name matching and tokens.
-// The guest list is stored encrypted in guests.enc.mjs; GUEST_KEY (a Netlify environment variable) unlocks it.
-import { createDecipheriv, createHmac, createHash, timingSafeEqual } from "node:crypto";
-import { ENCRYPTED_GUESTS } from "./guests.enc.mjs";
+// Shared logic for the guest functions: the guest list, name matching, tokens and the Google Sheet link.
+// The guest list lives in Mari's Google Sheet. The site reads it through the sheet's Apps Script web app and keeps
+// it for a minute; guests.mjs is a fallback copy if the sheet can't be reached.
+// Two Netlify environment variables, set by Mari in the Netlify dashboard (never stored in this repository):
+//   SHEET_URL    the Apps Script web app link (ends in /exec)
+//   TOKEN_SECRET any long private phrase; it signs the "remember me" token saved on each guest's phone
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { FALLBACK_ROWS } from "./guests.mjs";
 
-let cache = null;
-
-function keyBytes() {
-  const k = process.env.GUEST_KEY || "";
-  const buf = Buffer.from(k, "base64");
-  if (buf.length !== 32) throw new Error("GUEST_KEY is missing or not 32 bytes");
-  return buf;
+const SHEET_URL = (process.env.SHEET_URL || "").trim();
+function secret() {
+  const s = process.env.TOKEN_SECRET || "";
+  if (s.length < 16) throw new Error("TOKEN_SECRET is missing or too short");
+  return s;
 }
 
-export function loadParties() {
+let cache = null, cachedAt = 0;
+
+/* ---------- Guest list ---------- */
+const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+function members(full) {
+  const parts = full.split("&").map((s) => s.trim().replace(/\s+/g, " ")).filter(Boolean);
+  if (parts.length === 1) return [parts[0]];
+  const last = parts[parts.length - 1].split(" ").slice(-1)[0];
+  return parts.map((p) => (p.split(" ").length === 1 ? p + " " + last : p));
+}
+
+// Turns the sheet's rows (header first) into invitations ("parties").
+export function partiesFromRows(rows) {
+  const [head = [], ...body] = rows || [];
+  const h = head.map((x) => String(x).trim().toLowerCase());
+  const col = (name) => h.findIndex((x) => x.startsWith(name));
+  const C = { name: col("full name"), alt: col("other spellings"), group: col("group"), lang: col("site language"), plus: col("plus-one allowed"), plusName: col("plus-one name") };
+  if (C.name < 0) return [];
+  const seen = new Set();
+  return body.map((r) => {
+    const display = String(r[C.name] || "").trim().replace(/\s+/g, " ");
+    if (!display) return null;
+    const ms = members(display).map((full) => ({ full, first: full.split(" ")[0] }));
+    let id = slug(display) || "guest"; while (seen.has(id)) id += "-2"; seen.add(id);
+    const get = (k) => (C[k] >= 0 ? String(r[C[k]] || "").trim() : "");
+    return {
+      id, display, short: ms.map((m) => m.first).join(" & "), members: ms,
+      aliases: get("alt").split(",").map((s) => s.trim()).filter(Boolean),
+      group: (get("group") || "american").toLowerCase(),
+      lang: /georg|ქარ/i.test(get("lang")) ? "ka" : "en",
+      plusOne: /^y/i.test(get("plus")), plusOneName: get("plusName")
+    };
+  }).filter(Boolean).map(withCandidates);
+}
+
+export async function loadParties() {
+  if (cache && Date.now() - cachedAt < 60000) return cache;
+  if (SHEET_URL) {
+    try {
+      const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 8000);
+      const res = await fetch(SHEET_URL + "?action=guests", { signal: ctl.signal, redirect: "follow" });
+      clearTimeout(t);
+      const data = await res.json();
+      const parties = data && data.ok ? partiesFromRows(data.rows) : [];
+      if (parties.length) { cache = parties; cachedAt = Date.now(); return cache; }
+    } catch (e) { console.error("sheet read failed", e); }
+  }
   if (cache) return cache;
-  const raw = Buffer.from(ENCRYPTED_GUESTS, "base64");
-  const iv = raw.subarray(0, 12), tag = raw.subarray(12, 28), data = raw.subarray(28);
-  const d = createDecipheriv("aes-256-gcm", keyBytes(), iv);
-  d.setAuthTag(tag);
-  const json = Buffer.concat([d.update(data), d.final()]).toString("utf8");
-  cache = JSON.parse(json).map(withCandidates);
+  cache = partiesFromRows(FALLBACK_ROWS); cachedAt = Date.now() - 50000;
   return cache;
+}
+
+// Sends a reply or a not-found note to the sheet, which also emails Mari.
+export async function toSheet(payload) {
+  if (!SHEET_URL) return;
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 12000);
+    await fetch(SHEET_URL, { method: "POST", headers: { "content-type": "text/plain" }, body: JSON.stringify(payload), signal: ctl.signal, redirect: "follow" });
+    clearTimeout(t);
+  } catch (e) { console.error("sheet write failed", payload.type, e); }
 }
 
 /* ---------- Names ---------- */
@@ -88,10 +142,10 @@ function scoreAgainst(input, cand) {
 }
 
 // Returns {status:"found", party, member} | {status:"last"} | {status:"ambiguous"} | {status:"none", closest, score}
-export function matchName(raw) {
+export async function matchName(raw) {
   const input = normalize(raw);
   if (input.split(" ").filter(Boolean).length < 2) return { status: "last" };
-  const scored = loadParties().map((p) => {
+  const scored = (await loadParties()).map((p) => {
     let s = 0;
     for (const c of p.candidates) s = Math.max(s, scoreAgainst(input, c));
     return { p, s };
@@ -104,18 +158,14 @@ export function matchName(raw) {
 }
 
 /* ---------- Tokens ---------- */
-function tokenKey() { return createHash("sha256").update("mg-token:").update(keyBytes()).digest(); }
-export function makeToken(id) {
-  const sig = createHmac("sha256", tokenKey()).update(id).digest("base64url").slice(0, 24);
-  return Buffer.from(id).toString("base64url") + "." + sig;
-}
-export function readToken(token) {
+const sign = (id) => createHmac("sha256", secret()).update(id).digest("base64url").slice(0, 24);
+export function makeToken(id) { return Buffer.from(id).toString("base64url") + "." + sign(id); }
+export async function readToken(token) {
   const [b, sig] = String(token || "").split(".");
   if (!b || !sig) return null;
-  const id = Buffer.from(b, "base64url").toString("utf8");
-  const want = createHmac("sha256", tokenKey()).update(id).digest("base64url").slice(0, 24);
+  const id = Buffer.from(b, "base64url").toString("utf8"), want = sign(id);
   if (want.length !== sig.length || !timingSafeEqual(Buffer.from(want), Buffer.from(sig))) return null;
-  return loadParties().find((p) => p.id === id) || null;
+  return (await loadParties()).find((p) => p.id === id) || null;
 }
 
 // What the browser is allowed to know about a party.
@@ -127,14 +177,6 @@ export function publicParty(p) {
 /* ---------- Helpers ---------- */
 export function json(body, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
-}
-
-// Sends a submission to one of the site's Netlify Forms, which emails Mari.
-export async function notify(origin, form, fields) {
-  const body = new URLSearchParams({ "form-name": form, ...fields });
-  try {
-    await fetch(origin + "/", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: body.toString() });
-  } catch (e) { console.error("notify failed", form, e); }
 }
 
 export function storeName(context) {

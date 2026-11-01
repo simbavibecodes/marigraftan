@@ -1,6 +1,6 @@
 // Saves a party's RSVP. One reply per party: sending again updates it.
 import { getStore } from "@netlify/blobs";
-import { readToken, json, storeName } from "../lib/core.mjs";
+import { readToken, json, storeName, toSheet } from "../lib/core.mjs";
 
 export const config = { path: "/api/rsvp" };
 
@@ -10,7 +10,7 @@ export default async (req, context) => {
   if (req.method !== "POST") return json({ error: "method" }, 405);
   let body = {};
   try { body = await req.json(); } catch (e) { return json({ error: "body" }, 400); }
-  const p = readToken(body.token);
+  const p = await readToken(body.token);
   if (!p) return json({ ok: false, error: "token" }, 403);
 
   const reply = {};
@@ -27,5 +27,8 @@ export default async (req, context) => {
     history: [...((prev && prev.history) || []), ...(prev ? [prev.reply] : [])].slice(-10)
   };
   await store.setJSON(p.id, record);
-  return json({ ok: true, status: prev ? "updated" : "new", reply: record.reply });
+  const status = prev ? "updated" : "new";
+  // Adds the reply to the "Replies" tab of Mari's sheet and emails her.
+  await toSheet({ type: "rsvp", status, party: (storeName(context) === "rsvps" ? "" : "[TEST] ") + p.display, reply: record.reply });
+  return json({ ok: true, status, reply: record.reply });
 };
