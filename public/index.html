@@ -418,6 +418,34 @@ html[data-lang="ka"] .field>label,html[data-lang="ka"] .field>.lbl{text-transfor
 .form textarea{border:1px solid var(--line-paper);border-radius:4px;padding:10px 12px;min-height:96px;resize:vertical}
 .form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--burgundy)}
 .choice{display:flex;flex-wrap:wrap;gap:10px}
+/* name screen */
+html.gated{overflow:hidden}
+.gate{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px max(20px,env(safe-area-inset-left,0px));background:linear-gradient(180deg,rgba(18,10,11,.55),rgba(18,10,11,.82)),#1a1112 url("media/sameba-poster.jpg") 50% 40%/cover no-repeat;color:var(--cream);transition:opacity .9s ease,visibility .9s}
+.gate.out{opacity:0;visibility:hidden;pointer-events:none}
+.gate-card{width:min(420px,100%);display:grid;justify-items:center;gap:14px;text-align:center}
+.gate-mono{font-family:var(--display);font-size:clamp(46px,12vw,64px);letter-spacing:.06em;line-height:1;margin:0}
+.gate-mono .script{color:var(--mauve);font-size:.8em;margin:0 .04em}
+.gate-date{font-family:var(--serif);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,216,.8);margin:0 0 18px}
+.gate-date i,.gate-go i,.gate-link i{font-style:normal;margin:0 .6em;opacity:.7}
+.gate-form{width:100%;display:grid;gap:16px;justify-items:center}
+.gate-form label{display:grid;gap:6px;font-family:var(--display);font-size:clamp(22px,5.6vw,27px);letter-spacing:.03em;line-height:1.25}
+.g-ka,.g-kafont{font-family:"Noto Serif Georgian",serif;font-weight:300}
+.gate-form label .g-ka{font-size:.62em;letter-spacing:.01em;color:rgba(241,231,216,.85)}
+.gate input{width:100%;box-sizing:border-box;background:rgba(241,231,216,.08);border:0;border-bottom:1px solid rgba(241,231,216,.55);color:var(--cream);font-family:var(--serif);font-size:20px;text-align:center;padding:12px 10px;border-radius:2px;outline:none}
+.gate input:focus{border-bottom-color:var(--cream);background:rgba(241,231,216,.12)}
+.gate input::placeholder{color:rgba(241,231,216,.5);font-size:15px}
+.gate-go{background:var(--cream);color:var(--oxblood);border:0;border-radius:99px;padding:12px 30px;font-family:var(--serif);font-size:15px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.gate-go .g-kafont{text-transform:none;letter-spacing:.02em}
+.gate-go[disabled]{opacity:.6;cursor:wait}
+.gate-link{background:none;border:0;color:rgba(241,231,216,.8);font-family:var(--serif);font-size:14px;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.gate-msg,.gate-note{margin:0;font-size:15px;line-height:1.5;color:rgba(241,231,216,.92);display:grid;gap:4px}
+.gate-msg .g-ka,.gate-note .g-ka{font-size:14px;color:rgba(241,231,216,.75)}
+.gate-preview{margin:10px 0 0;font-size:12px;color:rgba(241,231,216,.6);font-family:var(--mono)}
+.not-you{margin:6px 0 0}
+.not-you button{background:none;border:0;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.choice-stack{display:grid;justify-items:start;gap:8px}
+@media (prefers-reduced-motion:reduce){.gate{transition:none}}
+
 .choice label{position:relative;cursor:pointer}
 .choice input{position:absolute;opacity:0;pointer-events:none}
 .choice label>span{display:inline-block;padding:10px 18px;border:1px solid var(--line-paper);border-radius:99px;font-size:16px;transition:background .2s,color .2s,border-color .2s}
@@ -1015,16 +1043,10 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <span class="rsvp-by"><span class="en">Kindly reply by Jan 15, 2027</span><span class="ka">გთხოვთ, გვიპასუხოთ 15 იანვრამდე</span></span>
     </div>
     <form class="form" id="rsvpForm" novalidate>
-      <div class="field">
-        <label for="f-name"><span class="en">Your name</span><span class="ka">სახელი და გვარი</span></label>
-        <input type="text" id="f-name" name="name" autocomplete="name" required>
-      </div>
+      <input type="hidden" id="f-name" name="name">
       <div class="field">
         <span class="lbl" id="att-l"><span class="en">Will you join us?</span><span class="ka">შეძლებთ მობრძანებას?</span></span>
-        <div class="choice" role="radiogroup" aria-labelledby="att-l">
-          <label><input type="radio" name="attending" value="yes" id="f-yes"><span><span class="en">Joyfully accepts</span><span class="ka">სიამოვნებით მოვალ</span></span></label>
-          <label><input type="radio" name="attending" value="no" id="f-no"><span><span class="en">Regretfully declines</span><span class="ka">სამწუხაროდ, ვერ მოვალ</span></span></label>
-        </div>
+        <div class="choice choice-stack" role="radiogroup" aria-labelledby="att-l" id="attChoices"></div>
       </div>
       <div class="ifyes" id="ifyes" hidden>
         <div class="two">
@@ -1037,7 +1059,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <input type="date" id="f-leave" name="departure" min="2027-03-01" max="2027-03-31" value="2027-03-13">
           </div>
         </div>
-        <div class="field">
+        <div class="field" id="plusField" hidden>
           <span class="lbl" id="plus-l"><span class="en">Will anyone be joining you?</span><span class="ka">ვინმე ხომ არ გახლავთ?</span></span>
           <div class="choice" role="radiogroup" aria-labelledby="plus-l">
             <label><input type="radio" name="plusOne" value="yes" id="f-plus-yes"><span><span class="en">Yes</span><span class="ka">დიახ</span></span></label>
@@ -1065,7 +1087,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <textarea id="f-note" name="note" data-en-placeholder="Transfers, accommodation, ski rental, or a note for us" data-ka-placeholder="ტრანსფერი, განთავსება, სათხილამურო აღჭურვილობა, უბრალოდ გვწერეთ"></textarea>
       </div>
       <p class="form-msg err" id="formErr" role="alert" hidden></p>
-      <button class="submit" type="submit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
+      <button class="submit" type="submit" id="rsvpSubmit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
       <p class="preview-note" id="previewNote" hidden>Preview: replies start saving once the site is live on marigraftan.com.</p>
     </form>
     <div class="form" id="rsvpDone" hidden>
@@ -1080,8 +1102,32 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 </div>
 
 <form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
-  <input name="bot-field"><input name="guest"><input name="name"><input name="attending"><input name="arrival"><input name="departure"><input name="plusOne"><input name="plusOneName"><input name="dietary"><input name="dietaryDetails"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
+  <input name="bot-field"><input name="status"><input name="party"><input name="name"><input name="attending"><input name="who"><input name="arrival"><input name="departure"><input name="plusOne"><input name="plusOneName"><input name="dietary"><input name="dietaryDetails"><textarea name="note"></textarea><input name="lang"><input name="sentAt">
 </form>
+<form name="not-found" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+  <input name="bot-field"><input name="kind"><input name="typed"><input name="contact"><input name="closest"><input name="score"><input name="lang"><input name="sentAt">
+</form>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <p class="gate-mono">M<span class="script">&amp;</span>G</p>
+    <p class="gate-date">March 11, 2027<i>·</i>11 მარტი, 2027</p>
+    <form class="gate-form" id="gateForm" novalidate>
+      <label for="gateName" id="gateTitle"><span class="g-en">Please provide your full name</span><span class="g-ka">გთხოვთ, მიუთითეთ სახელი და გვარი</span></label>
+      <input id="gateName" type="text" autocomplete="name" autocapitalize="words" spellcheck="false" enterkeyhint="go">
+      <button type="submit" class="gate-go" id="gateGo">Enter<i>·</i><span class="g-kafont">შესვლა</span></button>
+      <p class="gate-msg" id="gateMsg" role="alert" hidden></p>
+    </form>
+    <form class="gate-form" id="gateContact" novalidate hidden>
+      <p class="gate-note"><span class="g-en">We couldn't find your name. Please check the spelling, or leave your email or phone and we'll get back to you.</span><span class="g-ka">თქვენი სახელი ვერ ვიპოვეთ. შეამოწმეთ მართლწერა, ან დაგვიტოვეთ ელფოსტა ან ტელეფონი და დაგიკავშირდებით.</span></p>
+      <input id="gateContactInput" type="text" autocomplete="email" placeholder="Email or phone · ელფოსტა ან ტელეფონი">
+      <button type="submit" class="gate-go">Send<i>·</i><span class="g-kafont">გაგზავნა</span></button>
+      <button type="button" class="gate-link" id="gateRetry">Try again<i>·</i><span class="g-kafont">თავიდან ცდა</span></button>
+      <p class="gate-msg" id="gateContactMsg" role="status" hidden></p>
+    </form>
+    <p class="gate-preview" id="gatePreview" hidden>Preview: try “Jane Smith” (a couple) or “Alex Morgan” (with a plus-one).</p>
+  </div>
+</div>
 
 <section class="interlude horses" aria-label="See you in the mountains">
   <video id="horsesFilm" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="media/horses-poster.jpg" aria-label="Two horses grazing beneath Gergeti Trinity Church"><source src="media/horses.mp4" type="video/mp4"></video>
@@ -1094,54 +1140,41 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   <div class="wrap">
     <p class="names-s">MARI<span class="script">&amp;</span>GRAFTAN</p>
     <p class="caps" style="color:var(--mauve)"><span class="en">March 11, 2027</span><span class="ka">11 მარტი, 2027</span></p>
+    <p class="not-you" id="notYou" hidden><button type="button" id="notYouBtn"></button></p>
   </div>
 </footer>
 
 <script>
 (function(){
   /* ---------- Configuration ---------- */
-  // Replies are saved by Netlify Forms on the live site (marigraftan.com). Anywhere else the form runs in preview mode.
+  // On the live site the name screen and replies talk to private Netlify functions (/api/guest, /api/rsvp).
+  // Anywhere else (the preview) a small demo list stands in, so no real guest names are ever in this page.
   var LIVE = /(^|\.)marigraftan\.com$|\.netlify\.app$/.test(location.hostname);
-  // Personal invitations: code -> guest. Each printed QR code opens marigraftan.com/?g=<code>.
-  var GUESTS = {
-    "mari": {name:"Mari", dear:{en:"Dear Mari,", ka:"ძვირფასო მარი,"}, lang:"en"}
-  };
-
   var root = document.documentElement;
+  var party = null, token = null, serverReply = null;
 
-  /* ---------- Guest ---------- */
-  function guestCode(){
-    var q = "";
-    try { q = new URLSearchParams(location.search).get("g") || ""; } catch(e){}
-    if(!q){ var m = (location.hash||"").match(/^#for-([a-z0-9-]+)$/i); if(m) q = m[1]; }
-    return q.toLowerCase();
-  }
-  var code = guestCode();
-  var guest = GUESTS[code] || null;
-
-  /* ---------- Language ---------- */
+  /* ---------- Storage ---------- */
   function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   function read(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function drop(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+  /* ---------- Language ---------- */
   function setLang(l){
     root.setAttribute("data-lang", l);
     root.setAttribute("lang", l);
     document.querySelectorAll("[data-lang-btn]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang-btn")===l)); });
     document.querySelectorAll("[data-en]").forEach(function(el){ el.textContent = el.getAttribute("data-"+l); });
-    renderDear(); renderCountdown(); renderDone();
+    renderDear(); renderCountdown(); renderGuest(); renderDone();
   }
   document.querySelectorAll("[data-lang-btn]").forEach(function(b){
     b.addEventListener("click", function(){ var l=b.getAttribute("data-lang-btn"); store("mg-lang",l); setLang(l); });
   });
+  function lang(){ return root.getAttribute("data-lang") === "ka" ? "ka" : "en"; }
 
   /* ---------- Greeting ---------- */
   function renderDear(){
-    if(!guest) return;
-    var l = root.getAttribute("data-lang");
-    document.getElementById("dear").textContent = guest.dear[l] || guest.dear.en;
-  }
-  if(guest){
-    document.getElementById("passName").textContent = guest.name;
-    document.getElementById("f-name").value = guest.name;
+    if(!party) return;
+    document.getElementById("dear").textContent = (lang()==="ka" ? "ძვირფასო " : "Dear ") + party.short + ",";
   }
 
   /* ---------- Countdown ---------- */
@@ -1156,15 +1189,16 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   }
 
   /* ---------- Barcode ---------- */
-  (function(){
-    var seed = 0, s = (guest ? guest.name : "Mari & Graftan") + "1103";
+  function renderBarcode(){
+    var seed = 0, s = (party ? party.display : "Mari & Graftan") + "1103";
     for(var i=0;i<s.length;i++) seed = (seed*31 + s.charCodeAt(i)) >>> 0;
     function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
     var x = 4, out = "";
     while(x < 296){ var w = rnd()<.35 ? 3 : (rnd()<.5 ? 1.2 : 2); out += '<rect x="'+x.toFixed(1)+'" y="0" width="'+w+'" height="52" fill="#2B1A18"/>'; x += w + (rnd()<.5 ? 1.6 : 3.2); }
     document.getElementById("barcode").innerHTML = out;
     document.getElementById("passNo").textContent = "No. " + (1000 + seed % 9000) + "-0311";
-  })();
+  }
+  renderBarcode();
 
   /* ---------- Header + nav ---------- */
   var bar = document.getElementById("bar");
@@ -1273,15 +1307,77 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var stub = document.getElementById("tear");
   var hint = document.getElementById("passHint");
   var again = document.getElementById("passAgain");
-  var lastReply = null, opener = null;
+  var lastReply = null, lastStatus = "new", opener = null;
 
-  function holderName(){ return document.getElementById("f-name").value.trim() || (guest ? guest.name : (root.getAttribute("data-lang")==="ka" ? "ჩვენი სტუმარი" : "Our guest")); }
-  function syncName(){ var n = holderName(); document.getElementById("passName").textContent = n; document.getElementById("sheetTitle").textContent = n; }
-  document.getElementById("f-name").addEventListener("input", syncName);
+  function T(en, ka){ return lang()==="ka" ? ka : en; }
+  function holderName(){ return party ? party.display : T("Our guest", "ჩვენი სტუმარი"); }
+  function couple(){ return !!(party && party.members && party.members.length === 2); }
 
-  form.querySelectorAll('input[name="attending"]').forEach(function(r){
-    r.addEventListener("change", function(){ ifyes.hidden = form.elements.attending.value !== "yes"; });
-  });
+  // Attending choices: a couple can answer for both, either one, or neither.
+  function attendOptions(){
+    if(couple()){
+      var a = party.members[0].first, b = party.members[1].first;
+      return [
+        {v:"both", att:"yes", who:"Both", en:"Both of us will be there", ka:"ორივე მოვალთ"},
+        {v:"m0", att:"yes", who:"Only "+a, en:"Only "+a, ka:"მხოლოდ "+a},
+        {v:"m1", att:"yes", who:"Only "+b, en:"Only "+b, ka:"მხოლოდ "+b},
+        {v:"no", att:"no", who:"Neither", en:"Regretfully, neither of us can make it", ka:"სამწუხაროდ, ვერცერთი ვერ მოვალთ"}
+      ];
+    }
+    var me = party ? party.members[0].full : "";
+    return [
+      {v:"yes", att:"yes", who:me, en:"Joyfully accepts", ka:"სიამოვნებით მოვალ"},
+      {v:"no", att:"no", who:me, en:"Regretfully declines", ka:"სამწუხაროდ, ვერ მოვალ"}
+    ];
+  }
+  function renderChoices(){
+    var box = document.getElementById("attChoices"), cur = form.elements.attend ? form.elements.attend.value : "";
+    box.innerHTML = attendOptions().map(function(o){
+      return '<label><input type="radio" name="attend" value="'+o.v+'"'+(o.v===cur?' checked':'')+'><span><span class="en">'+o.en+'</span><span class="ka">'+o.ka+'</span></span></label>';
+    }).join("");
+    box.querySelectorAll("input").forEach(function(r){ r.addEventListener("change", syncAttend); });
+    syncAttend();
+  }
+  function chosen(){ var v = form.elements.attend ? form.elements.attend.value : ""; return attendOptions().filter(function(o){ return o.v===v; })[0] || null; }
+  function syncAttend(){ var c = chosen(); ifyes.hidden = !c || c.att !== "yes"; }
+
+  function renderGuest(){
+    var n = holderName();
+    document.getElementById("passName").textContent = n;
+    document.getElementById("sheetTitle").textContent = n;
+    document.getElementById("f-name").value = party ? party.display : "";
+    document.getElementById("plusField").hidden = !(party && party.plusOne);
+    if(!(party && party.plusOne)) document.getElementById("plusName").hidden = true;
+    document.getElementById("diet-l").innerHTML = couple()
+      ? '<span class="en">Any dietary restrictions for either of you?</span><span class="ka">გაქვთ რომელიმეს კვების შეზღუდვები?</span>'
+      : '<span class="en">Any dietary restrictions?</span><span class="ka">გაქვთ კვების შეზღუდვები?</span>';
+    document.getElementById("rsvpSubmit").innerHTML = serverReply
+      ? '<span class="en">Update my reply</span><span class="ka">პასუხის განახლება</span>'
+      : '<span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span>';
+    var ny = document.getElementById("notYou");
+    ny.hidden = !party;
+    if(party) document.getElementById("notYouBtn").textContent = T("Not " + party.short + "? Switch guest", "არ ხართ " + party.short + "? სტუმრის შეცვლა");
+    if(party) renderChoices();
+  }
+
+  // Fill the form with a reply the guest already sent, so they can change it.
+  function prefill(r){
+    if(!r) return;
+    var opts = attendOptions(), o = opts.filter(function(x){ return x.who === r.who && x.att === r.attending; })[0]
+      || opts.filter(function(x){ return x.att === r.attending; })[0];
+    if(o){ var el = form.querySelector('input[name="attend"][value="'+o.v+'"]'); if(el) el.checked = true; }
+    if(r.arrival) form.elements.arrival.value = r.arrival;
+    if(r.departure) form.elements.departure.value = r.departure;
+    if(party && party.plusOne){
+      var py = r.plusOne === "yes"; document.getElementById(py ? "f-plus-yes" : "f-plus-no").checked = true;
+      document.getElementById("plusName").hidden = !py; document.getElementById("f-plus-name").value = r.plusOneName || "";
+    }
+    var dy = r.dietary === "yes"; document.getElementById(dy ? "f-diet-yes" : "f-diet-no").checked = true;
+    document.getElementById("dietDetails").hidden = !dy; document.getElementById("f-diet-details").value = r.dietaryDetails || "";
+    form.elements.note.value = r.note || "";
+    syncAttend();
+  }
+
   form.querySelectorAll('input[name="dietary"]').forEach(function(r){
     r.addEventListener("change", function(){ document.getElementById("dietDetails").hidden = form.elements.dietary.value !== "yes"; });
   });
@@ -1293,7 +1389,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     opener = document.activeElement;
     sheet.hidden = false; root.style.overflow = "hidden";
     document.getElementById("sheetNo").textContent = "RSVP · " + document.getElementById("passNo").textContent;
-    setTimeout(function(){ (document.getElementById("f-name").value ? document.getElementById("f-yes") : document.getElementById("f-name")).focus({preventScroll:true}); }, 50);
+    setTimeout(function(){ var f = form.querySelector('input[name="attend"]'); if(f) f.focus({preventScroll:true}); }, 50);
   }
   function closeSheet(){
     sheet.hidden = true; root.style.overflow = "";
@@ -1306,22 +1402,21 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     stub.classList.add("torn");
     setTimeout(openSheet, 450);
   });
-  again.addEventListener("click", function(){ form.hidden = false; done.hidden = true; openSheet(); });
+  again.addEventListener("click", function(){ prefill(serverReply || lastReply); form.hidden = false; done.hidden = true; openSheet(); });
   document.getElementById("sheetClose").addEventListener("click", closeSheet);
   document.getElementById("doneBack").addEventListener("click", closeSheet);
   sheet.addEventListener("click", function(e){ if(e.target === sheet) closeSheet(); });
   document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !sheet.hidden) closeSheet(); });
 
   function renderDone(){
-    var l = root.getAttribute("data-lang");
-    document.querySelectorAll("[data-en-placeholder]").forEach(function(el){ el.placeholder = el.getAttribute("data-"+l+"-placeholder"); });
-    syncName();
+    document.querySelectorAll("[data-en-placeholder]").forEach(function(el){ el.placeholder = el.getAttribute("data-"+lang()+"-placeholder"); });
     if(!lastReply) return;
-    var yes = lastReply.attending === "yes";
-    document.getElementById("doneTitle").textContent = yes ? (l==="ka" ? "მთაში შევხვდებით" : "See you in the mountains") : (l==="ka" ? "მოგვენატრებით" : "We'll miss you");
-    document.getElementById("doneText").textContent = yes
-      ? (l==="ka" ? "მადლობა, "+lastReply.name+". თქვენი პასუხი მიღებულია." : "Thank you, "+lastReply.name+". Your reply is in.")
-      : (l==="ka" ? "მადლობა, რომ შეგვატყობინეთ, "+lastReply.name+"." : "Thank you for letting us know, "+lastReply.name+".");
+    var yes = lastReply.attending === "yes", who = party ? party.short : "";
+    document.getElementById("doneTitle").textContent = yes ? T("See you in the mountains", "მთაში შევხვდებით") : T("We'll miss you", "მოგვენატრებით");
+    document.getElementById("doneText").textContent = lastStatus === "updated"
+      ? T("Thank you, "+who+". Your reply has been updated.", "მადლობა, "+who+". თქვენი პასუხი განახლდა.")
+      : yes ? T("Thank you, "+who+". Your reply is in.", "მადლობა, "+who+". თქვენი პასუხი მიღებულია.")
+            : T("Thank you for letting us know, "+who+".", "მადლობა, რომ შეგვატყობინეთ, "+who+".");
     stamp.querySelector("div").firstChild.nodeValue = yes ? "CONFIRMED" : "WITH LOVE";
   }
   function markReplied(reply){
@@ -1334,50 +1429,128 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     form.hidden = true; done.hidden = false;
     document.getElementById("previewNote2").hidden = saved;
   }
+  function api(path, body){
+    return fetch(path, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)})
+      .then(function(r){ return r.json().then(function(j){ if(!r.ok && !("found" in j)) throw new Error(r.status); return j; }); });
+  }
   form.addEventListener("submit", function(e){
     e.preventDefault();
-    var l = root.getAttribute("data-lang"), err = document.getElementById("formErr");
-    var name = document.getElementById("f-name").value.trim(), att = form.elements.attending.value;
-    if(!name || !att){
-      err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ სახელი და აირჩიოთ, შეძლებთ თუ არა მობრძანებას." : "Please add your name and choose whether you can join us.";
-      err.hidden = false; return;
-    }
-    var plus = att==="yes" && form.elements.plusOne.value==="yes";
+    var err = document.getElementById("formErr"), c = chosen();
+    if(!party){ err.textContent = T("Please enter your name first.", "ჯერ სახელი შეიყვანეთ."); err.hidden = false; return; }
+    if(!c){ err.textContent = T("Please choose whether you can join us.", "გთხოვთ, აირჩიოთ, შეძლებთ თუ არა მობრძანებას."); err.hidden = false; return; }
+    var yes = c.att === "yes";
+    var plus = yes && party.plusOne && form.elements.plusOne.value==="yes";
     var plusName = plus ? document.getElementById("f-plus-name").value.trim() : "";
-    if(plus && !plusName){
-      err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ თანმხლების სახელი." : "Please add the name of the person joining you.";
-      err.hidden = false; return;
-    }
-    var diet = att==="yes" && form.elements.dietary.value==="yes";
+    if(plus && !plusName){ err.textContent = T("Please add the name of the person joining you.", "გთხოვთ, მიუთითოთ თანმხლების სახელი."); err.hidden = false; return; }
+    var diet = yes && form.elements.dietary.value==="yes";
     var dietDetails = diet ? document.getElementById("f-diet-details").value.trim() : "";
-    if(diet && !dietDetails){
-      err.textContent = l==="ka" ? "გთხოვთ, მიუთითოთ კვების შეზღუდვები." : "Please tell us your dietary restrictions.";
-      err.hidden = false; return;
-    }
+    if(diet && !dietDetails){ err.textContent = T("Please tell us your dietary restrictions.", "გთხოვთ, მიუთითოთ კვების შეზღუდვები."); err.hidden = false; return; }
     err.hidden = true;
     var reply = {
-      guest: code || "", name: name, attending: att,
-      arrival: att==="yes" ? form.elements.arrival.value : "", departure: att==="yes" ? form.elements.departure.value : "",
-      plusOne: att==="yes" ? (plus ? "yes" : "no") : "", plusOneName: plusName,
-      dietary: att==="yes" ? (diet ? "yes" : "no") : "", dietaryDetails: dietDetails,
-      note: form.elements.note.value.trim(), lang: l, sentAt: new Date().toISOString()
+      attending: c.att, who: c.who,
+      arrival: yes ? form.elements.arrival.value : "", departure: yes ? form.elements.departure.value : "",
+      plusOne: party.plusOne && yes ? (plus ? "yes" : "no") : "", plusOneName: plusName,
+      dietary: yes ? (diet ? "yes" : "no") : "", dietaryDetails: dietDetails,
+      note: form.elements.note.value.trim(), lang: lang()
     };
-    if(!LIVE){ showDone(reply, false); return; }
-    var btn = form.querySelector(".submit"); btn.disabled = true;
-    var body = new URLSearchParams({"form-name":"rsvp"}); Object.keys(reply).forEach(function(k){ body.append(k, String(reply[k])); });
-    fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); showDone(reply, true); store("mg-reply", JSON.stringify(reply)); })
-      .catch(function(){ err.textContent = l==="ka" ? "პასუხი ვერ გაიგზავნა. შეამოწმეთ ინტერნეტი და სცადეთ თავიდან." : "Your reply didn't send. Check your connection and try again."; err.hidden = false; })
+    if(!LIVE){ lastStatus = serverReply ? "updated" : "new"; serverReply = reply; showDone(reply, false); renderGuest(); return; }
+    var btn = document.getElementById("rsvpSubmit"); btn.disabled = true;
+    api("/api/rsvp", {token: token, reply: reply})
+      .then(function(res){
+        if(!res.ok) throw new Error(res.error || "save");
+        lastStatus = res.status; serverReply = res.reply;
+        // Netlify Forms emails Mari a copy of every new or changed reply.
+        var body = new URLSearchParams({"form-name":"rsvp", status: res.status, party: party.display, name: party.display});
+        Object.keys(res.reply).forEach(function(k){ body.append(k, String(res.reply[k])); });
+        return fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: body.toString()}).catch(function(){});
+      })
+      .then(function(){ showDone(serverReply, true); renderGuest(); })
+      .catch(function(){ err.textContent = T("Your reply didn't send. Check your connection and try again.", "პასუხი ვერ გაიგზავნა. შეამოწმეთ ინტერნეტი და სცადეთ თავიდან."); err.hidden = false; })
       .then(function(){ btn.disabled = false; });
   });
   document.getElementById("previewNote").hidden = LIVE;
-  // A guest who already replied on this phone sees their stamped pass.
-  (function(){ var r = null; try{ r = JSON.parse(read("mg-reply") || "null"); }catch(e){}
-    if(r && r.name){ markReplied(r); var f=document.getElementById("f-name"); if(!f.value) f.value = r.name; } })();
+
+  /* ---------- Name screen ---------- */
+  var gate = document.getElementById("gate");
+  var DEMO = [
+    {keys:["jane smith","john smith","jane john smith"], party:{display:"Jane & John Smith", short:"Jane & John", members:[{first:"Jane",full:"Jane Smith"},{first:"John",full:"John Smith"}], plusOne:false, plusOneName:"", group:"american", lang:"en"}},
+    {keys:["alex morgan"], party:{display:"Alex Morgan", short:"Alex", members:[{first:"Alex",full:"Alex Morgan"}], plusOne:true, plusOneName:"", group:"american", lang:"en"}}
+  ];
+  function words(v){ return v.toLowerCase().replace(/[^a-zა-ჰ\s]/g," ").split(/\s+/).filter(function(w){ return w && w!=="and"; }); }
+  function lookup(body){
+    if(LIVE) return api("/api/guest", body);
+    // Preview: fake lookups so the screens can be tried without the private list.
+    if(body.contact) return Promise.resolve({ok:true});
+    if(body.token){ var t = DEMO.filter(function(d){ return d.party.display === body.token; })[0]; return Promise.resolve(t ? {found:true, token:body.token, party:t.party, reply:null} : {found:false, reason:"token"}); }
+    var w = words(body.name || "");
+    if(w.length < 2) return Promise.resolve({found:false, reason:"last"});
+    var hit = DEMO.filter(function(d){ return d.keys.indexOf(w.join(" ")) >= 0; })[0];
+    return Promise.resolve(hit ? {found:true, token:hit.party.display, party:hit.party, reply:null} : {found:false, reason:"none"});
+  }
+  function enter(res, quick){
+    party = res.party; token = res.token; serverReply = res.reply || null; lastReply = null; lastStatus = "new";
+    store("mg-guest", token);
+    var l = read("mg-lang") || party.lang || "en";
+    setLang(l); renderBarcode();
+    form.reset(); renderGuest();
+    if(serverReply){ prefill(serverReply); markReplied(serverReply); }
+    root.classList.remove("gated");
+    if(quick) gate.hidden = true; else { gate.classList.add("out"); setTimeout(function(){ gate.hidden = true; }, 950); }
+    document.dispatchEvent(new CustomEvent("mg:enter"));
+  }
+  function showGate(){
+    gate.hidden = false; gate.classList.remove("out"); root.classList.add("gated");
+    document.getElementById("gateForm").hidden = false; document.getElementById("gateContact").hidden = true;
+    setTimeout(function(){ document.getElementById("gateName").focus({preventScroll:true}); }, 60);
+  }
+  function gateSay(id, en, ka){
+    var m = document.getElementById(id);
+    m.innerHTML = '<span class="g-en">'+en+'</span><span class="g-ka">'+ka+'</span>'; m.hidden = false;
+  }
+  document.getElementById("gateForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var v = document.getElementById("gateName").value.trim(), go = document.getElementById("gateGo");
+    document.getElementById("gateMsg").hidden = true;
+    if(words(v).length < 2){ gateSay("gateMsg", "Please add your last name", "გთხოვთ, დაამატეთ გვარი"); return; }
+    go.disabled = true;
+    lookup({name: v, lang: lang()}).then(function(res){
+      if(res.found) return enter(res);
+      if(res.reason === "last") gateSay("gateMsg", "Please add your last name", "გთხოვთ, დაამატეთ გვარი");
+      else if(res.reason === "ambiguous") gateSay("gateMsg", "Please type your name exactly as it appears on your invitation", "გთხოვთ, ჩაწერეთ სახელი ზუსტად ისე, როგორც მოსაწვევშია");
+      else { document.getElementById("gateForm").hidden = true; document.getElementById("gateContact").hidden = false; document.getElementById("gateContactMsg").hidden = true; }
+    }).catch(function(){
+      gateSay("gateMsg", "Something went wrong. Please try again.", "რაღაც შეცდომაა. გთხოვთ, სცადოთ თავიდან.");
+    }).then(function(){ go.disabled = false; });
+  });
+  document.getElementById("gateContact").addEventListener("submit", function(e){
+    e.preventDefault();
+    var c = document.getElementById("gateContactInput").value.trim();
+    if(!c){ gateSay("gateContactMsg", "Please leave an email or phone number", "გთხოვთ, დაგვიტოვოთ ელფოსტა ან ტელეფონი"); return; }
+    lookup({name: document.getElementById("gateName").value.trim(), contact: c, lang: lang()})
+      .then(function(){ gateSay("gateContactMsg", "Thank you, we'll be in touch soon.", "მადლობა, მალე დაგიკავშირდებით."); })
+      .catch(function(){ gateSay("gateContactMsg", "Something went wrong. Please try again.", "რაღაც შეცდომაა. გთხოვთ, სცადოთ თავიდან."); });
+  });
+  document.getElementById("gateRetry").addEventListener("click", function(){
+    document.getElementById("gateContact").hidden = true; document.getElementById("gateForm").hidden = false;
+    document.getElementById("gateMsg").hidden = true; document.getElementById("gateName").select();
+  });
+  document.getElementById("notYouBtn").addEventListener("click", function(){
+    drop("mg-guest"); party = null; token = null; serverReply = null; lastReply = null;
+    location.reload();
+  });
+  document.getElementById("gatePreview").hidden = LIVE;
 
   /* ---------- Start ---------- */
-  var startLang = read("mg-lang") || (guest && guest.lang) || ((navigator.language||"").toLowerCase().indexOf("ka")===0 ? "ka" : "en");
+  var startLang = read("mg-lang") || ((navigator.language||"").toLowerCase().indexOf("ka")===0 ? "ka" : "en");
   setLang(startLang);
+  drop("mg-reply");
+  var saved = read("mg-guest");
+  if(saved){
+    // Returning guest: open straight away, then confirm with the server in the background.
+    gate.hidden = true;
+    lookup({token: saved}).then(function(res){ if(res.found) enter(res, true); else { drop("mg-guest"); showGate(); } })
+      .catch(function(){ showGate(); });
+  } else showGate();
 })();
 </script>
 
