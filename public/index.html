@@ -1590,16 +1590,16 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 <script>
 /* ---------- Music ----------
    Plays softly in the background once a guest's name is found. Returning guests (who skip the name
-   screen) hear it from their first tap. The header button pauses and resumes; a pause is remembered.
+   screen) hear it from their first tap. The header button pauses and resumes for the current visit only:
+   the music plays again on every new visit.
    It runs through Web Audio so the volume and the fade-in also work on iPhones. */
 (function(){
   var btn = document.getElementById("musicBtn"), el = document.getElementById("music");
   var AC = window.AudioContext || window.webkitAudioContext;
   if(!btn || !el || !AC) { if(btn) btn.hidden = true; return; }
   var SRC = el.getAttribute("src"), VOL = 0.32, FADE_IN = 4, FADE_OUT = 0.7;
-  function get(){ try{ return localStorage.getItem("mg-music"); }catch(e){ return null; } }
-  function set(v){ try{ localStorage.setItem("mg-music", v); }catch(e){} }
-  var wanted = get() !== "off", entered = false, playing = false;
+  try{ localStorage.removeItem("mg-music"); }catch(e){}   // older versions remembered a pause; forget it
+  var wanted = true, entered = false, playing = false;
   var ctx = null, gain = null, node = null, buffer = null, bytes = null, decoding = null, stopT = null;
 
   function show(on){
@@ -1660,7 +1660,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   // The tap on "Enter" switches sound on silently; the song itself starts only if the name is found.
   var gf = document.getElementById("gateForm");
   if(gf){
-    gf.addEventListener("submit", function(){ if(wanted) unlock(); });
+    // Listen on the page, before the name screen's own handler, so sound is on before the name is checked.
+    document.addEventListener("submit", function(e){ if(e.target === gf && wanted) unlock(); }, true);
     var gn = document.getElementById("gateName");
     if(gn) gn.addEventListener("focus", fetchBytes, {once:true});
   }
@@ -1668,15 +1669,16 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     entered = true;
     if(!wanted){ show(false); return; }
     fetchBytes();
-    if(ctx && ctx.state === "running") play(); else arm();
+    // If sound was switched on by the tap on "Enter", start now (even if the phone is still waking it up).
+    if(ctx && ctx.state !== "closed") play(); else arm();
   }
   document.addEventListener("mg:enter", onEnter);
   if(window.mgEntered) onEnter();   // the guest was let in before this script ran
 
   btn.addEventListener("click", function(){
     disarm();
-    if(playing){ wanted = false; set("off"); stop(); }
-    else { wanted = true; set("on"); unlock(); play(); }
+    if(playing){ wanted = false; stop(); }
+    else { wanted = true; unlock(); play(); }
   });
   // Quiet while the site is in the background; carry on when the guest comes back.
   document.addEventListener("visibilitychange", function(){
