@@ -78,6 +78,17 @@ p{margin:0}
 .mono .script{font-size:26px;margin:0 .15em;color:var(--mauve)}
 .bar-right{display:flex;align-items:center;gap:14px}
 .lang{display:flex;border:1px solid var(--line-dark);border-radius:99px;padding:2px}
+.music{width:34px;height:34px;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:2.5px;padding:0;border:1px solid var(--line-dark);border-radius:50%;background:none;cursor:pointer;color:var(--dim);transition:color .3s,border-color .3s}
+.music:hover,.music[aria-pressed="true"]{color:var(--cream)}
+.music i{display:block;width:2px;height:4px;border-radius:1px;background:currentColor;transition:height .3s}
+.music i:nth-child(2){height:9px}.music i:nth-child(3){height:6px}
+.music[aria-pressed="true"] i{animation:eq 1.1s ease-in-out infinite}
+.music[aria-pressed="true"] i:nth-child(2){animation-delay:-.45s}.music[aria-pressed="true"] i:nth-child(3){animation-delay:-.8s}.music[aria-pressed="true"] i:nth-child(4){animation-delay:-.25s}
+.music.ask{animation:ask 2.4s ease-in-out infinite}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@keyframes ask{0%,100%{box-shadow:0 0 0 0 rgba(243,220,203,0)}50%{box-shadow:0 0 0 5px rgba(243,220,203,.14)}}
+@media (prefers-reduced-motion:reduce){.music[aria-pressed="true"] i,.music.ask{animation:none}.music[aria-pressed="true"] i{height:9px}}
+@media (max-width:380px){.bar-right{gap:10px}.music{width:30px;height:30px}}
 .lang button{background:none;border:0;padding:5px 11px;border-radius:99px;cursor:pointer;font-size:13px;letter-spacing:.08em;color:var(--dim)}
 .lang button[aria-pressed="true"]{background:var(--cream);color:var(--oxblood)}
 .lang button:last-child{font-family:"Noto Serif Georgian",serif}
@@ -546,6 +557,9 @@ html[data-lang="ka"] .dish-nut{text-transform:none;letter-spacing:0;font-family:
 .eat-note{margin:0;padding:10px 14px;border-left:2px solid var(--burgundy);background:rgba(122,36,52,.06);color:var(--ink);font-size:.95em}
 .eat-fav{margin:6px 0 -6px;color:var(--burgundy)}
 .eat-art{width:100%;max-width:340px;mix-blend-mode:multiply;margin:-6px 0 -4px}
+.travel-art{margin:32px auto -8px;max-width:250px;width:62%}
+.travel-art img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
+@media (min-width:880px){.travel-art{margin-top:24px;max-width:270px;width:60%}}
 .meal{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-paper);padding:10px 0}
 .meal .script{font-size:28px;color:var(--burgundy);line-height:1}
 html[data-lang="ka"] .meal .script{font-family:"Noto Serif Georgian",serif;font-size:18px}
@@ -685,6 +699,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <button data-go="food"><span class="en">Food &amp; Wine</span><span class="ka">სამზარეულო</span></button>
     </nav>
     <div class="bar-right">
+      <button type="button" class="music" id="musicBtn" aria-pressed="false" aria-label="Play music" title="Music"><i></i><i></i><i></i><i></i></button>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
         <button type="button" data-lang-btn="ka" aria-pressed="false">ქარ</button>
@@ -694,6 +709,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   </div>
 </header>
 
+<audio id="music" src="media/music.mp3" loop preload="none"></audio>
 <main id="top">
   <section class="hero" aria-label="Mari and Graftan">
     <div class="hero-film" aria-hidden="true">
@@ -981,6 +997,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <li><a href="https://roomshotels.com/" target="_blank" rel="noopener">Rooms Hotel Tbilisi</a></li>
             <li><a href="https://www.artizanhotels.com/en" target="_blank" rel="noopener">Artizan Hotel</a></li>
           </ul>
+          <figure class="travel-art"><img src="media/khinkali.jpg" alt="Illustration of khinkali, a clay wine jug, vintage skis and a gondola in the mountains" loading="lazy"></figure>
         </div>
       </div>
     </div>
@@ -1496,6 +1513,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     if(serverReply){ prefill(serverReply); markReplied(serverReply); }
     root.classList.remove("gated");
     if(quick) gate.hidden = true; else { gate.classList.add("out"); setTimeout(function(){ gate.hidden = true; }, 950); }
+    window.mgEntered = true;
     document.dispatchEvent(new CustomEvent("mg:enter"));
   }
   function showGate(){
@@ -1553,6 +1571,75 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   } else showGate();
 })();
 </script>
+<script>
+/* ---------- Music ----------
+   Starts when a guest taps "Enter" on the name screen. Returning guests (who skip the name screen)
+   hear it from their first tap anywhere on the page. The button pauses and resumes; a pause is remembered. */
+(function(){
+  var a = document.getElementById("music"), btn = document.getElementById("musicBtn");
+  if(!a || !btn) return;
+  function get(){ try{ return localStorage.getItem("mg-music"); }catch(e){ return null; } }
+  function set(v){ try{ localStorage.setItem("mg-music", v); }catch(e){} }
+  var VOL = 0.75, entered = false, wanted = get() !== "off", fadeT = null;
+  function show(on){
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", on ? "Pause music" : "Play music");
+    btn.classList.toggle("ask", !on && wanted && entered);
+  }
+  function fadeTo(v, ms, done){
+    clearInterval(fadeT);
+    var from = a.volume, t0 = Date.now();
+    fadeT = setInterval(function(){
+      var k = Math.min(1, (Date.now() - t0) / ms);
+      try{ a.volume = from + (v - from) * k; }catch(e){}
+      if(k >= 1){ clearInterval(fadeT); if(done) done(); }
+    }, 40);
+  }
+  function play(){
+    a.muted = false;
+    try{ a.volume = 0; }catch(e){}
+    var p = a.play();
+    show(true); fadeTo(VOL, 2500);
+    if(p && p.catch) p.catch(function(){ show(false); arm(); });
+  }
+  function stop(){ fadeTo(0, 500, function(){ a.pause(); }); show(false); }
+  // The first tap anywhere starts the music for a returning guest.
+  function onFirst(e){
+    if(btn.contains(e.target)) return;
+    disarm(); if(wanted && a.paused) play();
+  }
+  function arm(){ document.addEventListener("click", onFirst, true); document.addEventListener("keydown", onFirst, true); btn.classList.toggle("ask", wanted); }
+  function disarm(){ document.removeEventListener("click", onFirst, true); document.removeEventListener("keydown", onFirst, true); }
+  // Start the song inside the tap on "Enter" itself: phones only allow sound that starts directly from a tap.
+  // If the name isn't found, it fades away again.
+  var gf = document.getElementById("gateForm");
+  if(gf) gf.addEventListener("submit", function(){
+    var n = (document.getElementById("gateName").value || "").trim().split(/\s+/).filter(Boolean);
+    if(!wanted || !a.paused || n.length < 2) return;
+    play();
+    setTimeout(function(){ if(!entered && !a.paused) stop(); }, 8000);
+  });
+  function onEnter(){
+    entered = true;
+    if(!wanted){ show(false); return; }
+    if(a.paused) play(); else show(true);
+  }
+  document.addEventListener("mg:enter", onEnter);
+  if(window.mgEntered) onEnter();   // the guest was let in before this script ran
+  btn.addEventListener("click", function(){
+    disarm();
+    if(a.paused || a.muted){ wanted = true; set("on"); play(); }
+    else { wanted = false; set("off"); stop(); }
+  });
+  // Pause while the site is in the background; carry on when the guest comes back.
+  var wasOn = false;
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden){ wasOn = !a.paused && !a.muted; if(wasOn) a.pause(); }
+    else if(wasOn){ var p = a.play(); if(p && p.catch) p.catch(function(){ show(false); arm(); }); }
+  });
+})();
+</script>
+
 
 </body>
 </html>
