@@ -334,6 +334,7 @@ html[data-lang="ka"] .rate-code .copy{text-transform:none;letter-spacing:0;font-
 @media (min-width:900px){.crown-img{position:sticky;top:96px}}
 #crowning h2{font-size:clamp(34px,1.6rem + 2.2vw,54px)}
 .moments{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:0;counter-reset:m}
+.moments-head{margin:30px 0 -20px;font-family:"Noto Serif Georgian",serif;font-size:15px;letter-spacing:.03em;color:var(--mauve)}
 .moments li{display:grid;grid-template-columns:32px 1fr;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line-dark);align-items:baseline}
 .moments p{grid-column:2}
 .moments li::before{counter-increment:m;content:counter(m,upper-roman);font-family:var(--display);font-size:18px;color:var(--mauve);line-height:1.1;grid-row:span 2}
@@ -861,7 +862,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 
       <div class="route stay-box has-stamp">
         <button class="code-stamp" type="button" data-code="MG2027" aria-label="Copy booking code MG2027"><span class="k"><span class="en">CODE</span><span class="ka">კოდი</span></span><b>MG2027</b><span class="t"><span class="en">TAP TO COPY</span><span class="ka">დააჭირეთ</span></span><span class="copied" hidden><span class="en">COPIED</span><span class="ka">დაკოპირდა</span></span></button>
-        <p class="caps"><span class="en">Stay a little longer</span><span class="ka">დარჩით ცოტა მეტხანს</span></p>
+        <p class="caps only-full"><span class="en">Stay a little longer</span><span class="ka">დარჩით ცოტა მეტხანს</span></p>
         <p class="route-when only-full"><span class="en">MAR 10 – MORNING OF MAR 13 · INCLUDED</span><span class="ka">10 მარტი – 13 მარტის დილა · შედის</span></p>
         <p class="only-day" style="color:var(--ink-dim)"><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate from March 8 to 15. To use it, enter our code when you book on their official website.</span><span class="ka">სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> ჩვენს სტუმრებს სთავაზობს ფასდაკლებას 8–15 მარტის შუალედში. თუ გსურთ ისარგებლოთ ფასდაკლებით, გამოიყენეთ ჩვენი კოდი რეზერვაციისას მათ ოფიციალურ საიტზე.</span></p>
         <p class="only-full" style="color:var(--ink-dim)"><span class="en">Should you require extra nights, <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate.</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> დამატებითი ღამეებისთვის ჩვენს სტუმრებს სპეციალურ ფასს სთავაზობს.</span></p>
@@ -880,6 +881,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </div>
         <p class="lede en">The Georgian Orthodox sacrament of marriage. There are no spoken vows; the service is sung in Georgian, and you only need to watch for five moments.</p>
         <p class="lede ka">გვიხარია, რომ ამ დღეს ჩვენთან ერთად იქნებით.</p>
+        <p class="moments-head ka">ჯვრისწერის 5 მნიშვნელოვანი ნაწილი</p>
         <ol class="moments">
           <li><b><span class="en">Candles</span><span class="ka">სანთლები</span></b><p><span class="en">The light of faith</span><span class="ka">რწმენის სინათლე</span></p></li>
           <li><b><span class="en">Rings</span><span class="ka">ბეჭდები</span></b><p><span class="en">Blessed and exchanged three times</span><span class="ka">კურთხევა და სამგზის გაცვლა</span></p></li>
@@ -919,7 +921,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <div class="f"><span class="l">Days</span><span class="v"><span class="only-full">3</span><span class="only-day">2</span></span></div>
           </div>
           <button class="pass-stub" id="tear" type="button" aria-haspopup="dialog">
-            <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოაგლიჯეთ პასუხისთვის</span></span>
+            <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოხსენით პასუხისთვის</span></span>
             <span class="rsvp-by">RSVP BY JAN 15, 2027</span>
             <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
             <span class="l" id="passNo">No. 1103-2027</span>
@@ -927,7 +929,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <div class="stamp" id="stamp" aria-hidden="true"><div>CONFIRMED<span>11 · III · 27</span></div></div>
         </div>
       </div>
-      <p class="pass-hint" id="passHint"><span class="en">Tear off the stub to reply</span><span class="ka">პასუხისთვის მოაგლიჯეთ კუპონი</span></p>
+      <p class="pass-hint" id="passHint"><span class="en">Tear off the stub to reply</span><span class="ka">პასუხისთვის მოხსენით კუპონი</span></p>
       <button class="pass-again" id="passAgain" type="button" hidden><span class="en">Change my reply</span><span class="ka">პასუხის შეცვლა</span></button>
     </div>
   </section>
