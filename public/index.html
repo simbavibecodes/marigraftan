@@ -709,7 +709,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   </div>
 </header>
 
-<audio id="music" src="media/music.mp3" loop preload="none"></audio>
+<audio id="music" src="media/music.mp3" preload="none" hidden></audio>
 <main id="top">
   <section class="hero" aria-label="Mari and Graftan">
     <div class="hero-film" aria-hidden="true">
@@ -1573,69 +1573,99 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 </script>
 <script>
 /* ---------- Music ----------
-   Starts when a guest taps "Enter" on the name screen. Returning guests (who skip the name screen)
-   hear it from their first tap anywhere on the page. The button pauses and resumes; a pause is remembered. */
+   Plays softly in the background once a guest's name is found. Returning guests (who skip the name
+   screen) hear it from their first tap. The header button pauses and resumes; a pause is remembered.
+   It runs through Web Audio so the volume and the fade-in also work on iPhones. */
 (function(){
-  var a = document.getElementById("music"), btn = document.getElementById("musicBtn");
-  if(!a || !btn) return;
+  var btn = document.getElementById("musicBtn"), el = document.getElementById("music");
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if(!btn || !el || !AC) { if(btn) btn.hidden = true; return; }
+  var SRC = el.getAttribute("src"), VOL = 0.32, FADE_IN = 4, FADE_OUT = 0.7;
   function get(){ try{ return localStorage.getItem("mg-music"); }catch(e){ return null; } }
   function set(v){ try{ localStorage.setItem("mg-music", v); }catch(e){} }
-  var VOL = 0.75, entered = false, wanted = get() !== "off", fadeT = null;
+  var wanted = get() !== "off", entered = false, playing = false;
+  var ctx = null, gain = null, node = null, buffer = null, bytes = null, decoding = null, stopT = null;
+
   function show(on){
     btn.setAttribute("aria-pressed", on ? "true" : "false");
     btn.setAttribute("aria-label", on ? "Pause music" : "Play music");
     btn.classList.toggle("ask", !on && wanted && entered);
   }
-  function fadeTo(v, ms, done){
-    clearInterval(fadeT);
-    var from = a.volume, t0 = Date.now();
-    fadeT = setInterval(function(){
-      var k = Math.min(1, (Date.now() - t0) / ms);
-      try{ a.volume = from + (v - from) * k; }catch(e){}
-      if(k >= 1){ clearInterval(fadeT); if(done) done(); }
-    }, 40);
+  // Download the song early (quietly), so it's ready the moment a guest is let in.
+  function fetchBytes(){
+    if(!bytes) bytes = fetch(SRC).then(function(r){ return r.arrayBuffer(); });
+    return bytes;
+  }
+  // Must be called inside a tap: phones only allow sound from a context first switched on by a tap.
+  function unlock(){
+    if(!ctx){
+      try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
+      ctx = new AC(); gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
+      var b = ctx.createBuffer(1, 1, 22050), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination);
+      try{ s.start(0); }catch(e){}
+    }
+    if(ctx.state !== "running"){ var r = ctx.resume(); if(r && r.catch) r.catch(function(){}); }
+  }
+  function decode(){
+    if(!decoding) decoding = fetchBytes().then(function(ab){
+      return new Promise(function(ok, no){ var p = ctx.decodeAudioData(ab, ok, no); if(p && p.then) p.then(ok, no); });
+    }).then(function(b){ buffer = b; return b; });
+    return decoding;
+  }
+  function ramp(to, secs){
+    var t = ctx.currentTime;
+    gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(gain.gain.value, t); gain.gain.linearRampToValueAtTime(to, t + secs);
   }
   function play(){
-    a.muted = false;
-    try{ a.volume = 0; }catch(e){}
-    var p = a.play();
-    show(true); fadeTo(VOL, 2500);
-    if(p && p.catch) p.catch(function(){ show(false); arm(); });
+    if(!ctx) return false;
+    clearTimeout(stopT); playing = true; show(true);
+    if(ctx.state !== "running"){ var r = ctx.resume(); if(r && r.catch) r.catch(function(){}); }
+    decode().then(function(){
+      if(!playing) return;
+      if(!node){ node = ctx.createBufferSource(); node.buffer = buffer; node.loop = true; node.connect(gain); node.start(0); }
+      ramp(VOL, FADE_IN);
+    }).catch(function(){ playing = false; show(false); });
+    return true;
   }
-  function stop(){ fadeTo(0, 500, function(){ a.pause(); }); show(false); }
-  // The first tap anywhere starts the music for a returning guest.
+  function stop(){
+    playing = false; show(false);
+    if(!ctx) return;
+    ramp(0, FADE_OUT);
+    stopT = setTimeout(function(){ if(!playing && ctx.state === "running") ctx.suspend(); }, FADE_OUT * 1000 + 100);
+  }
+  // Returning guests: the first tap anywhere starts the music.
   function onFirst(e){
     if(btn.contains(e.target)) return;
-    disarm(); if(wanted && a.paused) play();
+    disarm(); if(wanted && !playing){ unlock(); play(); }
   }
-  function arm(){ document.addEventListener("click", onFirst, true); document.addEventListener("keydown", onFirst, true); btn.classList.toggle("ask", wanted); }
+  function arm(){ document.addEventListener("click", onFirst, true); document.addEventListener("keydown", onFirst, true); show(false); }
   function disarm(){ document.removeEventListener("click", onFirst, true); document.removeEventListener("keydown", onFirst, true); }
-  // Start the song inside the tap on "Enter" itself: phones only allow sound that starts directly from a tap.
-  // If the name isn't found, it fades away again.
+
+  // The tap on "Enter" switches sound on silently; the song itself starts only if the name is found.
   var gf = document.getElementById("gateForm");
-  if(gf) gf.addEventListener("submit", function(){
-    var n = (document.getElementById("gateName").value || "").trim().split(/\s+/).filter(Boolean);
-    if(!wanted || !a.paused || n.length < 2) return;
-    play();
-    setTimeout(function(){ if(!entered && !a.paused) stop(); }, 8000);
-  });
+  if(gf){
+    gf.addEventListener("submit", function(){ if(wanted) unlock(); });
+    var gn = document.getElementById("gateName");
+    if(gn) gn.addEventListener("focus", fetchBytes, {once:true});
+  }
   function onEnter(){
     entered = true;
     if(!wanted){ show(false); return; }
-    if(a.paused) play(); else show(true);
+    fetchBytes();
+    if(ctx && ctx.state === "running") play(); else arm();
   }
   document.addEventListener("mg:enter", onEnter);
   if(window.mgEntered) onEnter();   // the guest was let in before this script ran
+
   btn.addEventListener("click", function(){
     disarm();
-    if(a.paused || a.muted){ wanted = true; set("on"); play(); }
-    else { wanted = false; set("off"); stop(); }
+    if(playing){ wanted = false; set("off"); stop(); }
+    else { wanted = true; set("on"); unlock(); play(); }
   });
-  // Pause while the site is in the background; carry on when the guest comes back.
-  var wasOn = false;
+  // Quiet while the site is in the background; carry on when the guest comes back.
   document.addEventListener("visibilitychange", function(){
-    if(document.hidden){ wasOn = !a.paused && !a.muted; if(wasOn) a.pause(); }
-    else if(wasOn){ var p = a.play(); if(p && p.catch) p.catch(function(){ show(false); arm(); }); }
+    if(!ctx || !playing) return;
+    if(document.hidden) ctx.suspend(); else { var r = ctx.resume(); if(r && r.catch) r.catch(function(){ arm(); }); }
   });
 })();
 </script>
