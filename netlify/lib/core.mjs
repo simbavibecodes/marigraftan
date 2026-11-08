@@ -19,7 +19,7 @@ let cache = null, cachedAt = 0;
 const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 function members(full) {
-  const parts = full.split("&").map((s) => s.trim().replace(/\s+/g, " ")).filter(Boolean);
+  const parts = full.split(/&|\sდა\s/).map((s) => s.trim().replace(/\s+/g, " ")).filter(Boolean);
   if (parts.length === 1) return [parts[0]];
   const last = parts[parts.length - 1].split(" ").slice(-1)[0];
   return parts.map((p) => (p.split(" ").length === 1 ? p + " " + last : p));
@@ -30,7 +30,7 @@ export function partiesFromRows(rows) {
   const [head = [], ...body] = rows || [];
   const h = head.map((x) => String(x).trim().toLowerCase());
   const col = (name) => h.findIndex((x) => x.startsWith(name));
-  const C = { name: col("full name"), alt: col("other spellings"), group: col("group"), lang: col("site language"), plus: col("plus-one allowed"), plusName: col("plus-one name") };
+  const C = { name: col("full name"), ka: col("georgian"), alt: col("other spellings"), group: col("group"), lang: col("site language"), plus: col("plus-one allowed"), plusName: col("plus-one name") };
   if (C.name < 0) return [];
   const seen = new Set();
   return body.map((r) => {
@@ -39,9 +39,13 @@ export function partiesFromRows(rows) {
     const ms = members(display).map((full) => ({ full, first: full.split(" ")[0] }));
     let id = slug(display) || "guest"; while (seen.has(id)) id += "-2"; seen.add(id);
     const get = (k) => (C[k] >= 0 ? String(r[C[k]] || "").trim() : "");
+    // Georgian spelling, e.g. "ჯეიკ და ელ კალბ": used for "ძვირფასო ჯეიკ და ელ," and also accepted on the name screen.
+    const kaDisplay = get("ka").replace(/\s+/g, " ");
+    const kaMs = kaDisplay ? members(kaDisplay).map((full) => ({ full, first: full.split(" ")[0] })) : [];
     return {
       id, display, short: ms.map((m) => m.first).join(" & "), members: ms,
-      aliases: get("alt").split(",").map((s) => s.trim()).filter(Boolean),
+      kaDisplay, kaShort: kaMs.map((m) => m.first).join(" და "), kaMembers: kaMs.map((m) => m.first),
+      aliases: [...get("alt").split(",").map((s) => s.trim()).filter(Boolean), ...kaMs.map((m) => m.full)],
       group: (get("group") || "american").toLowerCase(),
       lang: /georg|ქარ/i.test(get("lang")) ? "ka" : "en",
       plusOne: /^y/i.test(get("plus")), plusOneName: get("plusName")
@@ -84,7 +88,7 @@ export function normalize(s) {
     .normalize("NFKD").replace(/[̀-ͯ]/g, "")
     .replace(/[ა-ჰ]/g, (c) => GEO[c] || "")
     .replace(/[^a-z\s]/g, " ")
-    .split(/\s+/).filter((t) => t && t !== "and").join(" ");
+    .split(/\s+/).filter((t) => t && t !== "and" && t !== "da").join(" ");
 }
 
 function lev(a, b) {
@@ -169,6 +173,7 @@ export async function readToken(token) {
 // What the browser is allowed to know about a party.
 export function publicParty(p) {
   return { display: p.display, short: p.short, members: p.members.map((m) => ({ first: m.first, full: m.full })),
+           kaDisplay: p.kaDisplay || "", kaShort: p.kaShort || "", kaMembers: p.kaMembers || [],
            plusOne: !!p.plusOne, plusOneName: p.plusOneName || "", group: p.group, lang: p.lang };
 }
 
