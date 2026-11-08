@@ -57,6 +57,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* language */
 html:not([data-lang="ka"]) .ka, html[data-lang="ka"] .en{display:none!important}
+/* Versions: guests whose sheet group is "Georgian 1 day" see the one-day version (data-group="day") */
+html[data-group="day"] .only-full, html:not([data-group="day"]) .only-day{display:none!important}
 html[data-lang="ka"] .caps{text-transform:none;letter-spacing:.03em}
 html[data-lang="ka"] body{line-height:1.75}
 html[data-lang="ka"] .ka-small{font-size:.92em}
@@ -78,6 +80,17 @@ p{margin:0}
 .mono .script{font-size:26px;margin:0 .15em;color:var(--mauve)}
 .bar-right{display:flex;align-items:center;gap:14px}
 .lang{display:flex;border:1px solid var(--line-dark);border-radius:99px;padding:2px}
+.music{width:34px;height:34px;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:2.5px;padding:0;border:1px solid var(--line-dark);border-radius:50%;background:none;cursor:pointer;color:var(--dim);transition:color .3s,border-color .3s}
+.music:hover,.music[aria-pressed="true"]{color:var(--cream)}
+.music i{display:block;width:2px;height:4px;border-radius:1px;background:currentColor;transition:height .3s}
+.music i:nth-child(2){height:9px}.music i:nth-child(3){height:6px}
+.music[aria-pressed="true"] i{animation:eq 1.1s ease-in-out infinite}
+.music[aria-pressed="true"] i:nth-child(2){animation-delay:-.45s}.music[aria-pressed="true"] i:nth-child(3){animation-delay:-.8s}.music[aria-pressed="true"] i:nth-child(4){animation-delay:-.25s}
+.music.ask{animation:ask 2.4s ease-in-out infinite}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@keyframes ask{0%,100%{box-shadow:0 0 0 0 rgba(243,220,203,0)}50%{box-shadow:0 0 0 5px rgba(243,220,203,.14)}}
+@media (prefers-reduced-motion:reduce){.music[aria-pressed="true"] i,.music.ask{animation:none}.music[aria-pressed="true"] i{height:9px}}
+@media (max-width:380px){.bar-right{gap:10px}.music{width:30px;height:30px}}
 .lang button{background:none;border:0;padding:5px 11px;border-radius:99px;cursor:pointer;font-size:13px;letter-spacing:.08em;color:var(--dim)}
 .lang button[aria-pressed="true"]{background:var(--cream);color:var(--oxblood)}
 .lang button:last-child{font-family:"Noto Serif Georgian",serif}
@@ -178,7 +191,7 @@ html[data-lang="ka"] .www dt{text-transform:none;letter-spacing:0;font-size:15px
 .www.v2 dd small{letter-spacing:.02em;font-weight:400}
 .www.v3 dd{font-family:var(--display);font-size:clamp(24px,5.5vw,32px);letter-spacing:.03em;text-transform:none;line-height:1.15}
 
-html[data-lang="ka"] .www dd{font-family:"Noto Serif Georgian",serif;font-weight:300;font-size:22px}
+html[data-lang="ka"] .www dd{font-family:"Noto Serif Georgian",serif;font-weight:300;font-size:clamp(19px,5vw,22px);letter-spacing:.02em;text-transform:none;line-height:1.4}
 .www small{display:block;font-family:var(--serif);font-size:15px;letter-spacing:.02em;color:var(--dim);margin-top:4px}
 .story{margin-top:28px}
 .peaks{margin:4px 0 6px;max-width:520px}
@@ -286,6 +299,7 @@ html[data-lang="ka"] .day .mo{text-transform:none;letter-spacing:0}
 .day li{display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:baseline}
 .day time{font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;color:var(--burgundy)}
 .day small{display:block;color:var(--ink-dim);font-size:.86em;font-style:italic}
+.day .day-note{grid-column:1/-1;margin:12px 0 0;padding-top:10px;border-top:1px dashed var(--line-paper);color:var(--ink-dim);font-size:.92em;font-style:italic}
 .route.stay-box{margin-top:44px;max-width:560px}
 .route.has-stamp{position:relative;padding-right:150px}
 .code-stamp{position:absolute;top:20px;right:20px;width:118px;padding:12px 8px 10px;display:grid;gap:3px;justify-items:center;cursor:pointer;color:var(--burgundy);background:rgba(239,230,214,.6);border:1.5px dashed var(--burgundy);border-radius:4px;transform:rotate(4deg);font-family:var(--mono);transition:transform .3s}
@@ -320,6 +334,7 @@ html[data-lang="ka"] .rate-code .copy{text-transform:none;letter-spacing:0;font-
 @media (min-width:900px){.crown-img{position:sticky;top:96px}}
 #crowning h2{font-size:clamp(34px,1.6rem + 2.2vw,54px)}
 .moments{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:0;counter-reset:m}
+.moments-head{margin:30px 0 -20px;font-family:"Noto Serif Georgian",serif;font-size:15px;letter-spacing:.03em;color:var(--mauve)}
 .moments li{display:grid;grid-template-columns:32px 1fr;gap:2px 10px;padding:12px 0;border-top:1px solid var(--line-dark);align-items:baseline}
 .moments p{grid-column:2}
 .moments li::before{counter-increment:m;content:counter(m,upper-roman);font-family:var(--display);font-size:18px;color:var(--mauve);line-height:1.1;grid-row:span 2}
@@ -546,6 +561,9 @@ html[data-lang="ka"] .dish-nut{text-transform:none;letter-spacing:0;font-family:
 .eat-note{margin:0;padding:10px 14px;border-left:2px solid var(--burgundy);background:rgba(122,36,52,.06);color:var(--ink);font-size:.95em}
 .eat-fav{margin:6px 0 -6px;color:var(--burgundy)}
 .eat-art{width:100%;max-width:340px;mix-blend-mode:multiply;margin:-6px 0 -4px}
+.travel-art{margin:32px auto -8px;max-width:250px;width:62%}
+.travel-art img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
+@media (min-width:880px){.travel-art{margin-top:24px;max-width:270px;width:60%}}
 .meal{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line-paper);padding:10px 0}
 .meal .script{font-size:28px;color:var(--burgundy);line-height:1}
 html[data-lang="ka"] .meal .script{font-family:"Noto Serif Georgian",serif;font-size:18px}
@@ -633,6 +651,8 @@ html[data-lang="ka"] .look-card figcaption{font-family:"Noto Serif Georgian",ser
 .sw.chip b{align-self:end}
 .sw.chip b{font-family:var(--mono);font-weight:700;font-size:8.5px;letter-spacing:.08em;margin-top:4px;line-height:1.2;color:var(--oxblood)}
 .sw.chip small{font-family:var(--mono);font-size:8px;color:var(--ink-dim);letter-spacing:.02em}
+.sw.chip{min-width:0;grid-template-columns:minmax(0,1fr)}
+html[data-lang="ka"] .sw.chip b{font-size:10px;line-height:1.3;letter-spacing:0;hyphens:manual;overflow-wrap:anywhere}
 .sw{display:grid;justify-items:center;gap:8px;text-align:center}
 .sw i{width:46px;height:46px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 2px 6px rgba(42,19,21,.18)}
 .sw b{font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood)}
@@ -680,11 +700,12 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <nav class="navlinks" aria-label="Sections">
       <button data-go="weekend"><span class="en">The Program</span><span class="ka">პროგრამა</span></button>
       <button data-go="crowning"><span class="en">Ceremony</span><span class="ka">ჯვრისწერა</span></button>
-      <button data-go="dress"><span class="en">Dress Code</span><span class="ka">ჩაცმა</span></button>
-      <button data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
-      <button data-go="food"><span class="en">Food &amp; Wine</span><span class="ka">სამზარეულო</span></button>
+      <button data-go="dress"><span class="en">Dress Code</span><span class="ka">დრეს კოდი</span></button>
+      <button class="only-full" data-go="travel"><span class="en">Travel</span><span class="ka">მგზავრობა</span></button>
+      <button class="only-full" data-go="food"><span class="en">Food &amp; Wine</span><span class="ka">სამზარეულო</span></button>
     </nav>
     <div class="bar-right">
+      <button type="button" class="music" id="musicBtn" aria-pressed="false" aria-label="Play music" title="Music"><i></i><i></i><i></i><i></i></button>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
         <button type="button" data-lang-btn="ka" aria-pressed="false">ქარ</button>
@@ -694,6 +715,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   </div>
 </header>
 
+<audio id="music" src="media/music.mp3" preload="none" hidden></audio>
 <main id="top">
   <section class="hero" aria-label="Mari and Graftan">
     <div class="hero-film" aria-hidden="true">
@@ -718,11 +740,11 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <figure class="letter-photo"><img src="media/img_7646.jpg" alt="Mari and Graftan kissing in the snow, Graftan in a ski helmet"></figure>
     <div class="letter-body">
       <p class="dear" id="dear"><span class="en">Dear friends,</span><span class="ka">ძვირფასო მეგობრებო,</span></p>
-      <p class="invite-lede"><span class="en">We'd love you by our side.</span><span class="ka">გვინდა, ჩვენს გვერდით იყოთ.</span></p>
+      <p class="invite-lede"><span class="en">We'd love you by our side.</span><span class="ka">გთხოვთ, გვეწვიოთ.</span></p>
       <dl class="www v2">
-        <div><dt><span class="en">What</span><span class="ka">რა</span></dt><dd><span class="en">Vows, khinkali &amp; fresh snow</span><span class="ka">ჯვრისწერა, ხინკალი და ახალი თოვლი</span></dd></div>
-        <div><dt><span class="en">Where</span><span class="ka">სად</span></dt><dd><span class="en">Georgia</span><span class="ka">საქართველო</span><small><span class="en">Tbilisi · Kazbegi · Gudauri</span><span class="ka">თბილისი · ყაზბეგი · გუდაური</span></small></dd></div>
-        <div><dt><span class="en">When</span><span class="ka">როდის</span></dt><dd><span class="en">March 10–13, 2027</span><span class="ka">10–13 მარტი, 2027</span><small><span class="en">and longer if you can</span><span class="ka">და მეტხანს, თუ შეძლებთ</span></small></dd></div>
+        <div><dt><span class="en">What</span><span class="ka">რა</span></dt><dd><span class="only-full"><span class="en">Vows, khinkali &amp; fresh snow</span><span class="ka">ჯვრისწერა, ხინკალი და ახალი თოვლი</span></span><span class="only-day"><span class="en">Our wedding &amp; the celebration after</span><span class="ka">ჯვრისწერა და მისი აღსანიშნავი წვეულება</span></span></dd></div>
+        <div><dt><span class="en">Where</span><span class="ka">სად</span></dt><dd><span class="only-full"><span class="en">Georgia</span><span class="ka">საქართველო</span></span><span class="only-day"><span class="en">Kazbegi · Gudauri</span><span class="ka">ყაზბეგი · გუდაური</span></span><small class="only-full"><span class="en">Tbilisi · Kazbegi · Gudauri</span><span class="ka">თბილისი · ყაზბეგი · გუდაური</span></small></dd></div>
+        <div><dt><span class="en">When</span><span class="ka">როდის</span></dt><dd><span class="only-full"><span class="en">March 10–13, 2027</span><span class="ka">10–13 მარტი, 2027</span></span><span class="only-day"><span class="en">March 11, 2027</span><span class="ka">11 მარტი 2027 წელი</span></span><small><span class="en">and longer if you can</span><span class="ka">და მეტხანს, თუ შეძლებთ</span></small></dd></div>
       </dl>
       <div class="story">
         <p class="story-title"><span class="en">From his mountains to mine</span><span class="ka">მისი მთებიდან ჩემს მთებამდე</span></p>
@@ -737,12 +759,12 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <circle class="pin" cx="104" cy="46" r="3"/><circle class="pin" cx="420" cy="22" r="3"/>
           </svg>
           <div class="peak-labels">
-            <div><b>Aspen</b><span>2024</span><small>39°10′ N · 106°49′ W</small><small class="en">11,212 ft</small><small class="ka">3417 მ</small></div>
+            <div><b><span class="en">Aspen</span><span class="ka">ასპენი</span></b><span>2024</span><small>39°10′ N · 106°49′ W</small><small class="en">11,212 ft</small><small class="ka">3417 მ</small></div>
             <div><b><span class="en">Kazbek</span><span class="ka">მყინვარწვერი</span></b><span>2027</span><small>42°42′ N · 44°31′ E</small><small class="en">16,581 ft</small><small class="ka">5054 მ</small></div>
           </div>
         </figure>
         <p class="story-text story-coda en">and everything in between and beyond</p>
-        <p class="story-text story-coda ka">და ყველაფერი, რაც მათ შორისაა და მათ მიღმა</p>
+        <p class="story-text story-coda ka">და ყველგან — მათ მიღმა და მათ შორის.</p>
       </div>
     </div>
   </section>
@@ -772,7 +794,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <div class="wrap">
         <p class="caps"><span class="en">Mount Kazbek · 16,581 ft</span><span class="ka">მყინვარწვერი · 5054 მ</span></p>
         <h2><span class="en">The Program</span><span class="ka">პროგრამა</span></h2>
-        <p class="caps"><span class="en">March 10–13, 2027</span><span class="ka">10 – 13 მარტი, 2027</span></p>
+        <p class="caps"><span class="only-full"><span class="en">March 10–13, 2027</span><span class="ka">10 – 13 მარტი, 2027</span></span><span class="only-day"><span class="en">March 11–12, 2027</span><span class="ka">11 – 12 მარტი, 2027</span></span></p>
       </div>
     </header>
     <div class="wrap">
@@ -780,22 +802,23 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <div class="cal" aria-label="March 2027">
         <div class="ski"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">8</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
         <div class="ski"><span class="w" data-en="Tue" data-ka="სამ"></span><span class="d">9</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
-        <div class="hosted"><span class="w" data-en="Wed" data-ka="ოთხ"></span><span class="d">10</span><svg class="day-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 22.5l5-6 2.5 2.8 4.2-5.8 9.3 9"/><g transform="rotate(-8 10.5 6)"><path d="M4.5 1.8h11"/><path d="M10 1.8v1.4"/><path d="M7 5.6c0-1.4 1.4-2.4 3.1-2.4 1.8 0 3.2 1 3.2 2.4S11.9 8 10.1 8C8.4 8 7 7 7 5.6z"/><path d="M13.3 5.3h5"/><path d="M18.6 3.9v2.8"/><path d="M8.8 8v1.3M11.4 8v1.3"/><path d="M7.4 9.3h5.6"/></g></svg></div>
+        <div class="hosted only-full"><span class="w" data-en="Wed" data-ka="ოთხ"></span><span class="d">10</span><svg class="day-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 22.5l5-6 2.5 2.8 4.2-5.8 9.3 9"/><g transform="rotate(-8 10.5 6)"><path d="M4.5 1.8h11"/><path d="M10 1.8v1.4"/><path d="M7 5.6c0-1.4 1.4-2.4 3.1-2.4 1.8 0 3.2 1 3.2 2.4S11.9 8 10.1 8C8.4 8 7 7 7 5.6z"/><path d="M13.3 5.3h5"/><path d="M18.6 3.9v2.8"/><path d="M8.8 8v1.3M11.4 8v1.3"/><path d="M7.4 9.3h5.6"/></g></svg></div>
+        <div class="ski only-day"><span class="w" data-en="Wed" data-ka="ოთხ"></span><span class="d">10</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
         <div class="hosted"><span class="w" data-en="Thu" data-ka="ხუთ"></span><span class="d">11</span><svg class="day-ico couple" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="8" cy="5.4" r="2.2"/><path d="M4.2 22.6l.5-11.2c.1-1.4 1.1-2.3 2.4-2.3h1.9c1.3 0 2.3.9 2.4 2.3l.5 11.2z"/><path class="cut" d="M7.1 9.1L8 12.2l.9-3.1z"/><path d="M14 3.9c2.6-1.1 4.6.6 5.4 3.2 1.1 3.7 1.9 9.5 3.1 15.5h-3.4z" opacity=".55"/><circle class="sep" cx="15.3" cy="6.1" r="2"/><path class="sep" d="M13.6 10.3c1.1-.6 2.4-.6 3.5 0l-.3 3.4 4.4 8.9H10.4l3.5-8.9z"/></svg></div>
         <div class="hosted"><span class="w" data-en="Fri" data-ka="პარ"></span><span class="d">12</span><svg class="day-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6.5h15c-1.2 4-4 6-7.5 6s-6.3-2-7.5-6z"/><path d="M12 12.5v6.5M8.5 20.5h7"/><circle cx="15.5" cy="3.5" r=".6"/><circle cx="18" cy="2" r=".5"/></svg></div>
         <div class="ski"><span class="w" data-en="Sat" data-ka="შაბ"></span><span class="d">13</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
         <div class="ski"><span class="w" data-en="Sun" data-ka="კვი"></span><span class="d">14</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
         <div class="ski"><span class="w" data-en="Mon" data-ka="ორშ"></span><span class="d">15</span><img class="ski-ico" src="media/skis-icon.webp" alt=""></div>
       </div>
-        <p class="cal-ribbon"><span class="en">Mari &amp; Graftan in Gudauri · <span style="white-space:nowrap">March 8 – 15</span></span><span class="ka">მარი და გრაფტანი გუდაურში · <span style="white-space:nowrap">8 – 15 მარტი</span></span></p>
+        <p class="cal-ribbon"><span class="en">Mari &amp; Graftan in Gudauri · <span style="white-space:nowrap">March 8 – 15</span></span><span class="ka">მარი და გრაფტანი არიან გუდაურში · <span style="white-space:nowrap">8 – 15 მარტი</span></span></p>
       <div class="cal-key">
         <span><i style="background:var(--hosted);border-color:var(--hosted)"></i><span class="en">Hosted celebrations</span><span class="ka">ზეიმის დღეები</span></span>
-        <span><img class="ski-ico key" src="media/skis-icon.webp" alt=""><span class="en">Ski days · feel free to join*</span><span class="ka">სათხილამურო დღეები · შემოგვიერთდით სურვილისამებრ*</span></span>
-        <span class="cal-note"><span class="en">* Heliskiing is available at the resort</span><span class="ka">* კურორტზე ხელმისაწვდომია ჰელისკიინგი</span></span>
+        <span><img class="ski-ico key" src="media/skis-icon.webp" alt=""><span class="en">Ski days · feel free to join<span class="only-full">*</span></span><span class="ka">სათხილამურო დღეები · შემოგვიერთდით სურვილისამებრ<span class="only-full">*</span></span></span>
+        <span class="cal-note only-full"><span class="en">* Heliskiing is available at the resort</span><span class="ka">* კურორტზე ხელმისაწვდომია ჰელისკიინგი</span></span>
       </div>
 
       <div class="days">
-        <article class="day">
+        <article class="day only-full">
           <span class="num">10</span>
           <span class="wd"><span class="en">Wednesday</span><span class="ka">ოთხშაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
@@ -810,23 +833,24 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <span class="wd"><span class="en">Thursday</span><span class="ka">ხუთშაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">10:00 AM</span><span class="ka">10:00</span></time><span><span class="en">Transfer from <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> to Gergeti Trinity Church</span><span class="ka">ტრანსფერი <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯიდან“</a> გერგეტის სამებამდე</span></span></li>
-            <li><time><span class="en">12:30 PM</span><span class="ka">12:30</span></time><span><span class="en">Church ceremony</span><span class="ka">ჯვრისწერა</span><small><span class="en">Gergeti Trinity Church</span><span class="ka">ქორწინების საიდუმლო</span></small></span></li>
-            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Departure from Gergeti</span><span class="ka">გამგზავრება გერგეტიდან</span></span></li>
-            <li><time><span class="en">4:30 PM</span><span class="ka">16:30</span></time><span><span class="en">Cocktail hour</span><span class="ka">კოქტეილი</span><small><span class="en">Champagne &amp; canapés · <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
-            <li><time><span class="en">6:30 PM</span><span class="ka">18:30</span></time><span><span class="en">The evening begins</span><span class="ka">საღამო იწყება</span><small><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
+            <li class="only-full"><time><span class="en">10:00 AM</span><span class="ka">10:00</span></time><span><span class="en">Transfer from <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> to Gergeti Trinity Church</span><span class="ka">ტრანსფერი <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯიდან“</a> გერგეტის სამებამდე</span></span></li>
+            <li><time><span class="en">12:30 PM</span><span class="ka">12:30</span></time><span><span class="en">Church ceremony</span><span class="ka">ჯვრისწერა გერგეტის წმინდა სამებაში</span><small class="en">Gergeti Trinity Church</small></span></li>
+            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Departure from Gergeti</span><span class="ka">გერგეტიდან გუდაურში დაბრუნება</span></span></li>
+            <li><time><span class="en">4:30 PM</span><span class="ka">16:30</span></time><span><span class="en">Cocktail hour</span><span class="ka">კოქტეილის საათი</span><small><span class="en">Champagne &amp; canapés · <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
+            <li><time><span class="en">6:30 PM</span><span class="ka">18:30</span></time><span><span class="en">The evening begins</span><span class="ka">საღამოს დასაწყისი</span><small><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
           </ol>
+          <p class="day-note only-day"><span class="en">Already in Gudauri? A transfer to the church leaves <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> at 11:00 AM.</span><span class="ka">თუ უკვე იმყოფებით გუდაურში, 11 საათზე ხელმისაწვდომი იქნება ტრანსფერი ეკლესიაში სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯიდან“</a>.</span></p>
         </article>
         <article class="day">
           <span class="num">12</span>
           <span class="wd"><span class="en">Friday</span><span class="ka">პარასკევი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
           <ol>
-            <li><time><span class="en">11:00 AM</span><span class="ka">11:00</span></time><span><span class="en">Après-ski brunch</span><span class="ka">აპრე-სკი ბრანჩი</span><small><span class="en">Khinkali-making masterclass</span><span class="ka">ხინკლის მომზადების მასტერკლასი</span></small></span></li>
-            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="en">Let&rsquo;s hit the slopes</span><span class="ka">გავიდეთ ტრასაზე</span></span></li>
+            <li class="only-full"><time><span class="en">11:00 AM</span><span class="ka">11:00</span></time><span><span class="en">Après-ski brunch</span><span class="ka">აპრე-სკი ბრანჩი</span><small><span class="en">Khinkali-making masterclass</span><span class="ka">ხინკლის მომზადების მასტერკლასი</span></small></span></li>
+            <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="only-full"><span class="en">Let&rsquo;s hit the slopes</span><span class="ka">გავიდეთ ტრასაზე</span></span><span class="only-day"><span class="en">Join us on the slopes</span><span class="ka">შემოგვიერთდით სასრიალოდ</span></span></span></li>
           </ol>
         </article>
-        <article class="day">
+        <article class="day only-full">
           <span class="num">13</span>
           <span class="wd"><span class="en">Saturday</span><span class="ka">შაბათი</span></span>
           <span class="mo"><span class="en">March</span><span class="ka">მარტი</span></span>
@@ -838,9 +862,10 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
 
       <div class="route stay-box has-stamp">
         <button class="code-stamp" type="button" data-code="MG2027" aria-label="Copy booking code MG2027"><span class="k"><span class="en">CODE</span><span class="ka">კოდი</span></span><b>MG2027</b><span class="t"><span class="en">TAP TO COPY</span><span class="ka">დააჭირეთ</span></span><span class="copied" hidden><span class="en">COPIED</span><span class="ka">დაკოპირდა</span></span></button>
-        <p class="caps"><span class="en">Stay a little longer</span><span class="ka">დარჩით ცოტა მეტხანს</span></p>
-        <p class="route-when"><span class="en">MAR 10 – MORNING OF MAR 13 · INCLUDED</span><span class="ka">10 მარტი – 13 მარტის დილა · შედის</span></p>
-        <p style="color:var(--ink-dim)"><span class="en">Should you require extra nights, <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate.</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> დამატებითი ღამეებისთვის ჩვენს სტუმრებს სპეციალურ ფასს სთავაზობს.</span></p>
+        <p class="caps only-full"><span class="en">Stay a little longer</span><span class="ka">დარჩით ცოტა მეტხანს</span></p>
+        <p class="route-when only-full"><span class="en">MAR 10 – MORNING OF MAR 13 · INCLUDED</span><span class="ka">10 მარტი – 13 მარტის დილა · შედის</span></p>
+        <p class="only-day" style="color:var(--ink-dim)"><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate from March 8 to 15. To use it, enter our code when you book on their official website.</span><span class="ka">სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> ჩვენს სტუმრებს სთავაზობს ფასდაკლებას 8–15 მარტის შუალედში. თუ გსურთ ისარგებლოთ ფასდაკლებით, გამოიყენეთ ჩვენი კოდი რეზერვაციისას მათ ოფიციალურ საიტზე.</span></p>
+        <p class="only-full" style="color:var(--ink-dim)"><span class="en">Should you require extra nights, <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate.</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> დამატებითი ღამეებისთვის ჩვენს სტუმრებს სპეციალურ ფასს სთავაზობს.</span></p>
       </div>
         </div>
       </div>
@@ -856,17 +881,18 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         </div>
         <p class="lede en">The Georgian Orthodox sacrament of marriage. There are no spoken vows; the service is sung in Georgian, and you only need to watch for five moments.</p>
         <p class="lede ka">გვიხარია, რომ ამ დღეს ჩვენთან ერთად იქნებით.</p>
+        <p class="moments-head ka">ჯვრისწერის 5 მნიშვნელოვანი ნაწილი</p>
         <ol class="moments">
           <li><b><span class="en">Candles</span><span class="ka">სანთლები</span></b><p><span class="en">The light of faith</span><span class="ka">რწმენის სინათლე</span></p></li>
           <li><b><span class="en">Rings</span><span class="ka">ბეჭდები</span></b><p><span class="en">Blessed and exchanged three times</span><span class="ka">კურთხევა და სამგზის გაცვლა</span></p></li>
           <li><b><span class="en">Crowns</span><span class="ka">გვირგვინები</span></b><p><span class="en">The heart of the service</span><span class="ka">საიდუმლოს გული</span></p></li>
-          <li><b><span class="en">The common cup</span><span class="ka">საერთო სასმისი</span></b><p><span class="en">Every joy and sorrow, shared</span><span class="ka">სიხარულიც და სიძნელეც ერთად</span></p></li>
-          <li><b><span class="en">Three circles</span><span class="ka">სამგზის შემოვლა</span></b><p><span class="en">Our first steps as husband and wife</span><span class="ka">პირველი ნაბიჯები ცოლ-ქმრად</span></p></li>
+          <li><b><span class="en">The common cup</span><span class="ka">საერთო სასმისი</span></b><p><span class="en">Every joy and sorrow, shared</span><span class="ka">ჭირისა და ლხინის გაზიარება</span></p></li>
+          <li><b><span class="en">Three circles</span><span class="ka">სამგზის შემოვლა</span></b><p><span class="en">Our first steps as husband and wife</span><span class="ka">პირველი ნაბიჯები როგორც ცოლ-ქმარი</span></p></li>
         </ol>
         <div class="note" style="margin-top:32px">
           <p class="caps"><span class="en">Before you come</span><span class="ka">სანამ მოხვალთ</span></p>
           <p class="en">Gergeti sits at 7,119 ft, so expect snow: wear a classic coat or fur and boots for the walk up. Women cover their hair with a scarf. Guests stand during the service, which lasts about 30 minutes.</p>
-          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით კლასიკური პალტო ან ბეწვი, თოვლისთვის შესაფერისი ფეხსაცმლით. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი. მსახურება დაახლოებით 30 წუთი გაგრძელდება.</p>
+          <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით კლასიკური პალტო ან ბეწვი და თოვლისთვის შესაფერისი ფეხსაცმელი. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი.</p>
         </div>
       </div>
     </div>
@@ -889,13 +915,13 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <figure class="pass-art"><img src="media/pass-couple-blue.jpg" alt="Illustration of Mari and Graftan skiing in traditional Georgian dress"></figure>
           <div class="pass-body">
             <div class="f wide"><span class="l">Pass holder</span><span class="v holder" id="passName">Our guest</span></div>
-            <div class="f"><span class="l">Valid</span><span class="v">MAR 10–12, 2027</span></div>
+            <div class="f"><span class="l">Valid</span><span class="v"><span class="only-full">MAR 10–12, 2027</span><span class="only-day">MAR 11–12, 2027</span></span></div>
             <div class="f"><span class="l">Zone</span><span class="v">Kazbegi · Gudauri</span></div>
             <div class="f"><span class="l">Hosts</span><span class="v">Mari &amp; Graftan</span></div>
-            <div class="f"><span class="l">Days</span><span class="v">3</span></div>
+            <div class="f"><span class="l">Days</span><span class="v"><span class="only-full">3</span><span class="only-day">2</span></span></div>
           </div>
           <button class="pass-stub" id="tear" type="button" aria-haspopup="dialog">
-            <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოაგლიჯეთ პასუხისთვის</span></span>
+            <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოხსენით პასუხისთვის</span></span>
             <span class="rsvp-by">RSVP BY JAN 15, 2027</span>
             <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
             <span class="l" id="passNo">No. 1103-2027</span>
@@ -903,7 +929,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <div class="stamp" id="stamp" aria-hidden="true"><div>CONFIRMED<span>11 · III · 27</span></div></div>
         </div>
       </div>
-      <p class="pass-hint" id="passHint"><span class="en">Tear off the stub to reply</span><span class="ka">პასუხისთვის მოაგლიჯეთ კუპონი</span></p>
+      <p class="pass-hint" id="passHint"><span class="en">Tear off the stub to reply</span><span class="ka">პასუხისთვის მოხსენით კუპონი</span></p>
       <button class="pass-again" id="passAgain" type="button" hidden><span class="en">Change my reply</span><span class="ka">პასუხის შეცვლა</span></button>
     </div>
   </section>
@@ -913,23 +939,23 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     <div class="wrap">
       <div class="section-head">
         <p class="caps"><span class="en">What to wear</span><span class="ka">რა ჩავიცვათ</span></p>
-        <div class="dress-title"><h2><span class="en">Dress Code</span><span class="ka">ჩაცმის სტილი</span></h2></div>
+        <div class="dress-title"><h2><span class="en">Dress Code</span><span class="ka">დრეს კოდი</span></h2></div>
       </div>
       <div class="dress-row has-pol">
       <div class="dress-grid one">
         <div class="dress">
           <p class="caps"><span class="en">March 11 · Evening</span><span class="ka">11 მარტი · საღამო</span></p>
-          <h3><span class="en">The Celebration</span><span class="ka">ზეიმი</span></h3>
+          <h3><span class="en">The Celebration</span><span class="ka">საღამო</span></h3>
           <p class="dress-tag"><span class="en">Black tie</span><span class="ka">Black tie</span></p>
           <p class="en"><span class="gown-lead">Gowns &amp; tuxedos</span>in deep jewel and earth tones.<br>Classic black tuxedos are always welcome.<br>Please avoid bright colors.</p>
-          <p class="ka"><span class="gown-lead ka-lead">საღამოს კაბები და სმოკინგები</span>მუქ, ძვირფასი ქვებისა და მიწის ფერებში.<br>კლასიკური შავი სმოკინგიც სასურველია.<br>გთხოვთ, მოერიდოთ მკვეთრ ფერებს.</p>
-          <div class="swatches in-card"><span class="sw chip"><i style="background:#2E1A0E"></i><b><span class="en">Espresso</span><span class="ka">ესპრესო</span></b><small>#2E1A0E</small></span><span class="sw chip"><i style="background:#461312"></i><b><span class="en">Burgundy</span><span class="ka">ბორდო</span></b><small>#461312</small></span><span class="sw chip"><i style="background:#6C0B25"></i><b><span class="en">Ruby</span><span class="ka">ლალისფერი</span></b><small>#6C0B25</small></span><span class="sw chip"><i style="background:#4A2338"></i><b><span class="en">Plum</span><span class="ka">ქლიავისფერი</span></b><small>#4A2338</small></span><span class="sw chip"><i style="background:#A97F8F"></i><b><span class="en">Mauve</span><span class="ka">ღია იისფერი</span></b><small>#A97F8F</small></span><span class="sw chip"><i style="background:#B08A86"></i><b><span class="en">Dusty rose</span><span class="ka">ფერფლისფერი ვარდი</span></b><small>#B08A86</small></span><span class="sw chip"><i style="background:#64652A"></i><b><span class="en">Olive</span><span class="ka">ზეთისხილისფერი</span></b><small>#64652A</small></span><span class="sw chip"><i style="background:#B5AD80"></i><b><span class="en">Sage</span><span class="ka">სალბისფერი</span></b><small>#B5AD80</small></span></div>
+          <p class="ka"><span class="gown-lead ka-lead">საღამოს კაბები და სმოკინგები</span>მუქ, ძვირფასი ქვებისა და მიწის ფერებში.<br>მამაკაცებისთვის მისაღებია კლასიკური შავი სმოკინგიც.<br>გთხოვთ, მოერიდოთ მკვეთრ-ღია ფერებს.</p>
+          <div class="swatches in-card"><span class="sw chip"><i style="background:#2E1A0E"></i><b><span class="en">Espresso</span><span class="ka">ესპრესო</span></b><small>#2E1A0E</small></span><span class="sw chip"><i style="background:#461312"></i><b><span class="en">Burgundy</span><span class="ka">ბორდო</span></b><small>#461312</small></span><span class="sw chip"><i style="background:#6C0B25"></i><b><span class="en">Ruby</span><span class="ka">ლალის&shy;ფერი</span></b><small>#6C0B25</small></span><span class="sw chip"><i style="background:#4A2338"></i><b><span class="en">Plum</span><span class="ka">ქლიავის&shy;ფერი</span></b><small>#4A2338</small></span><span class="sw chip"><i style="background:#A97F8F"></i><b><span class="en">Mauve</span><span class="ka">ღია იისფერი</span></b><small>#A97F8F</small></span><span class="sw chip"><i style="background:#B08A86"></i><b><span class="en">Dusty rose</span><span class="ka">ფერფლის&shy;ფერი ვარდი</span></b><small>#B08A86</small></span><span class="sw chip"><i style="background:#64652A"></i><b><span class="en">Olive</span><span class="ka">ზეთის&shy;ხილის&shy;ფერი</span></b><small>#64652A</small></span><span class="sw chip"><i style="background:#B5AD80"></i><b><span class="en">Sage</span><span class="ka">სალბის&shy;ფერი</span></b><small>#B5AD80</small></span></div>
         </div>
       </div>
         <div class="lookbook-pol" id="lookbook" aria-roledescription="carousel" aria-label="Looks we love">
           <div class="pol-wrap">
             <button class="pol-arrow prev" type="button" aria-label="Previous look">&lsaquo;</button>
-            <div class="polaroid"><figure class="pol-slide on" data-i="0"><img src="media/look-wine.jpg" alt="A draped wine-red velvet gown beside a black tuxedo" loading="lazy"><figcaption><span class="en">Wine &amp; black</span><span class="ka">ღვინისფერი და შავი</span></figcaption></figure><figure class="pol-slide" data-i="1"><img src="media/look-g-blush.jpg" alt="A pale rose draped jersey gown with pearl earrings and crystal sandals" loading="lazy"><figcaption><span class="en">Dusty rose drape</span><span class="ka">ფერფლისფერი ვარდი</span></figcaption></figure><figure class="pol-slide" data-i="2"><img src="media/look-aubergine.jpg" alt="A pleated aubergine gown beside a plum suit" loading="lazy"><figcaption><span class="en">Aubergine &amp; plum</span><span class="ka">ბადრიჯნისფერი და ქლიავისფერი</span></figcaption></figure><figure class="pol-slide" data-i="3"><img src="media/look-g-plum2.jpg" alt="A plum satin halter slip gown with a gold clutch, pearl bracelet and jeweled sandals" loading="lazy"><figcaption><span class="en">Plum satin</span><span class="ka">ქლიავისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="4"><img src="media/look-olive.jpg" alt="An olive cape gown beside an olive double-breasted suit" loading="lazy"><figcaption><span class="en">Olive</span><span class="ka">ზეთისხილისფერი</span></figcaption></figure><figure class="pol-slide" data-i="5"><img src="media/look-g-espresso.jpg" alt="An espresso satin cowl-neck gown with an olive clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Espresso &amp; olive</span><span class="ka">ესპრესო და ზეთისხილისფერი</span></figcaption></figure><figure class="pol-slide" data-i="6"><img src="media/look-g-fringe.jpg" alt="A strapless gown with tiered fringe fading from blush to chocolate" loading="lazy"><figcaption><span class="en">Ombré fringe</span><span class="ka">ომბრე ფოჩებით</span></figcaption></figure><figure class="pol-slide" data-i="7"><img src="media/look-espresso.jpg" alt="An espresso cape gown beside a dark brown double-breasted suit" loading="lazy"><figcaption><span class="en">Espresso</span><span class="ka">ესპრესო</span></figcaption></figure><figure class="pol-slide" data-i="8"><img src="media/look-g-copper.jpg" alt="A copper pleated chiffon halter gown with amber earrings and a pearl clutch" loading="lazy"><figcaption><span class="en">Copper chiffon</span><span class="ka">სპილენძისფერი შიფონი</span></figcaption></figure><figure class="pol-slide" data-i="9"><img src="media/look-g-wine.jpg" alt="A burgundy column gown with gold serpent jewelry and a burgundy clutch" loading="lazy"><figcaption><span class="en">Burgundy column</span><span class="ka">ბორდოსფერი</span></figcaption></figure><figure class="pol-slide" data-i="10"><img src="media/look-g-gold.jpg" alt="A gold beaded high-neck top with a burgundy satin draped maxi skirt" loading="lazy"><figcaption><span class="en">Gold &amp; burgundy</span><span class="ka">ოქროსფერი და ბორდო</span></figcaption></figure><figure class="pol-slide" data-i="11"><img src="media/look-black.jpg" alt="A one-shoulder black gown beside a black three-piece tuxedo with a bow tie" loading="lazy"><figcaption><span class="en">Classic black</span><span class="ka">კლასიკური შავი</span></figcaption></figure><figure class="pol-slide" data-i="12"><img src="media/look-g-chocolate.jpg" alt="A chocolate ruched halter gown with cream flower earrings, sandals and clutch" loading="lazy"><figcaption><span class="en">Chocolate halter</span><span class="ka">შოკოლადისფერი</span></figcaption></figure><figure class="pol-slide" data-i="13"><img src="media/look-g-rose.jpg" alt="A rose satin one-shoulder gown with a gold clutch and gold sandals" loading="lazy"><figcaption><span class="en">Rose satin</span><span class="ka">ვარდისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="14"><img src="media/look-g-olive.jpg" alt="An olive satin halter gown with a scarf neckline, an olive ostrich clutch and olive patent mules" loading="lazy"><figcaption><span class="en">Olive satin</span><span class="ka">ზეთისხილისფერი ატლასი</span></figcaption></figure><figure class="pol-slide" data-i="15"><img src="media/look-g-sage.jpg" alt="A sage off-the-shoulder draped gown with emerald earrings and a silver woven clutch" loading="lazy"><figcaption><span class="en">Sage drape</span><span class="ka">სალბისფერი</span></figcaption></figure><figure class="pol-slide" data-i="16"><img src="media/look-g-aubergine.jpg" alt="An aubergine column gown with a knotted shoulder, a woven burgundy clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Aubergine column</span><span class="ka">ბადრიჯნისფერი</span></figcaption></figure><figure class="pol-slide" data-i="17"><img src="media/look-g-taupe.jpg" alt="A taupe satin draped top and bias-cut maxi skirt with silver accessories" loading="lazy"><figcaption><span class="en">Taupe satin</span><span class="ka">ნაცრისფერ-ვარდისფერი ატლასი</span></figcaption></figure></div>
+            <div class="polaroid"><figure class="pol-slide on" data-i="0"><img src="media/look-wine.jpg" alt="A draped wine-red velvet gown beside a black tuxedo" loading="lazy"><figcaption><span class="en">Wine &amp; black</span></figcaption></figure><figure class="pol-slide" data-i="1"><img src="media/look-g-blush.jpg" alt="A pale rose draped jersey gown with pearl earrings and crystal sandals" loading="lazy"><figcaption><span class="en">Dusty rose drape</span></figcaption></figure><figure class="pol-slide" data-i="2"><img src="media/look-aubergine.jpg" alt="A pleated aubergine gown beside a plum suit" loading="lazy"><figcaption><span class="en">Aubergine &amp; plum</span></figcaption></figure><figure class="pol-slide" data-i="3"><img src="media/look-g-plum2.jpg" alt="A plum satin halter slip gown with a gold clutch, pearl bracelet and jeweled sandals" loading="lazy"><figcaption><span class="en">Plum satin</span></figcaption></figure><figure class="pol-slide" data-i="4"><img src="media/look-olive.jpg" alt="An olive cape gown beside an olive double-breasted suit" loading="lazy"><figcaption><span class="en">Olive</span></figcaption></figure><figure class="pol-slide" data-i="5"><img src="media/look-g-espresso.jpg" alt="An espresso satin cowl-neck gown with an olive clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Espresso &amp; olive</span></figcaption></figure><figure class="pol-slide" data-i="6"><img src="media/look-g-fringe.jpg" alt="A strapless gown with tiered fringe fading from blush to chocolate" loading="lazy"><figcaption><span class="en">Ombré fringe</span></figcaption></figure><figure class="pol-slide" data-i="7"><img src="media/look-espresso.jpg" alt="An espresso cape gown beside a dark brown double-breasted suit" loading="lazy"><figcaption><span class="en">Espresso</span></figcaption></figure><figure class="pol-slide" data-i="8"><img src="media/look-g-copper.jpg" alt="A copper pleated chiffon halter gown with amber earrings and a pearl clutch" loading="lazy"><figcaption><span class="en">Copper chiffon</span></figcaption></figure><figure class="pol-slide" data-i="9"><img src="media/look-g-wine.jpg" alt="A burgundy column gown with gold serpent jewelry and a burgundy clutch" loading="lazy"><figcaption><span class="en">Burgundy column</span></figcaption></figure><figure class="pol-slide" data-i="10"><img src="media/look-g-gold.jpg" alt="A gold beaded high-neck top with a burgundy satin draped maxi skirt" loading="lazy"><figcaption><span class="en">Gold &amp; burgundy</span></figcaption></figure><figure class="pol-slide" data-i="11"><img src="media/look-black.jpg" alt="A one-shoulder black gown beside a black three-piece tuxedo with a bow tie" loading="lazy"><figcaption><span class="en">Classic black</span></figcaption></figure><figure class="pol-slide" data-i="12"><img src="media/look-g-chocolate.jpg" alt="A chocolate ruched halter gown with cream flower earrings, sandals and clutch" loading="lazy"><figcaption><span class="en">Chocolate halter</span></figcaption></figure><figure class="pol-slide" data-i="13"><img src="media/look-g-rose.jpg" alt="A rose satin one-shoulder gown with a gold clutch and gold sandals" loading="lazy"><figcaption><span class="en">Rose satin</span></figcaption></figure><figure class="pol-slide" data-i="14"><img src="media/look-g-olive.jpg" alt="An olive satin halter gown with a scarf neckline, an olive ostrich clutch and olive patent mules" loading="lazy"><figcaption><span class="en">Olive satin</span></figcaption></figure><figure class="pol-slide" data-i="15"><img src="media/look-g-sage.jpg" alt="A sage off-the-shoulder draped gown with emerald earrings and a silver woven clutch" loading="lazy"><figcaption><span class="en">Sage drape</span></figcaption></figure><figure class="pol-slide" data-i="16"><img src="media/look-g-aubergine.jpg" alt="An aubergine column gown with a knotted shoulder, a woven burgundy clutch and gold jewelry" loading="lazy"><figcaption><span class="en">Aubergine column</span></figcaption></figure><figure class="pol-slide" data-i="17"><img src="media/look-g-taupe.jpg" alt="A taupe satin draped top and bias-cut maxi skirt with silver accessories" loading="lazy"><figcaption><span class="en">Taupe satin</span></figcaption></figure></div>
             <button class="pol-arrow next" type="button" aria-label="Next look">&rsaquo;</button>
           </div>
           <p class="pol-count" aria-live="polite"><span class="pol-label"><span class="en">Looks we love</span><span class="ka">ჩვენი საყვარელი სტილი</span></span> · <span id="polNo">1</span> / <span id="polOf">18</span></p>
@@ -938,7 +964,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     </div>
   </section>
 
-  <section class="paper section" id="travel">
+  <section class="paper section only-full" id="travel">
     <header class="prog-head travel-head">
       <img src="media/tbilisi.jpg" alt="Old Tbilisi at dusk: Narikala fortress above the old town, with the Peace Bridge over the Mtkvari" loading="lazy">
       <div class="wrap">
@@ -981,11 +1007,12 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <li><a href="https://roomshotels.com/" target="_blank" rel="noopener">Rooms Hotel Tbilisi</a></li>
             <li><a href="https://www.artizanhotels.com/en" target="_blank" rel="noopener">Artizan Hotel</a></li>
           </ul>
+          <figure class="travel-art"><img src="media/khinkali.jpg" alt="Illustration of khinkali, a clay wine jug, vintage skis and a gondola in the mountains" loading="lazy"></figure>
         </div>
       </div>
     </div>
   </section>
-  <section class="dark section" id="food">
+  <section class="dark section only-full" id="food">
     <div class="wrap">
       <div class="section-head">
         <p class="caps"><span class="en">Eat &amp; drink</span><span class="ka">ჭამა და სმა</span></p>
@@ -1125,14 +1152,14 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <button type="button" class="gate-link" id="gateRetry">Try again<i>·</i><span class="g-kafont">თავიდან ცდა</span></button>
       <p class="gate-msg" id="gateContactMsg" role="status" hidden></p>
     </form>
-    <p class="gate-preview" id="gatePreview" hidden>Preview: try “Jane Smith” (a couple) or “Alex Morgan” (with a plus-one).</p>
+    <p class="gate-preview" id="gatePreview" hidden>Preview: try “Jane Smith” (a couple), “Alex Morgan” (with a plus-one) or “Nino Beridze” (the one-day version, in Georgian).</p>
   </div>
 </div>
 
 <section class="interlude horses" aria-label="See you in the mountains">
   <video id="horsesFilm" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="media/horses-poster.jpg" aria-label="Two horses grazing beneath Gergeti Trinity Church"><source src="media/horses.mp4" type="video/mp4"></video>
   <div class="wrap">
-    <p class="big"><span class="en">See you in the mountains</span><span class="ka">მთაში შევხვდებით</span></p>
+    <p class="big"><span class="en">See you in the mountains</span><span class="ka">შევხვდებით მთაში</span></p>
   </div>
 </section>
 
@@ -1174,7 +1201,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   /* ---------- Greeting ---------- */
   function renderDear(){
     if(!party) return;
-    document.getElementById("dear").textContent = (lang()==="ka" ? "ძვირფასო " : "Dear ") + party.short + ",";
+    document.getElementById("dear").textContent = (lang()==="ka" ? "ძვირფასო " + (party.kaShort || party.short) : "Dear " + party.short) + ",";
   }
 
   /* ---------- Countdown ---------- */
@@ -1183,7 +1210,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     var days = Math.ceil((target - Date.now())/86400000);
     var el = document.getElementById("countdown");
     var l = root.getAttribute("data-lang");
-    if(days > 1) el.textContent = l==="ka" ? days+" დღე დარჩა" : days+" days to go";
+    if(days > 1) el.textContent = l==="ka" ? "დარჩენილია "+days+" დღე" : days+" days to go";
     else if(days === 1) el.textContent = l==="ka" ? "ხვალ" : "Tomorrow";
     else el.textContent = "";
   }
@@ -1317,10 +1344,11 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   function attendOptions(){
     if(couple()){
       var a = party.members[0].first, b = party.members[1].first;
+      var ka = party.kaMembers && party.kaMembers.length === 2 ? party.kaMembers : [a, b];
       return [
         {v:"both", att:"yes", who:"Both", en:"Both of us will be there", ka:"ორივე მოვალთ"},
-        {v:"m0", att:"yes", who:"Only "+a, en:"Only "+a, ka:"მხოლოდ "+a},
-        {v:"m1", att:"yes", who:"Only "+b, en:"Only "+b, ka:"მხოლოდ "+b},
+        {v:"m0", att:"yes", who:"Only "+a, en:"Only "+a, ka:"მხოლოდ "+ka[0]},
+        {v:"m1", att:"yes", who:"Only "+b, en:"Only "+b, ka:"მხოლოდ "+ka[1]},
         {v:"no", att:"no", who:"Neither", en:"Regretfully, neither of us can make it", ka:"სამწუხაროდ, ვერცერთი ვერ მოვალთ"}
       ];
     }
@@ -1356,7 +1384,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       : '<span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span>';
     var ny = document.getElementById("notYou");
     ny.hidden = !party;
-    if(party) document.getElementById("notYouBtn").textContent = T("Not " + party.short + "? Switch guest", "არ ხართ " + party.short + "? სტუმრის შეცვლა");
+    if(party) document.getElementById("notYouBtn").textContent = T("Not " + party.short + "? Switch guest", "არ ხართ " + (party.kaShort || party.short) + "? სტუმრის შეცვლა");
     if(party) renderChoices();
   }
 
@@ -1411,12 +1439,12 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   function renderDone(){
     document.querySelectorAll("[data-en-placeholder]").forEach(function(el){ el.placeholder = el.getAttribute("data-"+lang()+"-placeholder"); });
     if(!lastReply) return;
-    var yes = lastReply.attending === "yes", who = party ? party.short : "";
-    document.getElementById("doneTitle").textContent = yes ? T("See you in the mountains", "მთაში შევხვდებით") : T("We'll miss you", "მოგვენატრებით");
+    var yes = lastReply.attending === "yes", who = party ? party.short : "", kwho = party ? (party.kaShort || party.short) : "";
+    document.getElementById("doneTitle").textContent = yes ? T("See you in the mountains", "შევხვდებით მთაში") : T("We'll miss you", "მოგვენატრებით");
     document.getElementById("doneText").textContent = lastStatus === "updated"
-      ? T("Thank you, "+who+". Your reply has been updated.", "მადლობა, "+who+". თქვენი პასუხი განახლდა.")
-      : yes ? T("Thank you, "+who+". Your reply is in.", "მადლობა, "+who+". თქვენი პასუხი მიღებულია.")
-            : T("Thank you for letting us know, "+who+".", "მადლობა, რომ შეგვატყობინეთ, "+who+".");
+      ? T("Thank you, "+who+". Your reply has been updated.", "მადლობა, "+kwho+". თქვენი პასუხი განახლდა.")
+      : yes ? T("Thank you, "+who+". Your reply is in.", "მადლობა, "+kwho+". თქვენი პასუხი მიღებულია.")
+            : T("Thank you for letting us know, "+who+".", "მადლობა, რომ შეგვატყობინეთ, "+kwho+".");
     stamp.querySelector("div").firstChild.nodeValue = yes ? "CONFIRMED" : "WITH LOVE";
   }
   function markReplied(reply){
@@ -1474,7 +1502,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var gate = document.getElementById("gate");
   var DEMO = [
     {keys:["jane smith","john smith","jane john smith"], party:{display:"Jane & John Smith", short:"Jane & John", members:[{first:"Jane",full:"Jane Smith"},{first:"John",full:"John Smith"}], plusOne:false, plusOneName:"", group:"american", lang:"en"}},
-    {keys:["alex morgan"], party:{display:"Alex Morgan", short:"Alex", members:[{first:"Alex",full:"Alex Morgan"}], plusOne:true, plusOneName:"", group:"american", lang:"en"}}
+    {keys:["alex morgan"], party:{display:"Alex Morgan", short:"Alex", members:[{first:"Alex",full:"Alex Morgan"}], plusOne:true, plusOneName:"", group:"american", lang:"en"}},
+    {keys:["nino beridze","ნინო ბერიძე"], party:{display:"Nino & Giorgi Beridze", short:"Nino & Giorgi", kaShort:"ნინო და გიორგი", kaMembers:["ნინო","გიორგი"], members:[{first:"Nino",full:"Nino Beridze"},{first:"Giorgi",full:"Giorgi Beridze"}], plusOne:false, plusOneName:"", group:"georgian 1 day", lang:"ka"}}
   ];
   function words(v){ return v.toLowerCase().replace(/[^a-zა-ჰ\s]/g," ").split(/\s+/).filter(function(w){ return w && w!=="and"; }); }
   function lookup(body){
@@ -1492,10 +1521,15 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     store("mg-guest", token);
     var l = read("mg-lang") || party.lang || "en";
     setLang(l); renderBarcode();
-    form.reset(); renderGuest();
+    var day = /\bday\b|დღ/i.test(party.group || "");   // sheet Group "Georgian 1 day"
+    if(day) root.setAttribute("data-group", "day"); else root.removeAttribute("data-group");
+    form.reset();
+    if(day){ document.getElementById("f-arrive").value = "2027-03-11"; document.getElementById("f-leave").value = "2027-03-12"; }
+    renderGuest();
     if(serverReply){ prefill(serverReply); markReplied(serverReply); }
     root.classList.remove("gated");
     if(quick) gate.hidden = true; else { gate.classList.add("out"); setTimeout(function(){ gate.hidden = true; }, 950); }
+    window.mgEntered = true;
     document.dispatchEvent(new CustomEvent("mg:enter"));
   }
   function showGate(){
@@ -1553,6 +1587,105 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   } else showGate();
 })();
 </script>
+<script>
+/* ---------- Music ----------
+   Plays softly in the background once a guest's name is found. Returning guests (who skip the name
+   screen) hear it from their first tap. The header button pauses and resumes; a pause is remembered.
+   It runs through Web Audio so the volume and the fade-in also work on iPhones. */
+(function(){
+  var btn = document.getElementById("musicBtn"), el = document.getElementById("music");
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if(!btn || !el || !AC) { if(btn) btn.hidden = true; return; }
+  var SRC = el.getAttribute("src"), VOL = 0.32, FADE_IN = 4, FADE_OUT = 0.7;
+  function get(){ try{ return localStorage.getItem("mg-music"); }catch(e){ return null; } }
+  function set(v){ try{ localStorage.setItem("mg-music", v); }catch(e){} }
+  var wanted = get() !== "off", entered = false, playing = false;
+  var ctx = null, gain = null, node = null, buffer = null, bytes = null, decoding = null, stopT = null;
+
+  function show(on){
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", on ? "Pause music" : "Play music");
+    btn.classList.toggle("ask", !on && wanted && entered);
+  }
+  // Download the song early (quietly), so it's ready the moment a guest is let in.
+  function fetchBytes(){
+    if(!bytes) bytes = fetch(SRC).then(function(r){ return r.arrayBuffer(); });
+    return bytes;
+  }
+  // Must be called inside a tap: phones only allow sound from a context first switched on by a tap.
+  function unlock(){
+    if(!ctx){
+      try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
+      ctx = new AC(); gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
+      var b = ctx.createBuffer(1, 1, 22050), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination);
+      try{ s.start(0); }catch(e){}
+    }
+    if(ctx.state !== "running"){ var r = ctx.resume(); if(r && r.catch) r.catch(function(){}); }
+  }
+  function decode(){
+    if(!decoding) decoding = fetchBytes().then(function(ab){
+      return new Promise(function(ok, no){ var p = ctx.decodeAudioData(ab, ok, no); if(p && p.then) p.then(ok, no); });
+    }).then(function(b){ buffer = b; return b; });
+    return decoding;
+  }
+  function ramp(to, secs){
+    var t = ctx.currentTime;
+    gain.gain.cancelScheduledValues(t); gain.gain.setValueAtTime(gain.gain.value, t); gain.gain.linearRampToValueAtTime(to, t + secs);
+  }
+  function play(){
+    if(!ctx) return false;
+    clearTimeout(stopT); playing = true; show(true);
+    if(ctx.state !== "running"){ var r = ctx.resume(); if(r && r.catch) r.catch(function(){}); }
+    decode().then(function(){
+      if(!playing) return;
+      if(!node){ node = ctx.createBufferSource(); node.buffer = buffer; node.loop = true; node.connect(gain); node.start(0); }
+      ramp(VOL, FADE_IN);
+    }).catch(function(){ playing = false; show(false); });
+    return true;
+  }
+  function stop(){
+    playing = false; show(false);
+    if(!ctx) return;
+    ramp(0, FADE_OUT);
+    stopT = setTimeout(function(){ if(!playing && ctx.state === "running") ctx.suspend(); }, FADE_OUT * 1000 + 100);
+  }
+  // Returning guests: the first tap anywhere starts the music.
+  function onFirst(e){
+    if(btn.contains(e.target)) return;
+    disarm(); if(wanted && !playing){ unlock(); play(); }
+  }
+  function arm(){ document.addEventListener("click", onFirst, true); document.addEventListener("keydown", onFirst, true); show(false); }
+  function disarm(){ document.removeEventListener("click", onFirst, true); document.removeEventListener("keydown", onFirst, true); }
+
+  // The tap on "Enter" switches sound on silently; the song itself starts only if the name is found.
+  var gf = document.getElementById("gateForm");
+  if(gf){
+    gf.addEventListener("submit", function(){ if(wanted) unlock(); });
+    var gn = document.getElementById("gateName");
+    if(gn) gn.addEventListener("focus", fetchBytes, {once:true});
+  }
+  function onEnter(){
+    entered = true;
+    if(!wanted){ show(false); return; }
+    fetchBytes();
+    if(ctx && ctx.state === "running") play(); else arm();
+  }
+  document.addEventListener("mg:enter", onEnter);
+  if(window.mgEntered) onEnter();   // the guest was let in before this script ran
+
+  btn.addEventListener("click", function(){
+    disarm();
+    if(playing){ wanted = false; set("off"); stop(); }
+    else { wanted = true; set("on"); unlock(); play(); }
+  });
+  // Quiet while the site is in the background; carry on when the guest comes back.
+  document.addEventListener("visibilitychange", function(){
+    if(!ctx || !playing) return;
+    if(document.hidden) ctx.suspend(); else { var r = ctx.resume(); if(r && r.catch) r.catch(function(){ arm(); }); }
+  });
+})();
+</script>
+
 
 </body>
 </html>
