@@ -445,6 +445,8 @@ html.gated{overflow:hidden}
 .gate-date{font-family:var(--serif);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,231,216,.8);margin:0 0 18px}
 .gate-date i,.gate-go i,.gate-link i{font-style:normal;margin:0 .6em;opacity:.7}
 .gate-form{width:100%;display:grid;gap:16px;justify-items:center}
+.gate-welcome{margin:0 0 4px;display:grid;gap:6px;font-family:var(--display);font-size:clamp(22px,5.6vw,27px);letter-spacing:.03em;line-height:1.25}
+.gate-welcome .g-ka{font-family:"Noto Serif Georgian",serif;font-size:.62em;letter-spacing:.01em;color:rgba(241,231,216,.85)}
 .gate-form label{display:grid;gap:6px;font-family:var(--display);font-size:clamp(22px,5.6vw,27px);letter-spacing:.03em;line-height:1.25}
 .g-ka,.g-kafont{font-family:"Noto Serif Georgian",serif;font-weight:300}
 .gate-form label .g-ka{font-size:.62em;letter-spacing:.01em;color:rgba(241,231,216,.85)}
@@ -1167,7 +1169,12 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <button type="button" class="gate-link" id="gateRetry">Try again<i>·</i><span class="g-kafont">თავიდან ცდა</span></button>
       <p class="gate-msg" id="gateContactMsg" role="status" hidden></p>
     </form>
-    <p class="gate-preview" id="gatePreview" hidden>Preview: try “Jane Smith” (a couple), “Alex Morgan” (with a plus-one) “Nino Beridze” (the one-day version) or “Ana Kapanadze” (bridesmaids).</p>
+    <form class="gate-form" id="gateBack" novalidate hidden>
+      <p class="gate-welcome" id="gateWelcome"><span class="g-en">Welcome back</span><span class="g-ka">კეთილი იყოს თქვენი დაბრუნება</span></p>
+      <button type="submit" class="gate-go" id="gateBackGo">Enter<i>·</i><span class="g-kafont">შესვლა</span></button>
+      <button type="button" class="gate-link" id="gateSwitch">Not you?<i>·</i><span class="g-kafont">სხვა სტუმარი ხართ?</span></button>
+    </form>
+    <p class="gate-preview" id="gatePreview" hidden>Preview: try “Jane Smith” (a couple), “Alex Morgan” (with a plus-one), “Nino Beridze” (the one-day version) or “Ana Kapanadze” (bridesmaids).</p>
   </div>
 </div>
 
@@ -1552,7 +1559,32 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   function showGate(){
     gate.hidden = false; gate.classList.remove("out"); root.classList.add("gated");
     document.getElementById("gateForm").hidden = false; document.getElementById("gateContact").hidden = true;
+    document.getElementById("gateBack").hidden = true;
     setTimeout(function(){ document.getElementById("gateName").focus({preventScroll:true}); }, 60);
+  }
+  // Returning guest: a "Welcome back" screen with one Enter button. That tap is what lets the music play
+  // (browsers only allow sound after a tap), so the song plays on every visit.
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function showWelcomeBack(saved){
+    var back = document.getElementById("gateBack"), go = document.getElementById("gateBackGo"), found = null, waiting = false;
+    gate.hidden = false; gate.classList.remove("out"); root.classList.add("gated");
+    document.getElementById("gateForm").hidden = true; document.getElementById("gateContact").hidden = true; back.hidden = false;
+    var check = lookup({token: saved}).then(function(res){
+      if(!res.found){ drop("mg-guest"); showGate(); return null; }
+      found = res;
+      var p = res.party, ka = p.kaShort || p.short;
+      document.getElementById("gateWelcome").innerHTML = '<span class="g-en">Welcome back, ' + esc(p.short) + '</span><span class="g-ka">კეთილი იყოს თქვენი დაბრუნება, ' + esc(ka) + '</span>';
+      if(waiting) enter(res);
+      return res;
+    }).catch(function(){ drop("mg-guest"); showGate(); return null; });
+    back.onsubmit = function(e){
+      e.preventDefault();
+      if(found) enter(found); else { waiting = true; go.disabled = true; }
+    };
+    document.getElementById("gateSwitch").onclick = function(){
+      drop("mg-guest"); document.getElementById("gateName").value = ""; showGate();
+    };
+    return check;
   }
   function gateSay(id, en, ka){
     var m = document.getElementById(id);
@@ -1599,18 +1631,13 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   setLang(startLang);
   drop("mg-reply");
   var saved = read("mg-guest");
-  if(saved){
-    // Returning guest: open straight away, then confirm with the server in the background.
-    gate.hidden = true;
-    lookup({token: saved}).then(function(res){ if(res.found) enter(res, true); else { drop("mg-guest"); showGate(); } })
-      .catch(function(){ showGate(); });
-  } else showGate();
+  if(saved) showWelcomeBack(saved); else showGate();
 })();
 </script>
 <script>
 /* ---------- Music ----------
-   Plays softly in the background once a guest's name is found. Returning guests (who skip the name
-   screen) hear it from their first tap. The header button pauses and resumes for the current visit only:
+   Plays softly in the background once a guest taps Enter: on the name screen, or on the "Welcome back"
+   screen returning guests see. If sound is still blocked, it starts on the first tap. The header button pauses and resumes for the current visit only:
    the music plays again on every new visit.
    It runs through Web Audio so the volume and the fade-in also work on iPhones. */
 (function(){
@@ -1681,7 +1708,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var gf = document.getElementById("gateForm");
   if(gf){
     // Listen on the page, before the name screen's own handler, so sound is on before the name is checked.
-    document.addEventListener("submit", function(e){ if(e.target === gf && wanted) unlock(); }, true);
+    document.addEventListener("submit", function(e){ if((e.target === gf || e.target.id === "gateBack") && wanted) unlock(); }, true);
     var gn = document.getElementById("gateName");
     if(gn) gn.addEventListener("focus", fetchBytes, {once:true});
   }
