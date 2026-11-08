@@ -475,6 +475,10 @@ html.gated{overflow:hidden}
 .check{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
 .check input{accent-color:var(--burgundy);width:18px;height:18px;margin-top:4px;flex:none}
 .ifyes{display:grid;gap:26px}
+.after-attend{display:grid;gap:26px}
+.ifyes:not([hidden]),.after-attend:not([hidden]){animation:rsvp-in .45s ease both}
+@keyframes rsvp-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ifyes:not([hidden]),.after-attend:not([hidden]){animation:none}}
 .submit{justify-self:start;background:var(--burgundy);color:var(--cream);border:0;padding:15px 34px;border-radius:99px;font-size:16px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 html[data-lang="ka"] .submit{text-transform:none;letter-spacing:.02em}
 .submit:hover{background:#651C2A}
@@ -1126,12 +1130,14 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <input type="text" id="f-diet-details" name="dietaryDetails">
         </div>
       </div>
+      <div class="after-attend" id="afterAttend" hidden>
       <div class="field">
-        <label for="f-note"><span class="en">Anything we can help with?</span><span class="ka">რამეში ხომ არ გჭირდებათ დახმარება?</span></label>
+        <label for="f-note"><span class="note-yes"><span class="en">Anything we can help with?</span><span class="ka">რამეში ხომ არ გჭირდებათ დახმარება?</span></span><span class="note-no" hidden><span class="en">Would you like to leave us a note?</span><span class="ka">გსურთ, დაგვიტოვოთ შეტყობინება?</span></span></label>
         <textarea id="f-note" name="note" data-en-placeholder="Transfers, accommodation, ski rental, or a note for us" data-ka-placeholder="ტრანსფერი, განთავსება, სათხილამურო აღჭურვილობა, უბრალოდ გვწერეთ"></textarea>
       </div>
       <p class="form-msg err" id="formErr" role="alert" hidden></p>
       <button class="submit" type="submit" id="rsvpSubmit"><span class="en">Send my reply</span><span class="ka">პასუხის გაგზავნა</span></button>
+      </div>
       <p class="preview-note" id="previewNote" hidden>Preview: replies start saving once the site is live on marigraftan.com.</p>
     </form>
     <div class="form" id="rsvpDone" hidden>
@@ -1389,7 +1395,18 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     syncAttend();
   }
   function chosen(){ var v = form.elements.attend ? form.elements.attend.value : ""; return attendOptions().filter(function(o){ return o.v===v; })[0] || null; }
-  function syncAttend(){ var c = chosen(); ifyes.hidden = !c || c.att !== "yes"; }
+  // Only "Will you join us?" shows at first; the rest appears once they answer.
+  function syncAttend(){
+    var c = chosen(), yes = !!c && c.att === "yes", no = !!c && c.att === "no";
+    ifyes.hidden = !yes;
+    document.getElementById("afterAttend").hidden = !c;
+    document.querySelector("#afterAttend .note-yes").hidden = no;
+    document.querySelector("#afterAttend .note-no").hidden = !no;
+    var t = document.getElementById("f-note");
+    t.setAttribute("data-en-placeholder", no ? "" : "Transfers, accommodation, ski rental, or a note for us");
+    t.setAttribute("data-ka-placeholder", no ? "" : "ტრანსფერი, განთავსება, სათხილამურო აღჭურვილობა, უბრალოდ გვწერეთ");
+    t.placeholder = t.getAttribute("data-" + lang() + "-placeholder");
+  }
 
   function renderGuest(){
     var n = holderName();
