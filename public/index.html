@@ -1570,11 +1570,14 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   });
   document.getElementById("notYouBtn").addEventListener("click", function(){
     drop("mg-guest"); party = null; token = null; serverReply = null; lastReply = null;
-    location.reload();
+    window.scrollTo(0, 0); location.reload();
   });
   document.getElementById("gatePreview").hidden = LIVE;
 
   /* ---------- Start ---------- */
+  // Always open at the first slide (browsers otherwise return to where the guest last was, e.g. the bottom after "Switch guest").
+  try{ if("scrollRestoration" in history) history.scrollRestoration = "manual"; }catch(e){}
+  if(!location.hash) window.scrollTo(0, 0);
   var startLang = read("mg-lang") || ((navigator.language||"").toLowerCase().indexOf("ka")===0 ? "ka" : "en");
   setLang(startLang);
   drop("mg-reply");
