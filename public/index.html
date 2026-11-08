@@ -57,7 +57,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* language */
 html:not([data-lang="ka"]) .ka, html[data-lang="ka"] .en{display:none!important}
-/* Versions: guests whose sheet group is "Georgian" see the one-day version (data-group="day") */
+/* Versions: guests whose sheet group is "Georgian 1 day" see the one-day version (data-group="day") */
 html[data-group="day"] .only-full, html:not([data-group="day"]) .only-day{display:none!important}
 html[data-lang="ka"] .caps{text-transform:none;letter-spacing:.03em}
 html[data-lang="ka"] body{line-height:1.75}
@@ -1501,7 +1501,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var DEMO = [
     {keys:["jane smith","john smith","jane john smith"], party:{display:"Jane & John Smith", short:"Jane & John", members:[{first:"Jane",full:"Jane Smith"},{first:"John",full:"John Smith"}], plusOne:false, plusOneName:"", group:"american", lang:"en"}},
     {keys:["alex morgan"], party:{display:"Alex Morgan", short:"Alex", members:[{first:"Alex",full:"Alex Morgan"}], plusOne:true, plusOneName:"", group:"american", lang:"en"}},
-    {keys:["nino beridze","ნინო ბერიძე"], party:{display:"Nino & Giorgi Beridze", short:"Nino & Giorgi", kaShort:"ნინო და გიორგი", kaMembers:["ნინო","გიორგი"], members:[{first:"Nino",full:"Nino Beridze"},{first:"Giorgi",full:"Giorgi Beridze"}], plusOne:false, plusOneName:"", group:"georgian", lang:"ka"}}
+    {keys:["nino beridze","ნინო ბერიძე"], party:{display:"Nino & Giorgi Beridze", short:"Nino & Giorgi", kaShort:"ნინო და გიორგი", kaMembers:["ნინო","გიორგი"], members:[{first:"Nino",full:"Nino Beridze"},{first:"Giorgi",full:"Giorgi Beridze"}], plusOne:false, plusOneName:"", group:"georgian 1 day", lang:"ka"}}
   ];
   function words(v){ return v.toLowerCase().replace(/[^a-zა-ჰ\s]/g," ").split(/\s+/).filter(function(w){ return w && w!=="and"; }); }
   function lookup(body){
@@ -1519,7 +1519,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
     store("mg-guest", token);
     var l = read("mg-lang") || party.lang || "en";
     setLang(l); renderBarcode();
-    var day = /georgian|ქართ|day/i.test(party.group || "");
+    var day = /\bday\b|დღ/i.test(party.group || "");   // sheet Group "Georgian 1 day"
     if(day) root.setAttribute("data-group", "day"); else root.removeAttribute("data-group");
     form.reset();
     if(day){ document.getElementById("f-arrive").value = "2027-03-11"; document.getElementById("f-leave").value = "2027-03-12"; }
