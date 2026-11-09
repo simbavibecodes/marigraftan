@@ -386,6 +386,13 @@ html[data-lang="ka"] .moments b{font-family:"Noto Serif Georgian",serif;font-siz
 .pass-body .l,.pass-stub .l{font-size:9.5px;letter-spacing:.22em;color:var(--ink-dim);text-transform:uppercase}
 .pass-body .v{font-size:14px;font-weight:700;letter-spacing:.04em;overflow-wrap:anywhere}
 .pass-body .holder{font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.06em;line-height:1.1}
+/* Georgian on the pass: Georgian letters with gentler spacing */
+html[data-lang="ka"] .pass-top .k{font-family:"Noto Serif Georgian",serif;letter-spacing:.08em;font-size:11px}
+html[data-lang="ka"] .pass-top .t{font-family:"Noto Serif Georgian",serif;font-weight:300;letter-spacing:.1em;padding-left:.1em;font-size:clamp(30px,8.5vw,36px)}
+html[data-lang="ka"] .pass-body .l{font-family:"Noto Serif Georgian",serif;letter-spacing:.04em;font-size:10.5px}
+html[data-lang="ka"] .pass-body .v{font-family:"Noto Serif Georgian",serif;font-weight:500;letter-spacing:0;font-size:14px}
+html[data-lang="ka"] .pass-body .holder{font-weight:300;letter-spacing:.01em;font-size:26px;line-height:1.25}
+html[data-lang="ka"] .pass-stub .rsvp-by{font-family:"Noto Serif Georgian",serif;letter-spacing:.03em}
 .pass-stub{position:relative;width:100%;border:0;border-top:2px dashed var(--line-paper);padding:18px 22px 16px;display:grid;gap:6px;text-align:center;background:#EDE2D1;border-radius:0 0 10px 10px;cursor:pointer;color:inherit;font:inherit;transform-origin:20% 0;transition:transform .55s cubic-bezier(.5,0,.75,0),opacity .45s ease-in .1s;animation:tug 2.2s ease-in-out 1s infinite}
 .pass-stub:hover{background:#E8DBC7}
 .pass-stub.torn{animation:rip .6s cubic-bezier(.3,.7,.4,1) forwards;pointer-events:none;clip-path:polygon(0 4px,4% 0,8% 5px,12% 1px,16% 6px,20% 0,24% 4px,28% 1px,32% 6px,36% 0,40% 5px,44% 1px,48% 6px,52% 0,56% 4px,60% 1px,64% 6px,68% 0,72% 5px,76% 1px,80% 6px,84% 0,88% 4px,92% 1px,96% 5px,100% 0,100% 100%,0 100%)}
@@ -738,7 +745,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       <div class="hero-text">
         <h1 class="names">Mari<span class="amp">&amp;</span>Graftan</h1>
         <p class="when"><span class="en">March 11, 2027</span><span class="ka">11 მარტი, 2027</span></p>
-        <p class="where"><span class="caps"><span class="en">Gergeti Trinity Church · Georgia</span><span class="ka">გერგეტის წმინდა სამება · საქართველო</span></span><br><span class="en">Caucasus Mountains</span><span class="ka">კავკასიონის მთები</span></p>
+        <p class="where"><span class="caps"><span class="en">Gergeti Trinity Church · Georgia</span><span class="ka">გერგეტის წმინდა სამება · ყაზბეგი</span></span><br><span class="en">Caucasus Mountains</span><span class="ka">კავკასიონის მთები</span></p>
         <p class="countdown" id="countdown"></p>
       </div>
     </div>
@@ -855,8 +862,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
             <li class="only-bride"><time><span class="en">12:00 PM</span><span class="ka">12:00</span></time><span><span class="en">Transfer from <a class="lodge-link" href="https://roomshotels.com/" target="_blank" rel="noopener">Rooms Hotel Kazbegi</a> to Gergeti Trinity Church</span><span class="ka">ტრანსფერი <a class="lodge-link" href="https://roomshotels.com/" target="_blank" rel="noopener">რუმს ჰოტელ ყაზბეგიდან</a> გერგეტის წმინდა სამებაში</span></span></li>
             <li><time><span class="en">12:30 PM</span><span class="ka">12:30</span></time><span><span class="en">Church ceremony</span><span class="ka">ჯვრისწერა გერგეტის წმინდა სამებაში</span><small class="en">Gergeti Trinity Church</small></span></li>
             <li><time><span class="en">2:30 PM</span><span class="ka">14:30</span></time><span><span class="not-bride"><span class="en">Departure from Gergeti</span><span class="ka">გერგეტიდან გუდაურში დაბრუნება</span></span><span class="only-bride"><span class="en">Transfer to Gudauri</span><span class="ka">ტრანსფერი გუდაურში</span></span></span></li>
-            <li><time><span class="en">4:30 PM</span><span class="ka">16:30</span></time><span><span class="en">Cocktail hour</span><span class="ka">კოქტეილის საათი</span><small><span class="en">Champagne &amp; canapés · <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
-            <li><time><span class="en">6:30 PM</span><span class="ka">18:30</span></time><span><span class="en">The evening begins</span><span class="ka">საღამოს დასაწყისი</span><small><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
+            <li><time><span class="en">5:00 PM</span><span class="ka">17:00</span></time><span><span class="en">Cocktail hour</span><span class="ka">კოქტეილის საათი, სტუმრების მიღება</span><small><span class="en">Champagne &amp; canapés · <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
+            <li><time><span class="en">6:00 PM</span><span class="ka">18:00</span></time><span><span class="en">The evening begins</span><span class="ka">საღამოს დასაწყისი</span><small><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>, level −1</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a>, −1 სართული</span></small></span></li>
           </ol>
           <p class="day-note only-day not-bride"><span class="en">Already in Gudauri? A transfer to the church leaves <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> at 11:00 AM.</span><span class="ka">თუ უკვე იმყოფებით გუდაურში, 11 საათზე ხელმისაწვდომი იქნება ტრანსფერი ეკლესიაში სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯიდან“</a>.</span></p>
           <p class="day-note only-bride"><span class="en">Your night at <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a>.</span><span class="ka">ღამე სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯში“</a>.</span></p>
@@ -886,7 +893,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <p class="route-when only-full"><span class="en">MAR 10 – MORNING OF MAR 13 · INCLUDED</span><span class="ka">10 მარტი – 13 მარტის დილა · შედის</span></p>
         <p class="caps only-bride"><span class="en">Your rooms</span><span class="ka">თქვენი ოთახები</span></p>
         <p class="route-when only-bride"><span class="en">MAR 10 · ROOMS HOTEL KAZBEGI<br>MAR 11 · GUDAURI LODGE</span><span class="ka">10 მარტი · რუმს ჰოტელ ყაზბეგი<br>11 მარტი · „გუდაური ლოჯი“</span></p>
-        <p class="only-day" style="color:var(--ink-dim)"><span class="en"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate from March 8 to 15. To use it, enter our code when you book on their official website.</span><span class="ka">სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> ჩვენს სტუმრებს სთავაზობს ფასდაკლებას 8–15 მარტის შუალედში. თუ გსურთ ისარგებლოთ ფასდაკლებით, გამოიყენეთ ჩვენი კოდი რეზერვაციისას მათ ოფიციალურ საიტზე.</span></p>
+        <p class="only-day" style="color:var(--ink-dim)"><span class="en"><span class="not-bride"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate from March 8 to 15.</span><span class="only-bride">If you wish to stay longer, <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate from March 8 to 15.</span> To use it, enter our code when you book on their official website.</span><span class="ka">სასტუმრო <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> ჩვენს სტუმრებს სთავაზობს ფასდაკლებას 8–15 მარტის შუალედში. თუ გსურთ ისარგებლოთ ფასდაკლებით, გამოიყენეთ ჩვენი კოდი რეზერვაციისას მათ ოფიციალურ საიტზე.</span></p>
         <p class="only-full" style="color:var(--ink-dim)"><span class="en">Should you require extra nights, <a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">Gudauri Lodge</a> offers our guests a special rate.</span><span class="ka"><a class="lodge-link" href="https://gudaurilodge.ge/" target="_blank" rel="noopener">„გუდაური ლოჯი“</a> დამატებითი ღამეებისთვის ჩვენს სტუმრებს სპეციალურ ფასს სთავაზობს.</span></p>
       </div>
         </div>
@@ -912,7 +919,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
           <li><b><span class="en">Three circles</span><span class="ka">სამგზის შემოვლა</span></b><p><span class="en">Our first steps as husband and wife</span><span class="ka">პირველი ნაბიჯები როგორც ცოლ-ქმარი</span></p></li>
         </ol>
         <div class="note" style="margin-top:32px">
-          <p class="caps"><span class="en">Before you come</span><span class="ka">სანამ მოხვალთ</span></p>
+          <p class="caps"><span class="en">Before you come</span><span class="ka">თუ აპირებთ დაესწროთ ჯვრისწერას, გთხოვთ, გაითვალისწინოთ:</span></p>
           <p class="en">Gergeti sits at 7,119 ft, so expect snow: wear a classic coat or fur and boots for the walk up. Ladies, we kindly ask you to bring a scarf to cover your hair in church. Guests stand during the service, which lasts about 30 minutes.</p>
           <p class="ka">გერგეტი 2170 მეტრზეა: ჩაიცვით კლასიკური პალტო ან ბეწვი და თოვლისთვის შესაფერისი ფეხსაცმელი. ქალბატონებს გთხოვთ, თან იქონიოთ თავსაფარი.</p>
         </div>
@@ -930,21 +937,21 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
         <div class="pass" aria-label="Lift pass">
           <span class="grommet" aria-hidden="true"></span>
           <div class="pass-top">
-            <span class="k">SKI PASS · SEASON 2027</span>
-            <span class="t">GUDAURI</span>
-            <span class="k"><span class="en">GEORGIA · 7,205 FT</span><span class="ka">GEORGIA · 2,196 M</span></span>
+            <span class="k"><span class="en">SKI PASS · SEASON 2027</span><span class="ka">სათხილამურო საშვი · სეზონი 2027</span></span>
+            <span class="t"><span class="en">GUDAURI</span><span class="ka">გუდაური</span></span>
+            <span class="k en">GEORGIA · 7,205 FT</span>
           </div>
           <figure class="pass-art"><img src="media/pass-couple-blue.jpg" alt="Illustration of Mari and Graftan skiing in traditional Georgian dress"></figure>
           <div class="pass-body">
-            <div class="f wide"><span class="l">Pass holder</span><span class="v holder" id="passName">Our guest</span></div>
-            <div class="f"><span class="l">Valid</span><span class="v"><span class="only-full">MAR 10–12, 2027</span><span class="only-day not-bride">MAR 11–12, 2027</span><span class="only-bride">MAR 10–12, 2027</span></span></div>
-            <div class="f"><span class="l">Zone</span><span class="v">Kazbegi · Gudauri</span></div>
-            <div class="f"><span class="l">Hosts</span><span class="v">Mari &amp; Graftan</span></div>
-            <div class="f"><span class="l">Days</span><span class="v"><span class="only-full bride-too">3</span><span class="only-day not-bride">2</span></span></div>
+            <div class="f wide"><span class="l"><span class="en">Pass holder</span><span class="ka">საშვის მფლობელი</span></span><span class="v holder" id="passName">Our guest</span></div>
+            <div class="f"><span class="l"><span class="en">Valid</span><span class="ka">მოქმედებს</span></span><span class="v"><span class="only-full"><span class="en">MAR 10–12, 2027</span><span class="ka">10–12 მარტი, 2027</span></span><span class="only-day not-bride"><span class="en">MAR 11–12, 2027</span><span class="ka">11–12 მარტი, 2027</span></span><span class="only-bride"><span class="en">MAR 10–12, 2027</span><span class="ka">10–12 მარტი, 2027</span></span></span></div>
+            <div class="f"><span class="l"><span class="en">Zone</span><span class="ka">ზონა</span></span><span class="v"><span class="en">Kazbegi · Gudauri</span><span class="ka">ყაზბეგი · გუდაური</span></span></div>
+            <div class="f"><span class="l"><span class="en">Hosts</span><span class="ka">მასპინძლები</span></span><span class="v"><span class="en">Mari &amp; Graftan</span><span class="ka">მარი და გრაფტანი</span></span></div>
+            <div class="f"><span class="l"><span class="en">Days</span><span class="ka">დღეები</span></span><span class="v"><span class="only-full bride-too">3</span><span class="only-day not-bride">2</span></span></div>
           </div>
           <button class="pass-stub" id="tear" type="button" aria-haspopup="dialog">
             <span class="tear-line" aria-hidden="true"><span class="scissors">✂</span><span class="en">TEAR HERE TO RSVP</span><span class="ka">მოხსენით პასუხისთვის</span></span>
-            <span class="rsvp-by">RSVP BY JAN 15, 2027</span>
+            <span class="rsvp-by"><span class="en">RSVP BY JAN 15, 2027</span><span class="ka">გვიპასუხეთ 2027 წლის 15 იანვრამდე</span></span>
             <svg class="barcode" id="barcode" viewBox="0 0 300 52" preserveAspectRatio="none" aria-hidden="true"></svg>
             <span class="l" id="passNo">No. 1103-2027</span>
           </button>
@@ -1366,7 +1373,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var lastReply = null, lastStatus = "new", opener = null;
 
   function T(en, ka){ return lang()==="ka" ? ka : en; }
-  function holderName(){ return party ? party.display : T("Our guest", "ჩვენი სტუმარი"); }
+  function holderName(){ return party ? T(party.display, party.kaDisplay || party.display) : T("Our guest", "ჩვენი სტუმარი"); }
   function couple(){ return !!(party && party.members && party.members.length === 2); }
 
   // Attending choices: a couple can answer for both, either one, or neither.
@@ -1485,7 +1492,7 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
       ? T("Thank you, "+who+". Your reply has been updated.", "მადლობა, "+kwho+". თქვენი პასუხი განახლდა.")
       : yes ? T("Thank you, "+who+". Your reply is in.", "მადლობა, "+kwho+". თქვენი პასუხი მიღებულია.")
             : T("Thank you for letting us know, "+who+".", "მადლობა, რომ შეგვატყობინეთ, "+kwho+".");
-    stamp.querySelector("div").firstChild.nodeValue = yes ? "CONFIRMED" : "WITH LOVE";
+    stamp.querySelector("div").firstChild.nodeValue = yes ? T("CONFIRMED", "დადასტურდა") : T("WITH LOVE", "სიყვარულით");
   }
   function markReplied(reply){
     lastReply = reply; renderDone();
@@ -1543,8 +1550,8 @@ footer small{color:var(--dim);font-family:var(--mono);font-size:12px;letter-spac
   var DEMO = [
     {keys:["jane smith","john smith","jane john smith"], party:{display:"Jane & John Smith", short:"Jane & John", members:[{first:"Jane",full:"Jane Smith"},{first:"John",full:"John Smith"}], plusOne:false, plusOneName:"", group:"american", lang:"en"}},
     {keys:["alex morgan"], party:{display:"Alex Morgan", short:"Alex", members:[{first:"Alex",full:"Alex Morgan"}], plusOne:true, plusOneName:"", group:"american", lang:"en"}},
-    {keys:["nino beridze","ნინო ბერიძე"], party:{display:"Nino & Giorgi Beridze", short:"Nino & Giorgi", kaShort:"ნინო და გიორგი", kaMembers:["ნინო","გიორგი"], members:[{first:"Nino",full:"Nino Beridze"},{first:"Giorgi",full:"Giorgi Beridze"}], plusOne:false, plusOneName:"", group:"georgian 1 day", lang:"ka"}},
-    {keys:["ana kapanadze","ანა კაპანაძე"], party:{display:"Ana Kapanadze", short:"Ana", kaShort:"ანა", kaMembers:["ანა"], members:[{first:"Ana",full:"Ana Kapanadze"}], plusOne:false, plusOneName:"", group:"bridesmaids", lang:"ka"}}
+    {keys:["nino beridze","ნინო ბერიძე"], party:{display:"Nino & Giorgi Beridze", short:"Nino & Giorgi", kaShort:"ნინო და გიორგი", kaDisplay:"ნინო და გიორგი ბერიძე", kaMembers:["ნინო","გიორგი"], members:[{first:"Nino",full:"Nino Beridze"},{first:"Giorgi",full:"Giorgi Beridze"}], plusOne:false, plusOneName:"", group:"georgian 1 day", lang:"ka"}},
+    {keys:["ana kapanadze","ანა კაპანაძე"], party:{display:"Ana Kapanadze", short:"Ana", kaShort:"ანა", kaDisplay:"ანა კაპანაძე", kaMembers:["ანა"], members:[{first:"Ana",full:"Ana Kapanadze"}], plusOne:false, plusOneName:"", group:"bridesmaids", lang:"ka"}}
   ];
   function words(v){ return v.toLowerCase().replace(/[^a-zა-ჰ\s]/g," ").split(/\s+/).filter(function(w){ return w && w!=="and"; }); }
   function lookup(body){
